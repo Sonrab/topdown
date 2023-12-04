@@ -1,0 +1,80 @@
+<!DOCTYPE html5>
+<html>
+    <head>
+        <link rel="stylesheet" href="general.css">
+        <!--<style type="text/css">@import url(style/general.css)</style>-->
+        <title>Spel</title>
+    </head>
+    <body>
+        <main>
+            <div id="canvasDiv">
+                <!-- <canvas id="background_canvas"></canvas> -->
+                <canvas id="canvas">Your browser does not support the canvas tag.</canvas>
+                <div class="game-textbox" id="game-instruction-box" style="display:block;">
+                    <h1>PAUSED</h1><br>
+                    <h2>Controls</h2>
+                    <ul>
+                        <li>WASD: Move around</li>
+                        <li>Mouse: Aim</li>
+                        <li>Mouse1(Left click): Shoot</li>
+                        <li>Space (Needs to be unlocked): Dodge Roll</li>
+                        <li>Tab: View Character Stats</li>
+                        <li>E: Interact, Open chests etc</li>
+                        <li>F (Needs to be unlocked): Drop bomb</li>
+                        <li>1: Swap between Bow & Grappler</li>
+                        <li>2: Cast fire orb spell. Press 2 again to release a homing orb.</li>
+                    </ul>
+                    <br><h3>Press Escape to pause/unpause and view instructions!</h3>
+                </div>
+                <div class="user-interface">
+                    <div class="health-bar" id="healthBar">
+                            <p class="unselectable health-bar-text" id="healthBarText"></p>
+                    </div>
+                    <div class="mana-bar" id="manaBar"><p class="unselectable mana-bar-text" id="manaBarText">120/237</p></div>
+                    <div class="game-textbox" id="game-statscreen-box"></div>
+                    <div class="game-textbox" id="game-description-box" style="display:none;"></div>
+                </div>
+                <div id="cover"></div>
+                <canvas id="user_interface_canvas"></canvas>
+                <!-- <canvas id="foreground_canvas"></canvas> -->
+            </div>
+            <!-- <div id="debugOutput">Debug</div> -->
+        </main>
+    </body>
+    <script src="scripts/helper_functions.js"></script>
+    
+    <script src="scripts/player.js"></script>
+    <script src="scripts/camera.js"></script>
+    <script src="scripts/orb.js"></script>
+    <script src="scripts/renderer.js"></script>
+    <script src="scripts/user_interface.js"></script>
+    <script src="scripts/map.js"></script>
+    <script src="scripts/map_handler.js"></script>
+    <script src="scripts/maps.js"></script>
+    <script src="scripts/door.js"></script>
+    <script src="scripts/passage.js"></script>
+    <script src="scripts/chest.js"></script>
+    <script src="scripts/tile.js"></script>
+    <script src="scripts/tiles.js"></script>
+    <script src="scripts/tile_handler.js"></script>
+    <script src="scripts/music_handler.js"></script>
+    <script src="scripts/player_input.js"></script>
+    <script src="scripts/enemy.js"></script>
+    <script src="scripts/animator.js"></script>
+    <script src="scripts/animation.js"></script>
+    
+    
+    <script src="scripts/wizard.js"></script>
+    <script src="scripts/green_slime.js"></script>
+    <script src="scripts/red_slime.js"></script>
+    <script src="scripts/item_list.js"></script>
+    <script src="scripts/upgrade_list.js"></script>
+    <script src="scripts/sword.js"></script>
+    <script src="scripts/bow.js"></script>
+    <script src="scripts/grappler.js"></script>
+    <script src="scripts/projectile.js"></script>
+    <script src="scripts/arrow.js"></script>
+    <script src="scripts/fireball.js"></script>
+    <script src="scripts/bomb.js"></script>
+    <script src="scripts/main.js"></script>
+</html>
