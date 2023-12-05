@@ -138,7 +138,7 @@ class Player
         
     
         this.tileId = "";    
-        this.camera = new CCamera();
+        this.camera = new Camera();
     
     
         //player gravity and forces applied when moving

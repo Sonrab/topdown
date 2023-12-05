@@ -18,16 +18,7 @@ class Bomb
         this.blastRange = 50;
 
         this.hasExploded = false;
-        // this.timer = function()
-        // {
-        //     setTimeout(() => {
-        //         this.currentFrame++;
-        //         if(this.currentFrame >= bombFramesLen)    
-        //             this.explode();
-        //         else
-        //             this.timer();
-        //     }, bombFrames[this.currentFrame].duration);
-        // }
+
 
         this.animations = {
             countdown : new Animation(this, 'countdown', Bomb.countdownFrames, false),
@@ -173,52 +164,52 @@ class Bomb
         {
             "cutFrom": { "x": 0, "y": 0},
             "sourceFrameSize": { "w": 32, "h": 32 },
-            "duration": 600
+            "duration": 400
         },
         {
             "cutFrom": { "x": 32, "y": 0},
             "sourceFrameSize": { "w": 32, "h": 32 },
-            "duration": 600
+            "duration": 400
         },
         {
             "cutFrom": { "x": 64, "y": 0},
             "sourceFrameSize": { "w": 32, "h": 32 },
-            "duration": 600
+            "duration": 400
         },
         {
             "cutFrom": { "x": 96, "y": 0},
             "sourceFrameSize": { "w": 32, "h": 32 },
-            "duration": 600
+            "duration": 400
         },
         {
             "cutFrom": { "x": 128, "y": 0},
             "sourceFrameSize": { "w": 32, "h": 32 },
-            "duration": 600
+            "duration": 150
         },
         {
             "cutFrom": { "x": 160, "y": 0},
             "sourceFrameSize": { "w": 32, "h": 32 },
-            "duration": 600
+            "duration": 150
         },
         {
             "cutFrom": { "x": 192, "y": 0},
             "sourceFrameSize": { "w": 32, "h": 32 },
-            "duration": 80
+            "duration": 150
         },
         {
             "cutFrom": { "x": 224, "y": 0},
             "sourceFrameSize": { "w": 32, "h": 32 },
-            "duration": 80
+            "duration": 150
         },
         {
             "cutFrom": { "x": 256, "y": 0},
             "sourceFrameSize": { "w": 32, "h": 32 },
-            "duration": 80
+            "duration": 150
         },
         {
             "cutFrom": { "x": 288, "y": 0},
             "sourceFrameSize": { "w": 32, "h": 32 },
-            "duration": 80
+            "duration": 150
         }
     ]; 
 }
