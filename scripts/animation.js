@@ -46,6 +46,11 @@ class Animation
             this.nextFrame();
         }, this.frames[this.currentFrame].duration);
     }
+
+    getCurrentFrame()
+    {
+        return this.frames[this.currentFrame];
+    }
 }
 
 

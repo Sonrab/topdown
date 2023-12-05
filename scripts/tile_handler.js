@@ -30,7 +30,7 @@ CTileHandler.prototype.loadTiles = function()
 
     console.log(basic_solid_tiles);
 
-    let solidTilePreset = new CTile(
+    let solidTilePreset = new Tile(
         solid = true,
         friction = 1,
         speed = 1,
@@ -42,7 +42,7 @@ CTileHandler.prototype.loadTiles = function()
         this.tiles.set(basic_solid_tiles[i], solidTilePreset);
     }
 
-    let nonsolidTilePreset = new CTile(
+    let nonsolidTilePreset = new Tile(
         solid = false,
         friction = 0.2,
         speed = 1,
@@ -59,7 +59,7 @@ CTileHandler.prototype.loadTiles = function()
     // let solid_bombable_tiles = [191];
     // let nonsolid_bombable_tiles = [];
 
-    let solidBombablePreset = new CTile(
+    let solidBombablePreset = new Tile(
         solid = true,
         friction = 1,
         speed = 1,
@@ -67,7 +67,7 @@ CTileHandler.prototype.loadTiles = function()
         bombable = true
     );
 
-    let nonsolidBombablePreset = new CTile(
+    let nonsolidBombablePreset = new Tile(
         solid = false,
         friction = 1,
         speed = 1,
@@ -86,7 +86,7 @@ CTileHandler.prototype.loadTiles = function()
     // }
 
 
-    solidSplitTile32Preset = new CTile(
+    solidSplitTile32Preset = new Tile(
         solid = true,
         friction = 1,
         speed = 1,
@@ -96,7 +96,7 @@ CTileHandler.prototype.loadTiles = function()
         height = 32
     );
 
-    nonsolidSplitTile32Preset = new CTile(
+    nonsolidSplitTile32Preset = new Tile(
         solid = false,
         friction = 1,
         speed = 1,
@@ -106,7 +106,7 @@ CTileHandler.prototype.loadTiles = function()
         height = 32
     );
 
-    solidSplitTile16Preset = new CTile(
+    solidSplitTile16Preset = new Tile(
         solid = true,
         friction = 1,
         speed = 1,
@@ -116,7 +116,7 @@ CTileHandler.prototype.loadTiles = function()
         height = 16
     );
 
-    nonsolidSplitTile16Preset = new CTile(
+    nonsolidSplitTile16Preset = new Tile(
         solid = false,
         friction = 1,
         speed = 1,
@@ -126,7 +126,7 @@ CTileHandler.prototype.loadTiles = function()
         height = 16
     );
 
-    solidSplitTile16Preset = new CTile(
+    solidSplitTile16Preset = new Tile(
         solid = true,
         friction = 1,
         speed = 1,
@@ -136,7 +136,7 @@ CTileHandler.prototype.loadTiles = function()
         height = 8
     );
 
-    nonsolidSplitTile8Preset = new CTile(
+    nonsolidSplitTile8Preset = new Tile(
         solid = false,
         friction = 1,
         speed = 1,
@@ -146,7 +146,7 @@ CTileHandler.prototype.loadTiles = function()
         height = 8
     );
 
-    solidSplitTile8Preset = new CTile(
+    solidSplitTile8Preset = new Tile(
         solid = true,
         friction = 1,
         speed = 1,
@@ -166,15 +166,15 @@ CTileHandler.prototype.loadTiles = function()
     for(let i = 0; i < stairs_left.length; i++)
     {
         this.tiles.set(stairs_left[i], 
-            new CSplitTile( 
-                new CSplitTile(
+            new SplitTile( 
+                new SplitTile(
                     solidSplitTile8Preset,
                     nonsolidSplitTile8Preset,
                     solidSplitTile8Preset,
                     nonsolidSplitTile8Preset
                 ),
                 nonsolidSplitTile16Preset,
-                new CSplitTile(
+                new SplitTile(
                     solidSplitTile8Preset,
                     nonsolidSplitTile8Preset,
                     solidSplitTile8Preset,
@@ -190,16 +190,16 @@ CTileHandler.prototype.loadTiles = function()
     for(let i = 0; i < stairs_right.length; i++)
     {
         this.tiles.set(stairs_right[i], 
-            new CSplitTile( 
+            new SplitTile( 
                 nonsolidSplitTile16Preset,
-                new CSplitTile(
+                new SplitTile(
                     nonsolidSplitTile8Preset,
                     solidSplitTile8Preset,
                     nonsolidSplitTile8Preset,
                     solidSplitTile8Preset
                 ),
                 nonsolidSplitTile16Preset,
-                new CSplitTile(
+                new SplitTile(
                     nonsolidSplitTile8Preset,
                     solidSplitTile8Preset,
                     nonsolidSplitTile8Preset,
@@ -213,14 +213,14 @@ CTileHandler.prototype.loadTiles = function()
 
     //split tile goes topleft, topright, bottomleft, bottomright
     //top fence tile
-    this.tiles.set(178, new CSplitTile(
-        new CSplitTile( 
+    this.tiles.set(178, new SplitTile(
+        new SplitTile( 
             solidSplitTile8Preset,
             solidSplitTile8Preset,
             nonsolidSplitTile8Preset,
             nonsolidSplitTile8Preset
         ),
-        new CSplitTile( 
+        new SplitTile( 
             solidSplitTile8Preset,
             solidSplitTile8Preset,
             nonsolidSplitTile8Preset,
@@ -231,15 +231,15 @@ CTileHandler.prototype.loadTiles = function()
     ));
 
     //left fence
-    this.tiles.set(193, new CSplitTile(
-        new CSplitTile( 
+    this.tiles.set(193, new SplitTile(
+        new SplitTile( 
             solidSplitTile8Preset,
             nonsolidSplitTile8Preset,
             solidSplitTile8Preset,
             nonsolidSplitTile8Preset
         ),
         nonsolidSplitTile16Preset,
-        new CSplitTile( 
+        new SplitTile( 
             solidSplitTile8Preset,
             nonsolidSplitTile8Preset,
             solidSplitTile8Preset,   
@@ -249,20 +249,20 @@ CTileHandler.prototype.loadTiles = function()
     ));
 
     //topleft fence
-    this.tiles.set(177, new CSplitTile(
-        new CSplitTile( 
+    this.tiles.set(177, new SplitTile(
+        new SplitTile( 
             solidSplitTile8Preset,
             solidSplitTile8Preset,
             solidSplitTile8Preset,
             nonsolidSplitTile8Preset
         ),
-        new CSplitTile( 
+        new SplitTile( 
             solidSplitTile8Preset,
             solidSplitTile8Preset,
             nonsolidSplitTile8Preset,
             nonsolidSplitTile8Preset
         ),
-        new CSplitTile( 
+        new SplitTile( 
             solidSplitTile8Preset,
             nonsolidSplitTile8Preset,
             solidSplitTile8Preset,   
@@ -273,21 +273,21 @@ CTileHandler.prototype.loadTiles = function()
 
 
     //topright fence
-    this.tiles.set(179, new CSplitTile(
-        new CSplitTile( 
+    this.tiles.set(179, new SplitTile(
+        new SplitTile( 
             solidSplitTile8Preset,
             solidSplitTile8Preset,
             nonsolidSplitTile8Preset,
             nonsolidSplitTile8Preset
         ),
-        new CSplitTile( 
+        new SplitTile( 
             solidSplitTile8Preset,
             solidSplitTile8Preset,
             nonsolidSplitTile8Preset,
             solidSplitTile8Preset
         ),
         nonsolidSplitTile16Preset,
-        new CSplitTile( 
+        new SplitTile( 
             nonsolidSplitTile8Preset,
             solidSplitTile8Preset,
             nonsolidSplitTile8Preset,   
@@ -296,16 +296,16 @@ CTileHandler.prototype.loadTiles = function()
     ));
 
     //right fence
-    this.tiles.set(195, new CSplitTile(
+    this.tiles.set(195, new SplitTile(
         nonsolidSplitTile16Preset,
-        new CSplitTile( 
+        new SplitTile( 
             nonsolidSplitTile8Preset,
             solidSplitTile8Preset,
             nonsolidSplitTile8Preset,
             solidSplitTile8Preset
         ),
         nonsolidSplitTile16Preset,
-        new CSplitTile( 
+        new SplitTile( 
             nonsolidSplitTile8Preset,
             solidSplitTile8Preset,
             nonsolidSplitTile8Preset,   

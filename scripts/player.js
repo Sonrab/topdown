@@ -149,7 +149,7 @@ class Player
         
         this.walking = false;
     
-        this.bow = new CBow();
+        this.bow = new Bow();
         this.grappler = new CGrappler();
     
         this.equippedWep = this.bow;
@@ -431,9 +431,9 @@ class Player
 
         if(this.bombData.amount > 0) //check if player has bombs in bag
         {
-            let bomb = new CBomb();
+            let bomb = new Bomb();
             objectList.push(bomb);
-            bomb.timer();
+            //bomb.timer();
             this.bombData.amount--;
             if(!this.bombData.rechargeActive)
             {
@@ -508,8 +508,8 @@ class Player
 
     render()
     {
-        let cutFrom = this.currentAnimation.frames[this.currentAnimation.currentFrame].cutFrom;
-        ctx.drawImage(this.spritesheet, cutFrom.x, cutFrom.y, this.drawWidth, this.drawHeight, this.x - ((this.drawWidth-this.width)/2), this.y+this.height-this.drawHeight, this.drawWidth, this.drawHeight);
+        let frame = this.currentAnimation.getCurrentFrame();
+        ctx.drawImage(this.spritesheet, frame.cutFrom.x, frame.cutFrom.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h, this.x - ((this.drawWidth-this.width)/2), this.y+this.height-this.drawHeight, this.drawWidth, this.drawHeight);
  
 
         for(let i = 0; i < this.orbs.length; i++)

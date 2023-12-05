@@ -1,47 +1,73 @@
-function CRenderer()
-{
-    //console.log(this);
-    this.foregroundQueue = [];
-    this.backgroundQueue = [];
-
-};
-
 var TimeNowR = 0;
 var FPSR = 0;
 var countR = 0;
 
-
-
-
-
-
-CRenderer.prototype.renderScreen = function()
+class Renderer
 {
-    //can not use "this" here due to animationframe hijacking "this"-keyword
-    renderer.renderMain();
-    for(let i = 0; i < objectList.length; i++)
-        objectList[i].render();
-
-    renderer.renderProjectiles();
-    renderer.renderForeground();
-    // if(!player.behindForeground)
-    ctx.globalAlpha = mapHandler.foregroundAlpha;
-        mapHandler.map.renderForeground();
-
-    //console.log(mapHandler.foregroundAlpha);
-    ctx.globalAlpha = 1.0;
-    //player.renderHealth();
-    userInterface.render();
-
-    if(Date.now() >= TimeNowR)
+    constructor() 
     {
-        TimeNowR = Date.now() + 1000;
-        FPSR = countR;
-        countR = 0;
+        this.foregroundQueue = [];
+        this.backgroundQueue = [];
     }
-    countR++;
-    requestAnimationFrame(renderer.renderScreen);
-};
+
+    renderScreen()
+    {
+         //can not use "this" here due to animationframe hijacking "this"-keyword
+        renderer.renderMain();
+        for(let i = 0; i < objectList.length; i++)
+            objectList[i].render();
+
+        renderer.renderProjectiles();
+        renderer.renderForeground();
+        // if(!player.behindForeground)
+        ctx.globalAlpha = mapHandler.foregroundAlpha;
+            mapHandler.map.renderForeground();
+
+        //console.log(mapHandler.foregroundAlpha);
+        ctx.globalAlpha = 1.0;
+        //player.renderHealth();
+        userInterface.render();
+
+        if(Date.now() >= TimeNowR)
+        {
+            TimeNowR = Date.now() + 1000;
+            FPSR = countR;
+            countR = 0;
+        }
+        countR++;
+        requestAnimationFrame(renderer.renderScreen);
+    }
+
+    renderMain()
+    {
+        this.clearScreen();
+        mapHandler.map.render();
+        player.render();
+        // if(player.bomb !== false)
+        //     player.bomb.render();
+    }
+
+    clearScreen()
+    {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    renderForeground()
+    {
+        for(let i = 0; i < this.foregroundQueue.length; i++)
+        ctx.drawImage(...this.foregroundQueue[i]);
+
+    this.foregroundQueue = [];
+    }
+
+    renderProjectiles()
+    {
+        for(let i = 0; i < g_projectiles.length; i++)
+        {
+            g_projectiles[i].render();
+        }
+    }
+}
 
 // function drawRotated(degrees){
 //     context.clearRect(0,0,canvas.width,canvas.height);
@@ -63,41 +89,3 @@ CRenderer.prototype.renderScreen = function()
 //     // we’re done with the rotating so restore the unrotated context
 //     context.restore();
 // }
-
-
-
-//CChest.prototype.toggleRenderContent = function()
-CRenderer.prototype.renderMain = function()
-{
-    this.clearScreen();
-    mapHandler.map.render();
-    player.render();
-    if(player.bomb !== false)
-        player.bomb.render();
-};
-
-
-CRenderer.prototype.clearScreen = function()
-{
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // canvas.height = canvas.height;
-    // canvas.width = canvas.width;
-};
-
-CRenderer.prototype.renderForeground = function()
-{
-    for(let i = 0; i < this.foregroundQueue.length; i++)
-        ctx.drawImage(...this.foregroundQueue[i]);
-
-    this.foregroundQueue = [];
-};
-
-
-
-CRenderer.prototype.renderProjectiles = function()
-{
-    for(let i = 0; i < projectiles.length; i++)
-    {
-        projectiles[i].render();
-    }
-}

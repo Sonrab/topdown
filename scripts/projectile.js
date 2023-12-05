@@ -31,8 +31,7 @@ class Projectile
 
     render()
     {
-        let cutFrom = this.currentAnimation.frames[this.currentAnimation.currentFrame].cutFrom;
-        let frame = this.currentAnimation.frames[this.currentAnimation.currentFrame];
+        let frame = this.currentAnimation.getCurrentFrame();
 
         ctx.translate(this.x, this.y);
         ctx.rotate(this.radians);
@@ -80,7 +79,7 @@ class Projectile
             if(this.x > enemy.x && this.x < enemy.x+enemy.width
             && this.y > enemy.y && this.y < enemy.y+enemy.height)
             {
-                projectiles.splice(projectileIndex, 1);
+                g_projectiles.splice(projectileIndex, 1);
                 enemy.onHit(this.damage);
                 return;
             }
@@ -90,7 +89,7 @@ class Projectile
         let tile = mapHandler.map.getTileId(this.x, this.y);
         if(tile.solid)
         {
-            projectiles.splice(projectileIndex, 1);
+            g_projectiles.splice(projectileIndex, 1);
         }
     }
 }

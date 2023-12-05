@@ -27,6 +27,7 @@ var ctx = canvas.getContext('2d');
 
 //globals
 g_paused = true;
+g_projectiles = new Array();
 
 
 //html output divs. Used for displaying boxes of text
@@ -146,10 +147,10 @@ function update(d)
         mapHandler.map.enemies[i].update();
     }
 
-    for(let i = projectiles.length-1; i >= 0; i--)
+    for(let i = g_projectiles.length-1; i >= 0; i--)
     {
         
-        projectiles[i].update(i);
+        g_projectiles[i].update(i);
     }
 }
 
@@ -190,7 +191,7 @@ function setupGame()
     
     tileHandler = new CTileHandler(); //create tilehandler object
     
-    renderer = new CRenderer();
+    renderer = new Renderer();
     player = new Player(); // Create player object
     userInterface = new UserInterface();
     mapHandler = new CMapHandler(maps.get("start"), spawn = {x : 16, y : 13}); //create maphandler object

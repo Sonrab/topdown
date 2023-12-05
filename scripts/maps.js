@@ -25,6 +25,11 @@ function loadMaps()
                                 content = upgradeList.getUpgradeByName("unlock_bomb")
                         ),
                         new CChest(
+                                x = 15,
+                                y = 13,
+                                content = upgradeList.getUpgradeByName("unlock_bomb")
+                        ),
+                        new CChest(
                                 x = 8,
                                 y = 12,
                                 content = upgradeList.getUpgradeByName("bow_damage_upgrade")     
