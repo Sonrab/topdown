@@ -1,8 +1,11 @@
-const healthBarText = document.querySelector("#healthBarText");
-const healthBar = document.querySelector("#healthBar");
+const healthBarText = document.querySelector("#UI_healthBarText");
+const healthBar = document.querySelector("#UI_healthBar");
 
-const manaBarText = document.querySelector("#manaBarText");
-const manaBar = document.querySelector("#manaBar");
+const manaBarText = document.querySelector("#UI_manaBarText");
+const manaBar = document.querySelector("#UI_manaBar");
+
+const inventory = document.querySelector("#UI_inventory")
+const inventory_playerStats = document.querySelector("#UI_inventory_playerStats")
 
 class UserInterface
 {
@@ -15,6 +18,7 @@ class UserInterface
     
         this.images = new Map();
         this.bombIconPos = this.canvas.width - 96;
+        this.inventoryOpen = false;
     
         this.actionbarPosition = {
             x : this.canvas.width/2 - 256,
@@ -22,6 +26,32 @@ class UserInterface
         };
 
         this.init();
+    }
+
+    toggleInventory()
+    {
+        if(this.inventoryOpen) //close inv
+        {
+            inventory.classList.remove("fade-in");
+            inventory.classList.add("fade-out");
+            this.inventoryOpen = !this.inventoryOpen;
+            console.log(`Inv open: ${this.inventoryOpen}, Classlist: ${inventory.classList}`);
+            return;
+        }
+        else //open inv
+        {
+            inventory.classList.remove("fade-out");
+            inventory.classList.add("fade-in");
+            inventory_playerStats.innerHTML=`
+            <p title="Player health" class="unselectable">Health: ${player.health}/${player.maxHealth}</p>
+            <p title="Player mana" class="unselectable">Mana: ${player.mana}/${player.maxMana}</p>
+            <p title="Player movement speed" class="unselectable">Speed: ${player.speed}</p>
+            <p title="Raw bow damage (Before resistances)" class="unselectable">Bow Damage: ${player.bow.damage}</p>
+            `;
+            this.inventoryOpen = !this.inventoryOpen;
+            console.log(`Inv open: ${this.inventoryOpen}, Classlist: ${inventory.classList}`);
+            return;
+        }
     }
 
     init()
@@ -39,14 +69,13 @@ class UserInterface
     {
         this.clear();
         this.renderBomb();
-        //this.updateHealth();
+        this.updateHealth();
         this.updateMana();
         //this.renderActionBar();
     }
 
     updateHealth()
     {
-        console.log("aaaaaaa");
         let healthPercent = (player.health/player.maxHealth) * 100;
         if(healthPercent < 0)
             healthPercent = 0;
@@ -95,6 +124,6 @@ ui_image_bomb.src = "images/user_interface/ui_bomb.png";
 // const ui_image_heart_empty = new Image();
 // ui_image_heart_empty.src = "images/user_interface/ui_heart_empty.png";
 
-const ui_action_bar_frame = new Image();
-ui_action_bar_frame.src = "images/user_interface/ui_action_bar.png";
+// const ui_action_bar_frame = new Image();
+// ui_action_bar_frame.src = "images/user_interface/ui_action_bar.png";
 

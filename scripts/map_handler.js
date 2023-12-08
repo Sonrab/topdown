@@ -16,7 +16,7 @@ CMapHandler.prototype.clearMap = function()
 //changes map
 CMapHandler.prototype.setMap = function(map, spawn)
 {
-    
+    console.log(spawn);
     this.clearMap();
     
     this.map = map;
@@ -40,34 +40,7 @@ CMapHandler.prototype.setMap = function(map, spawn)
         canvas.height = this.map.mapsize.height * scaling;
 
 
-
-    //update player values
-    if(this.spawn.x || this.spawn.x === 0)
-    {
-
-        player.x = (spawn.x*tileHandler.tileWidth) + tileHandler.tileWidth - player.width;
-        //console.log(player.x);
-        player.tx = player.x;
-    }
-    player.bomb = false;
-    player.dashing = false;
-    console.log(player.x);
-    console.log(player.y);
-    if(this.spawn.y || this.spawn.y === 0)
-    {
-        console.log(player.y);
-        player.y = (spawn.y*tileHandler.tileWidth) + tileHandler.tileWidth - player.height;
-        player.ty = player.y;
-    }
-
-    // for(let i = 0; i < this.map.enemies.length; i++)
-    // {
-    //     let enemy = this.map.enemies[i];
-    //     // if(enemy.dead)
-    //     //     this.map.enemies.splice(i, 1)
-    //     // else
-    //         enemy.animate();
-    // }
+    player.setXY(spawn.x*tileWidth, spawn.y*tileWidth);
 };
 
 

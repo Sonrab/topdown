@@ -1,8 +1,5 @@
-var swordimg = new Image();
-swordimg.src = "images/weapons/sword.png";
-
-var swingimg = new Image();
-swingimg.src = "images/weapons/swing.png";
+const spritesheet_bow = new Image();
+spritesheet_bow.src = "images/weapons/bow.png";
 
 
 class Bow
@@ -10,9 +7,9 @@ class Bow
     constructor()
     {
         this.arrowSpeed = 10;
-        this.fireRate = 0.8; //arrows per sec
-        this.fireRateIncrease = 2; //percentage increase of firerate (1 = 100%, default)
-        this.img = swordimg;
+        this.fireRate = 1; //arrows per sec
+        this.fireRateIncrease = 1; //percentage increase of firerate (1 = 100%, default)
+        this.img = spritesheet_bow;
         this.height = 5;
         this.damage = 1;
         this.mouseDownAutoUse = true;
@@ -46,7 +43,7 @@ class Bow
             if(angle < 0)
             {
                 angle = 360 - (-angle);
-            }      
+            }     
             g_projectiles.push(new Arrow(player.center.x, player.center.y, dx, dy, magnitude, angle, this.damage, "player"));
         }
     }

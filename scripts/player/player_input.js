@@ -41,7 +41,6 @@ var firstClick = true;
 function checkKeyPress(e)
 {
     let key = e.keyCode;
-    console.log(key);
     if(firstClick)
     {
         firstClick = false;
@@ -87,19 +86,10 @@ function checkKeyPress(e)
         // }
     }
 
-    if(key === 9) //tab, bring up statscreen
+    if(key === 9) //tab, toggle inventory
     {
         e.preventDefault();
-        statscreenTextbox.innerHTML=`
-        <p title="Player health" class="unselectable">Health: ${player.health}/${player.maxHealth}</p>
-        <p title="Player mana" class="unselectable">Mana: ${player.mana}/${player.maxMana}</p>
-        <p title="Player movement speed" class="unselectable">Speed: ${player.speed}</p>
-        <p title="Raw bow damage (Before resistances)" class="unselectable">Bow Damage: ${player.bow.damage}</p>
-        `;
-
-        console.log(-statscreenTextbox.style.width);
-        //statscreenTextbox.style.display = (statscreenTextbox.style.display === "block") ? "none" : "block";
-        statscreenTextbox.style.left = (statscreenTextbox.style.left === "0px") ? -statscreenTextbox.offsetWidth : "0px";
+        userInterface.toggleInventory();
     }
 
     // if(key === 81)
@@ -131,5 +121,5 @@ function checkKeyPress(e)
 
 function checkKeyRelease(e)
 {
-    console.log(e);
+    //console.log(e);
 }

@@ -74,8 +74,6 @@ var playerCamera;
 var keysDown = {};
 window.addEventListener('keydown', function(e) 
 { 
-    console.log(e);
-    console.log(e.code);
     if(g_paused && e.code != "Escape" && e.code != "Tab")
         return;
     keysDown[e.code] = true;
@@ -128,16 +126,11 @@ canvas.addEventListener("mouseup", function() {
     mouse.down = false;
 });
 
-// function mouseClick()
-// {
-//     sword.swing();  
-// }
 
 var delta = 0;
 var updateFrequence = 0;
 function update(d) 
 {
-    currentTime = Date.now();
     delta = d;
 
 
@@ -161,14 +154,13 @@ var count = 0;
 
 var updateCounter = 0;
 var updateStart = 0;
+var lastUpdate = 0;
 function run() 
-{
+{    
+    currentTime = Date.now();
+    
     updateStart = performance.now();
-
     update((updateStart - updateEnd) / (1000/60));
-
-    
-    
     if(Date.now() >= TimeNow)
     {
         TimeNow = Date.now() + 1000;
@@ -180,13 +172,22 @@ function run()
     // debugOutput.innerHTML = "FPS: " + FPS;
     // debugOutput.innerHTML += "<br>FPS Render: " + FPSR;
     updateEnd = performance.now();
+    lastUpdate = performance.now();
+
+    // if(performance.now() - lastUpdate > 16)
+    // {
+    //     updateStart = performance.now();
+    //     update((updateStart - updateEnd) / (1000/60));
+    //     updateEnd = performance.now();
+    //     lastUpdate = performance.now();
+    // }
 }
 var currentTime;
 var updateEnd;
 function setupGame()
 {
     upgradeList = new UpgradeList();
-    musicHandler = new CMusicHandler();
+    musicHandler = new MusicHandler();
     loadMaps();
     
     tileHandler = new CTileHandler(); //create tilehandler object
@@ -194,7 +195,7 @@ function setupGame()
     renderer = new Renderer();
     player = new Player(); // Create player object
     userInterface = new UserInterface();
-    mapHandler = new CMapHandler(maps.get("start"), spawn = {x : 16, y : 13}); //create maphandler object
+    mapHandler = new CMapHandler(maps.get("start"), spawn = {x : 11, y : 21}); //create maphandler object
     
     updateEnd = performance.now();
     requestAnimationFrame(renderer.renderScreen);
@@ -203,6 +204,7 @@ function setupGame()
 
 function startGame()
 {
+    //gameloop = setInterval(run, 2);
     gameloop = setInterval(run, (1000/60));
 }
 
@@ -216,7 +218,7 @@ function pause()
     {
         clearInterval(gameloop);
     }
-    g_paused = g_paused ? false : true;
+    g_paused = !g_paused;
 }
 
 var time;

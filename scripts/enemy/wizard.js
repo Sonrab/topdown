@@ -143,7 +143,7 @@ class Wizard extends Enemy
         }
         console.log(angle);
     
-        projectiles.push(new Fireball(this.center.x, this.center.y, dx, dy, magnitude, angle, this.damage, this));
+        g_projectiles.push(new Fireball(this.center.x, this.center.y, dx, dy, magnitude, angle, this.damage, this));
     }
 
     update()

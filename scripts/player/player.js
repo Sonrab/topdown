@@ -3,101 +3,15 @@ var sound_player_death= new Audio("sounds/player/death.wav");
 sound_player_jump.volume = 0.2;
 sound_player_death = 0.2;
 
+const chestImg = addImage("images/red_armor.png");
+
 
 
 const spritesheet_player = addImage("images/player/player_sheet.png");
 
 class Player
 {
-    static walkDownAnimFrames = [
-        {
-            "cutFrom": { "x": 0, "y": 0},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        },
-        {
-            "cutFrom": { "x": 32, "y": 0},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        },
-        {
-            "cutFrom": { "x": 64, "y": 0},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        }
-    ];
-
-    static walkLeftAnimFrames = [
-        {
-            "cutFrom": { "x": 0, "y": 32},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        },
-        {
-            "cutFrom": { "x": 32, "y": 32},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        },
-        {
-            "cutFrom": { "x": 64, "y": 32},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        }
-    ];
-
-    static walkRightAnimFrames = [
-        {
-            "cutFrom": { "x": 0, "y": 64},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        },
-        {
-            "cutFrom": { "x": 32, "y": 64},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        },
-        {
-            "cutFrom": { "x": 64, "y": 64},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        }
-    ];
-
-    static walkUpAnimFrames = [
-        {
-            "cutFrom": { "x": 0, "y": 96},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        },
-        {
-            "cutFrom": { "x": 32, "y": 96},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        },
-        {
-            "cutFrom": { "x": 64, "y": 96},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        }
-    ];
-
-    static dodgeRollFrames = [
-        {
-            "cutFrom": { "x": 96, "y": 0},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        },
-        {
-            "cutFrom": { "x": 96, "y": 32},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        },
-        {
-            "cutFrom": { "x": 96, "y": 64},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        }
-    ];
+    
 
     constructor()
     {
@@ -139,6 +53,7 @@ class Player
     
         this.tileId = "";    
         this.camera = new Camera();
+        this.inventory = new Inventory();
     
     
         //player gravity and forces applied when moving
@@ -226,8 +141,38 @@ class Player
     init()
     {
         this.currentAnimation.play();
-        
+        // this.watch("mana", function(){
+        //     userInterface.updateMana();
+        // });
     }
+
+    setX(x)
+    {
+        this.x = x;
+        this.tx = x;
+        this.center.x = this.x + this.width/2;
+    }
+
+    setY(y)
+    {
+        this.y = y;
+        this.ty = y;
+        this.center.y = this.y + this.height/2;
+    }
+
+    setXY(x, y)
+    {
+        this.x = x;
+        this.y = y;
+
+        this.tx = x;
+        this.ty = y;
+
+        this.center.x = this.x + this.width/2;
+        this.center.y = this.y + this.height/2;
+    }
+
+
 
     setDirection(dir)
     {
@@ -495,7 +440,7 @@ class Player
     addMana(amount)
     {
         this.mana += amount;
-        userInterface.updateMana();
+        //userInterface.updateMana();
     }
 
     removeMana(amount)
@@ -510,7 +455,9 @@ class Player
     {
         let frame = this.currentAnimation.getCurrentFrame();
         ctx.drawImage(this.spritesheet, frame.cutFrom.x, frame.cutFrom.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h, this.x - ((this.drawWidth-this.width)/2), this.y+this.height-this.drawHeight, this.drawWidth, this.drawHeight);
- 
+        
+
+        //ctx.drawImage(chestImg, this.x - ((this.drawWidth-this.width)/2), this.y+this.height-this.drawHeight);
 
         for(let i = 0; i < this.orbs.length; i++)
         {
@@ -569,7 +516,7 @@ class Player
 
         
         this.checkCollision(mapHandler.map);
-        this.checkBehindForeground();
+        //this.checkBehindForeground();
         this.updateRotation();
         this.camera.update(); 
 
@@ -703,13 +650,16 @@ class Player
     checkPassages()
     {
         let passages = mapHandler.map.passages;
-        let centerX = this.x+(this.width/2);
+        // console.log(this.center.x/tileWidth);
+        // console.log(this.center.y/tileWidth);
+        // console.log("");
 
         for(let i = 0; i < passages.length; i++)
         {   
-            if(centerX >= passages[i].entrance.xmin*tileWidth && centerX <= passages[i].entrance.xmax*tileWidth && this.y >= passages[i].entrance.ymin*tileWidth && this.y <= passages[i].entrance.ymax*tileWidth)
+            let passage = passages[i];
+            if(this.center.x >= passage.entrance.xmin*tileWidth && this.center.x <= passage.entrance.xmax*tileWidth && this.center.y >= passage.entrance.ymin*tileWidth && this.center.y <= passage.entrance.ymax*tileWidth)
             {
-                mapHandler.setMap(maps.get(passages[i].passageTo), passages[i].spawn);
+                mapHandler.setMap(maps.get(passage.passageTo), passage.playerSpawnPoint);
             }
         }
     }
@@ -849,6 +799,8 @@ class Player
         }
     }
 
+
+
     checkBehindForeground()
     {
         let map = mapHandler.map;
@@ -940,6 +892,96 @@ class Player
             }
         }
     }
+
+    static walkDownAnimFrames = [
+        {
+            "cutFrom": { "x": 0, "y": 0},
+            "sourceFrameSize": { "w": 32, "h": 32},
+            "duration": 150
+        },
+        {
+            "cutFrom": { "x": 32, "y": 0},
+            "sourceFrameSize": { "w": 32, "h": 32},
+            "duration": 150
+        },
+        {
+            "cutFrom": { "x": 64, "y": 0},
+            "sourceFrameSize": { "w": 32, "h": 32},
+            "duration": 150
+        }
+    ];
+
+    static walkLeftAnimFrames = [
+        {
+            "cutFrom": { "x": 0, "y": 32},
+            "sourceFrameSize": { "w": 32, "h": 32},
+            "duration": 150
+        },
+        {
+            "cutFrom": { "x": 32, "y": 32},
+            "sourceFrameSize": { "w": 32, "h": 32},
+            "duration": 150
+        },
+        {
+            "cutFrom": { "x": 64, "y": 32},
+            "sourceFrameSize": { "w": 32, "h": 32},
+            "duration": 150
+        }
+    ];
+
+    static walkRightAnimFrames = [
+        {
+            "cutFrom": { "x": 0, "y": 64},
+            "sourceFrameSize": { "w": 32, "h": 32},
+            "duration": 150
+        },
+        {
+            "cutFrom": { "x": 32, "y": 64},
+            "sourceFrameSize": { "w": 32, "h": 32},
+            "duration": 150
+        },
+        {
+            "cutFrom": { "x": 64, "y": 64},
+            "sourceFrameSize": { "w": 32, "h": 32},
+            "duration": 150
+        }
+    ];
+
+    static walkUpAnimFrames = [
+        {
+            "cutFrom": { "x": 0, "y": 96},
+            "sourceFrameSize": { "w": 32, "h": 32},
+            "duration": 150
+        },
+        {
+            "cutFrom": { "x": 32, "y": 96},
+            "sourceFrameSize": { "w": 32, "h": 32},
+            "duration": 150
+        },
+        {
+            "cutFrom": { "x": 64, "y": 96},
+            "sourceFrameSize": { "w": 32, "h": 32},
+            "duration": 150
+        }
+    ];
+
+    static dodgeRollFrames = [
+        {
+            "cutFrom": { "x": 96, "y": 0},
+            "sourceFrameSize": { "w": 32, "h": 32},
+            "duration": 150
+        },
+        {
+            "cutFrom": { "x": 96, "y": 32},
+            "sourceFrameSize": { "w": 32, "h": 32},
+            "duration": 150
+        },
+        {
+            "cutFrom": { "x": 96, "y": 64},
+            "sourceFrameSize": { "w": 32, "h": 32},
+            "duration": 150
+        }
+    ];
 }
 
 

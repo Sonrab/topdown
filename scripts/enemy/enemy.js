@@ -99,14 +99,6 @@ class Enemy
     {
         let i = mapHandler.map.enemies.indexOf(this);
         mapHandler.map.enemies.splice(i, 1);
-        // for(let i = 0; i < mapHandler.map.enemies.length; i++)
-        // {
-        //     if(mapHandler.map.enemies[i] === this)
-        //     {
-        //         mapHandler.map.enemies.splice(i, 1);
-        //         return;
-        //     }
-        // }
     }
 
 

@@ -1,11 +1,13 @@
-var arrowimg = new Image();
-arrowimg.src = "images/weapons/arrow.png";
+const img_arrow = new Image();
+img_arrow.src = "images/weapons/arrow.png";
 
 
 class Projectile
 {
     constructor(x, y, angle, damage, firedBy)
     {
+        if(this.constructor === Projectile)
+            throw new Error("Can't instantiate enemy base class.");
         this.x = x;
         this.y = y;
         // this.center.x = this.x + this.width/2;
@@ -38,6 +40,12 @@ class Projectile
         ctx.drawImage(this.spritesheet, frame.cutFrom.x, frame.cutFrom.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h, 0, -this.height/2, this.width, this.height);
         ctx.rotate(-this.radians);
         ctx.translate(-this.x, -this.y);
+    }
+
+    removeFromMap()
+    {
+        let i = g_projectiles.indexOf(this);
+        g_projectiles.splice(i, 1);
     }
 
     checkCollision(projectileIndex)
@@ -79,7 +87,8 @@ class Projectile
             if(this.x > enemy.x && this.x < enemy.x+enemy.width
             && this.y > enemy.y && this.y < enemy.y+enemy.height)
             {
-                g_projectiles.splice(projectileIndex, 1);
+                //g_projectiles.splice(projectileIndex, 1);
+                this.removeFromMap();
                 enemy.onHit(this.damage);
                 return;
             }
@@ -89,7 +98,8 @@ class Projectile
         let tile = mapHandler.map.getTileId(this.x, this.y);
         if(tile.solid)
         {
-            g_projectiles.splice(projectileIndex, 1);
+            this.removeFromMap();
+            //g_projectiles.splice(projectileIndex, 1);
         }
     }
 }

@@ -4,6 +4,119 @@
     margin: 0;
 }
 
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.inventory {
+    position: absolute;
+    top: 25%;
+    left: 20%;
+    width: 60vw;
+    height: 30vw;
+    background-color: rgba(50, 35, 20, 0.8);
+    border-radius: 5px;
+    display: flex;
+    visibility: hidden;
+    border: 2px solid rgb(26, 26, 26);
+}
+
+.inventory-left {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.inventory-right {
+    width: 60%;
+    padding: 1%;
+}
+
+.item-slot {
+    background-color: rgb(122, 31, 31);
+    box-shadow: inset 0px 0px 3px 0px;
+}
+
+.item-slot:hover {
+    background-color: purple;
+}
+
+.equipment {
+    width: 100%;
+    height: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-bottom: 3px solid rgba(25, 25, 25, 0.8)
+}
+
+.equipment-row {
+    width: 100%;
+    height: 25%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.equipment-slot {
+    width: 20%;
+    height: 75%;
+    align-self: center;
+}
+
+.accessory-slot {
+    width: 15%;
+    height: 60%;
+    background-color: rgb(49, 14, 14);
+}
+
+.fade-out {
+    animation: fadeOut 0.5s forwards;
+}
+
+.fade-in {
+    
+    animation: fadeIn 1s forwards;
+}
+
+.player-stats {
+    font-size: 1.2rem;
+    font-weight: 550;
+    color: rgb(180, 180, 180);
+    padding: 2%;
+    width: 100%;
+    height: 25%;
+}
+
+
+.inventory-rows {
+    width: 100%;
+    height: 100%;
+    background-color: yellow;
+}
+
+.inventory-row {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    background-color: blue;
+}
+
+.inventory-slot {
+    height: 100%;
+    padding: 1%;
+    flex-grow: 1;
+}
+
+
+
+
 body {
     /* background-image:url('../images/background.jpg');
     background-position:center top;
@@ -30,24 +143,23 @@ body {
     display: block;
 }
 
-#game-statscreen-box {
-    background-image: url("images/parchment.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-color: rgba(255, 255, 255, 0);
-    color: black;
-    font-size: 1.2rem;
-    font-weight: 550;
-    padding: 2%;
+@keyframes fadeIn {
+    0% { 
+        opacity: 0;         
+    }
+    100% { 
+        opacity: 1; 
+        visibility: visible;
+    }
+  }
 
-    position: absolute;
-    display: block;
-    top: 25%;
-    left: -20%;
-    width: 20%;
-    height: 50%;
-    transition: left 0.5s;
-}
+  @keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { 
+        opacity: 0; 
+        visibility: hidden;
+    }
+  }
 
 #game-instruction-box > * {
     margin-left: 5%;

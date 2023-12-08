@@ -81,13 +81,7 @@ class Bomb
         }
 
 
-        this.hasExploded = true;
-        this.updateExplosionFrame();
-        // setTimeout(() => {
-        //     //player.bomb = false;
-        //     objectList.splice(this, 1);
-        // }, 300);
-        
+        this.hasExploded = true;  
     }
 
     onAnimationEnd(animName)
@@ -108,13 +102,8 @@ class Bomb
     render()
     {
         let frame = this.currentAnimation.getCurrentFrame();
-        console.log(frame);
         renderer.foregroundQueue.push([this.img, frame.cutFrom.x, frame.cutFrom.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h, 
             (this.x+(this.width/2)) - frame.sourceFrameSize.w/2, this.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h]);
-
-        // renderer.foregroundQueue.push([this.img, frame.cutFrom.x, frame.cutFrom.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h, 
-        //     (this.x+(this.width/2)) - frame.sourceFrameSize.w/2, this.y-this.height*2, frame.sourceFrameSize.w, frame.sourceFrameSize.h]);
-
     }
 
     static explosionFrames = [

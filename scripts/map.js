@@ -18,16 +18,32 @@ backgroundimg.src = "images/background.png";
 
 CMap.prototype.render = function()
 {
-    // let loopRowsTo = Math.floor(player.camera.y/tileWidth) + Math.floor(player.camera.viewport.height/tileWidth)+2;
-    // if(loopRowsTo > this.mapsize.height/tileWidth)
+    let loopRowsFrom = Math.floor(player.camera.y/tileWidth);
+    if(loopRowsFrom < 0) 
+    {
+        loopRowsFrom = 0;
+    }
+
+    let loopColsFrom = Math.floor(player.camera.x/tileWidth);
+    if(loopColsFrom < 0)
+    {
+        loopColsFrom = 0;
+    }
+
+    let loopRowsTo = Math.floor(player.camera.y/tileWidth) + Math.floor(player.camera.viewport.height/tileWidth)+2;
+    if(loopRowsTo > this.mapsize.height/tileWidth)
+    {
         loopRowsTo = this.mapsize.height/tileWidth;
+    }    
 
-    // let loopColsTo = Math.floor((player.camera.x)/tileWidth) + Math.floor(player.camera.viewport.width/tileWidth)+2;
-    // if(loopColsTo > this.mapsize.width/tileWidth)
+    let loopColsTo = Math.floor(player.camera.x/tileWidth) + Math.floor(player.camera.viewport.width/tileWidth)+2;
+    if(loopColsTo > this.mapsize.width/tileWidth)
+    {
         loopColsTo = this.mapsize.width/tileWidth;
+    }
+    //console.log(`Rows: ${loopRowsFrom} -> ${loopRowsTo}, Cols: ${loopColsFrom} -> ${loopColsTo}`);
 
-
-    
+    //console.log(`Rows: ${player.camera.viewport.width} -> ${loopRowsTo}, Cols: ${loopColsFrom} -> ${loopColsTo}`);
     
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     
@@ -37,17 +53,17 @@ CMap.prototype.render = function()
     ctx.imageSmoothingEnabled = false;
     
     let mapIndexOffset = -1;
-    
-    // ctx.drawImage(this.background, 2048, 0);
-    // ctx.drawImage(this.background, 4096, 0);
-    // ctx.drawImage(this.background, 6144, 0);
     //loops through every tile in the grid, checks it's id and draws the matching 32x32 piece from the tilesheet
-    for (let row = Math.floor(player.camera.y/tileWidth); row < loopRowsTo; row++)
+
+
+    for (let row = loopRowsFrom; row < loopRowsTo; row++)
     {
-        for (let col = Math.floor(player.camera.x/tileWidth); col < loopColsTo; col++)
+        for (let col = loopColsFrom; col < loopColsTo; col++)
         {
             for(let layer = 0; layer < 2; layer++)
             {
+                
+                //console.log(this.grid[row][col][layer]);
                 if(this.grid[row][col][layer] === 0)
                 {
                     // ctx.textAlign="center";
@@ -80,19 +96,35 @@ CMap.prototype.render = function()
 
 CMap.prototype.renderForeground = function()
 {
+    let loopRowsFrom = Math.floor(player.camera.y/tileWidth);
+    if(loopRowsFrom < 0) 
+    {
+        loopRowsFrom = 0;
+    }
+
+    let loopColsFrom = Math.floor(player.camera.x/tileWidth);
+    if(loopColsFrom < 0)
+    {
+        loopColsFrom = 0;
+    }
+
     let loopRowsTo = Math.floor(player.camera.y/tileWidth) + Math.floor(player.camera.viewport.height/tileWidth)+2;
     if(loopRowsTo > this.mapsize.height/tileWidth)
+    {
         loopRowsTo = this.mapsize.height/tileWidth;
+    }    
 
     let loopColsTo = Math.floor(player.camera.x/tileWidth) + Math.floor(player.camera.viewport.width/tileWidth)+2;
     if(loopColsTo > this.mapsize.width/tileWidth)
+    {
         loopColsTo = this.mapsize.width/tileWidth;
+    }
 
     let mapIndexOffset = -1;
 
-    for (let row = Math.floor(player.camera.y/tileWidth); row < loopRowsTo; row++)
+    for (let row = loopRowsFrom; row < loopRowsTo; row++)
     {
-        for (let col = Math.floor(player.camera.x/tileWidth); col < loopColsTo; col++)
+        for (let col = loopColsFrom; col < loopColsTo; col++)
         {
             if(this.grid[row][col][2] === 0)
             {

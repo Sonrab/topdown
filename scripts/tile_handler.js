@@ -20,7 +20,7 @@ CTileHandler.prototype.overWorldPlainsTiles = function()
 //COLLISION DETECTION: This checks if the blocks my character is touching is having collision or not (if its walkable):
 CTileHandler.prototype.loadTiles = function()
 {
-    let basic_solid_tiles = [133, 134, 135, 136, 137, 138, 149, 150, 151, 152, 153, 154, 177, 178, 179, 193, 195, 209, 210, 211, 225, 226, 227];
+    let basic_solid_tiles = [134, 135, 136, 137, 138, 150, 151, 152, 153, 154, 167, 168, 169, 170, 177, 178, 179, 183, 184, 185, 186, 193, 195, 209, 210, 211, 225, 226, 227];
     // for(let i = 0; i < basic_solid_tiles.length; i++)
     // {
     //         basic_solid_tiles.push(i);
@@ -155,6 +155,39 @@ CTileHandler.prototype.loadTiles = function()
         width = 8,
         height = 8
     );
+
+    //doorway
+    //topleft doorway
+    this.tiles.set(133, new SplitTile(
+        solidSplitTile16Preset,
+        solidSplitTile16Preset,
+        nonsolidSplitTile16Preset,
+        nonsolidSplitTile16Preset
+    ));
+
+    //topleft doorway
+    this.tiles.set(134, new SplitTile(
+        solidSplitTile16Preset,
+        solidSplitTile16Preset,
+        nonsolidSplitTile16Preset,
+        nonsolidSplitTile16Preset
+    ));
+
+    //bottomleft doorway
+    this.tiles.set(149, new SplitTile(
+        solidSplitTile16Preset,
+        nonsolidSplitTile16Preset,
+        solidSplitTile16Preset,
+        nonsolidSplitTile16Preset
+    ));
+
+    //bottomright doorway
+    this.tiles.set(150, new SplitTile(
+        nonsolidSplitTile16Preset,
+        solidSplitTile16Preset,
+        nonsolidSplitTile16Preset,
+        solidSplitTile16Preset
+    ));
 
     //left stairs 129, 145, 161, 131, 147, 163
     //right stairs 130, 146, 162, 132, 148, 164
