@@ -98,7 +98,7 @@ function loadMaps()
         maps.set("room", new CMap(
                 mapname = "room",
                 audio = "underground",
-                passages = false,
+                passages = [new Passage("start", {x: 12, y: 21}, {xmin: 5, xmax: 6, ymin: 9.5, ymax:10})],
                 interactables = [
                         // new CDoor(
                         // x = 1,
