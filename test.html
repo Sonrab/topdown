@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles/reset.css">
+    <link rel="stylesheet" href="general.css">
+    <style>
+        .grid{
+            height: 100vh;
+            display: grid;
+            column-gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+        .testAREA{
+            width: 500px;
+        }
+        .testAREA > div{
+           margin: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid">
+        <div class="testAREA">
+            <div class="btn">CONTROLS</div>
+            <div class="btn btn--inactive">OPTIONS</div>
+
+            <div class="uibar uibar--border-radius-right">
+                <span class="uibar__text">250/250</span>
+                <div class="uibar__progress uibar__progress--health uibar__progress--border-radius-right"></div>
+            </div>
+            <div class="uibar uibar--border-radius-right">
+                <span class="uibar__text">95/95</span>
+                <div class="uibar__progress uibar__progress--mana uibar__progress--border-radius-right"></div>
+            </div>
+            <div class="uibar uibar--border-radius-right uibar--border-radius-left">
+                <div class="uibar__progress uibar__progress--xp uibar__progress--border-radius-right uibar__progress--border-radius-left "></div>
+            </div>
+            <div class="shield">
+                <object type="image/svg+xml" data="/svgs/shield.svg">
+                </object>
+                <div class="shield__content">
+                    <span class="shield__level">24</span>
+                    <span class="shield__info">lvl</span>
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+               <div class="invetoryslot"><svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.0772 32.7166C16.9571 27.5905 5.4988 22.1629 17.4095 6.78455L24.9478 0C24.9478 0 19.5202 14.926 25.2494 18.5444C30.9785 22.1629 32.637 17.0368 34.4462 12.2122C38.3661 22.0121 32.3643 27.5092 36.5569 30.3043C40.1753 32.7166 40.7784 31.3597 47.2614 21.7106C53.5937 36.6366 42.2861 50.5072 33.0893 50.2057C33.0893 50.2057 38.0644 44.0242 36.5569 37.6919C32.9383 39.1996 30.3753 40.255 28.717 39.8027C27.0587 39.3504 18.0427 19.6601 20.5756 27.7413C23.7416 37.8427 19.671 50.658 16.8064 50.9595C13.9418 51.261 6.1017 50.0549 1.57867 41.3104C-2.94436 32.5658 3.68965 15.0768 3.68965 15.0768C1.72967 26.6859 5.7186 37.3882 11.0772 32.7166Z" class="icon_inactive"/>
+                    </svg>
+                    <span class="keyctrl invetoryslot--key">q</span>
+                </div> 
+                <div class="invetoryslot"><svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.0772 32.7166C16.9571 27.5905 5.4988 22.1629 17.4095 6.78455L24.9478 0C24.9478 0 19.5202 14.926 25.2494 18.5444C30.9785 22.1629 32.637 17.0368 34.4462 12.2122C38.3661 22.0121 32.3643 27.5092 36.5569 30.3043C40.1753 32.7166 40.7784 31.3597 47.2614 21.7106C53.5937 36.6366 42.2861 50.5072 33.0893 50.2057C33.0893 50.2057 38.0644 44.0242 36.5569 37.6919C32.9383 39.1996 30.3753 40.255 28.717 39.8027C27.0587 39.3504 18.0427 19.6601 20.5756 27.7413C23.7416 37.8427 19.671 50.658 16.8064 50.9595C13.9418 51.261 6.1017 50.0549 1.57867 41.3104C-2.94436 32.5658 3.68965 15.0768 3.68965 15.0768C1.72967 26.6859 5.7186 37.3882 11.0772 32.7166Z" class="icon_inactive"/>
+                    </svg>
+                    <span class="keyctrl invetoryslot--key">r</span>
+                </div> 
+                <div class="invetoryslot"><svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.0772 32.7166C16.9571 27.5905 5.4988 22.1629 17.4095 6.78455L24.9478 0C24.9478 0 19.5202 14.926 25.2494 18.5444C30.9785 22.1629 32.637 17.0368 34.4462 12.2122C38.3661 22.0121 32.3643 27.5092 36.5569 30.3043C40.1753 32.7166 40.7784 31.3597 47.2614 21.7106C53.5937 36.6366 42.2861 50.5072 33.0893 50.2057C33.0893 50.2057 38.0644 44.0242 36.5569 37.6919C32.9383 39.1996 30.3753 40.255 28.717 39.8027C27.0587 39.3504 18.0427 19.6601 20.5756 27.7413C23.7416 37.8427 19.671 50.658 16.8064 50.9595C13.9418 51.261 6.1017 50.0549 1.57867 41.3104C-2.94436 32.5658 3.68965 15.0768 3.68965 15.0768C1.72967 26.6859 5.7186 37.3882 11.0772 32.7166Z" class="icon_inactive"/>
+                    </svg>
+                    <span class="keyctrl invetoryslot--key">t</span>
+                </div> 
+                <div class="invetoryslot"><svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.0772 32.7166C16.9571 27.5905 5.4988 22.1629 17.4095 6.78455L24.9478 0C24.9478 0 19.5202 14.926 25.2494 18.5444C30.9785 22.1629 32.637 17.0368 34.4462 12.2122C38.3661 22.0121 32.3643 27.5092 36.5569 30.3043C40.1753 32.7166 40.7784 31.3597 47.2614 21.7106C53.5937 36.6366 42.2861 50.5072 33.0893 50.2057C33.0893 50.2057 38.0644 44.0242 36.5569 37.6919C32.9383 39.1996 30.3753 40.255 28.717 39.8027C27.0587 39.3504 18.0427 19.6601 20.5756 27.7413C23.7416 37.8427 19.671 50.658 16.8064 50.9595C13.9418 51.261 6.1017 50.0549 1.57867 41.3104C-2.94436 32.5658 3.68965 15.0768 3.68965 15.0768C1.72967 26.6859 5.7186 37.3882 11.0772 32.7166Z" class="icon_inactive"/>
+                    </svg>
+                    <span class="keyctrl invetoryslot--key">f</span>
+                </div> 
+            </div>
+            <br><br>
+            <div><span class="keyctrl">w</span>  asd  <span class="keyctrl">space</span>  asd  <span class="keyctrl">e</span></div>
+            
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M76.7548 16.714L78.7224 0.890367L62.8969 2.85602L61.4252 14.7046L58.0672 18.0626L47.3329 7.3283L24.0434 7.43372L17.9162 7.46145L17.9168 7.50967L6.32237 7.50967L6.32237 13.6367L17.9864 13.6367L18.4864 57.6434L16.7623 59.3675L14.3431 59.3675V59.4193H9.43552L9.43553 62.4715L4.06336 62.4715L4.06335 69.8955L10.0322 69.8955L10.0322 75.8642H17.4562L17.4562 70.4312L20.4473 70.4313L20.4473 65.5234L20.4993 65.5234L20.4993 62.4387L22.0511 60.8869L65.9943 61.5781L72.0696 61.5281L71.956 55.4882L71.5004 31.4958L61.4713 21.4667L64.7287 18.2093L76.7548 16.714ZM44.8065 13.4669L53.7347 22.3951L24.545 51.5848L24.113 13.5605L44.8065 13.4669ZM57.1388 25.7992L28.0906 54.8474L65.8262 55.3987L65.4213 34.0817L57.1388 25.7992ZM65.9426 73.6306L65.9943 61.5781L72.0696 61.5281L72.0696 73.6306L65.9426 73.6306Z" fill="#D1DFE4"/>
+                </g>
+                <defs>
+        
+                </svg>
+            
+        </div>
+    </div>
+    
+
+</body>
+</html>

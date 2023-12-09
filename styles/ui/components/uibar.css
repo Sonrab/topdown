@@ -1,0 +1,52 @@
+:root{
+    --borderRadius: 1rem;
+}
+.uibar{
+    background-color: var(--uiBgDark);
+    border: 2px solid var(--gold);
+    padding: 3px;
+    position: relative;
+}
+.uibar--border-radius-right{
+    border-top-right-radius: var(--borderRadius);
+    border-bottom-right-radius: var(--borderRadius);
+}
+.uibar--border-radius-left{
+    border-top-left-radius: var(--borderRadius);
+    border-bottom-left-radius: var(--borderRadius);
+}
+.uibar__text{
+    position: absolute;
+    font-size: 1.4rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.uibar__progress{
+    min-height: 3rem;
+    height: 100%;
+    transition: width 200ms ease;
+}
+.uibar__progress--xp{
+    background: linear-gradient(var(--xpColor), var(--xpColorDark));
+}
+.uibar__progress--health{
+    background: linear-gradient(var(--healthColor), var(--healthDark));
+}
+.uibar__progress--mana{
+    background: linear-gradient(var(--manaColor), var(--manaDark));
+}
+.uibar__progress--border-radius-right{
+    border-top-right-radius: calc(var(--borderRadius) - (0.3 * var(--borderRadius)));
+    border-bottom-right-radius: calc(var(--borderRadius) - (0.3 * var(--borderRadius)));
+}
+.uibar__progress--border-radius-left{
+    border-top-left-radius: calc(var(--borderRadius) - (0.3 * var(--borderRadius)));
+    border-bottom-left-radius: calc(var(--borderRadius) - (0.3 * var(--borderRadius)));
+}
+.hurtflash{
+    box-shadow: 0px 0px 189px 99px rgba(255,255,255,1) inset;
+    -webkit-box-shadow: 0px 0px 189px 99px rgba(255,255,255,1) inset;
+    -moz-box-shadow: 0px 0px 189px 99px rgba(255,255,255,1) inset;  
+    transition: box-shadow 200ms ease; 
+}

@@ -1,0 +1,21 @@
+.shield{
+    display: inline-block;
+    position: relative;
+    text-align: center;
+}
+.shield__content{
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+}
+.shield__info{
+    font-size: 2rem;
+}
+.shield__level{
+    font-size: 5rem;
+}

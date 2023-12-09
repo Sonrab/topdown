@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Aoboshi+One&display=swap');
+:root{
+    --font: "Aoboshi One", sans-serif;
+    --white: #F3F3F3;
+    --gray: #a7a7a7;
+    --black: #181818;
+    --gold: #E2C884;
+    --uiBg: #2A363C;
+    --uiBgVar: #537684;
+    --uiBgMid: #1B262B;
+    --uiBgDark: #111416;
+    --uiLight: #51A8D9;
+
+    --healthColor: #BA3343;
+    --healthDark: #8A0D1C;
+    --manaColor: #5B8CC6;
+    --manaDark: #2461A8;
+    --xpColor: #644C83;
+    --xpColorDark: #452B67;
+}

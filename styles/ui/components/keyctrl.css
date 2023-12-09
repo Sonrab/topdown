@@ -1,0 +1,11 @@
+.keyctrl{
+    text-transform: uppercase;
+    background-color: #E3E3E3;
+    color: #585858;
+    font-size: 1.4rem;
+    border-bottom: 4px solid #AAAAAA;
+    padding-block: .5rem;
+    padding-inline: 1rem;
+    border-radius: 1rem;
+    text-align: center;
+}
