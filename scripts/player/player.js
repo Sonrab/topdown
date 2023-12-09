@@ -54,6 +54,7 @@ class Player
         this.tileId = "";    
         this.camera = new Camera();
         this.inventory = new Inventory();
+        this.cursor = new Cursor();
     
     
         //player gravity and forces applied when moving
@@ -192,7 +193,6 @@ class Player
 
     castFireOrbs()
     {
-        
         let len = this.orbs.length;
         if(len > 0)
         {
@@ -205,7 +205,6 @@ class Player
                     break;
                 }
             }
-            
         }
         else
         {
@@ -216,10 +215,21 @@ class Player
             {
                 this.orbs.push(new Orb(i*orbSpacing));
             }
-            //this.orbs = [new Orb(0), new Orb(72), new Orb(144), new Orb(216), new Orb(288)];
         }
+    }
+
+    castFirestorm()
+    {
+        this.cursor.enterCastMode(90);
+
         
     }
+
+    firestorm()
+    {
+        console.log("pewpew");
+    }
+
 
     setPlayerWalking()
     {
@@ -281,15 +291,32 @@ class Player
 
         this.state = this.states.dodgeRolling;
         this.animations.dodgeRoll.play();
-
-        if (65 in keysDown || 37 in keysDown) //vänster
+        userInterface.triggerActionBarAnimation(userInterface.actionBar.mobility.element);
+        if ('KeyA' in keysDown || 'ArrowLeft' in keysDown) //vänster
         {
-            if(87 in keysDown || 38 in keysDown) // upp
+            player.move('left');
+        }   
+     
+        if ('KeyW' in keysDown || 'ArrowUp' in keysDown) // upp 
+            player.move('up');
+    
+    
+        if ('KeyS' in keysDown || 'ArrowDown' in keysDown) // ner 
+            player.move('down'); 
+        
+        
+        if ('KeyD' in keysDown || 'ArrowRight' in keysDown) //höger
+        {
+            player.move('right');
+        }
+        if ('KeyA' in keysDown || 'ArrowLeft' in keysDown)
+        {
+            if ('KeyW' in keysDown || 'ArrowUp' in keysDown) // upp 
             {
                 this.velX = -this.dodgeRollData.speed * diagonalMovementMultiplier;
                 this.velY = -this.dodgeRollData.speed * diagonalMovementMultiplier;
             }
-            else if(83 in keysDown || 40 in keysDown)
+            else if ('KeyS' in keysDown || 'ArrowDown' in keysDown) // ner 
             {
                 this.velX = -this.dodgeRollData.speed * diagonalMovementMultiplier;
                 this.velY = this.dodgeRollData.speed * diagonalMovementMultiplier;
@@ -300,9 +327,9 @@ class Player
                 this.velY = 0;
             }
         }
-        else if(87 in keysDown || 38 in keysDown) //upp
+        else if ('KeyW' in keysDown || 'ArrowUp' in keysDown) // upp 
         {
-            if (68 in keysDown || 39 in keysDown) //höger
+            if ('KeyD' in keysDown || 'ArrowRight' in keysDown) //höger
             {
                 this.velX = this.dodgeRollData.speed * diagonalMovementMultiplier;
                 this.velY = -this.dodgeRollData.speed * diagonalMovementMultiplier;
@@ -313,9 +340,9 @@ class Player
                 this.velY = -this.dodgeRollData.speed;
             }
         }
-        else if (83 in keysDown || 40 in keysDown) // ner 
+        else if ('KeyS' in keysDown || 'ArrowDown' in keysDown) // ner 
         {
-            if (68 in keysDown || 39 in keysDown) //höger
+            if ('KeyD' in keysDown || 'ArrowRight' in keysDown) //höger
             {
                 this.velX = this.dodgeRollData.speed * diagonalMovementMultiplier;
                 this.velY = this.dodgeRollData.speed * diagonalMovementMultiplier;
@@ -326,7 +353,7 @@ class Player
                 this.velY = this.dodgeRollData.speed;
             } 
         }   
-        else if (68 in keysDown || 39 in keysDown) //höger
+        else if ('KeyD' in keysDown || 'ArrowRight' in keysDown) //höger
         {
             this.velX = this.dodgeRollData.speed;
             this.velY = 0;
@@ -402,10 +429,17 @@ class Player
 
     takeDmg(dmg)
     {
-        console.log("aaaaaaa2");
+
+        /* "hurt flash" when getting hit. Move to better place later */
+        hurtVignette.style.opacity = 1;
+        setTimeout(function(){
+            hurtVignette.style.opacity = 0;
+           }, 200)
+        /* ------------- */
+
+
         if(!this.iframes.active)
         {
-            console.log("aaaaaaa2");
             //this.health -= dmg;
             this.removeHealth(dmg);
             this.toggleIframes();
@@ -591,7 +625,7 @@ class Player
     {  
         if(this.state === this.states.dodgeRolling)
             return;
-        if (code === 37)	//v�nster
+        if (code === 'left')	//v�nster
         {     
             if(Math.abs(this.velX - this.speed) < this.velCap)
                 this.velX -= this.speed;
@@ -600,7 +634,7 @@ class Player
 
             this.walking = true;
         }
-        else if (code === 39)	//h�ger
+        else if (code === 'right')	//h�ger
         {
             if(Math.abs(this.velX + this.speed) < this.velCap)
                 this.velX += this.speed;
@@ -608,7 +642,7 @@ class Player
                 this.velX = this.velCap;
             this.walking = true;
         }
-        else if(code===40) //ner
+        else if(code==='down') //ner
         {
             if(Math.abs(this.velY + this.speed) < this.velCap)
                 this.velY += this.speed;
@@ -616,7 +650,7 @@ class Player
                 this.velY = this.velCap;
             this.walking = true;
         }
-        else if(code === 38) // upp
+        else if(code === 'up') // upp
         {
             if(Math.abs(this.velY - this.speed) < this.velCap)
                 this.velY -= this.speed;
@@ -625,7 +659,7 @@ class Player
             this.walking = true;
         }
 
-        if([37, 38, 39, 40].includes(code))
+        if(['left', 'right', 'down', 'up'].includes(code))
         {
             if(this.state != this.states.walking)
                 this.setPlayerWalking();

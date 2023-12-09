@@ -35,8 +35,11 @@ class Bow
         if(this.lastFire + (1/(this.fireRate*this.fireRateIncrease) * 1000) <= currentTime)
         {
             this.lastFire = currentTime;
+            userInterface.triggerActionBarAnimation(userInterface.actionBar.primary.element);
+            
             let dx = mouse.transX - (player.center.x);
             let dy = mouse.transY - (player.center.y);
+
             let magnitude = Math.sqrt(dx*dx + dy*dy);
             let angle = Math.atan2(dy, dx) * (180 / Math.PI);
         

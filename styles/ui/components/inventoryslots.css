@@ -1,4 +1,4 @@
-.invetoryslot{
+.inventoryslot{
     position: relative;
     display: inline-block;
     border-radius: 2rem;
@@ -10,13 +10,13 @@
     -moz-box-shadow: 0px 0px 30px 2px rgba(0,0,0,0.51) inset;
     padding: 1rem;
 }
-.invetoryslot--key{
+.inventoryslot--key{
     position: absolute;
     top: 90%;
     left: 50%;
     transform: translateX(-50%);
 }
-.invetoryslot::before{
+.inventoryslot::before{
     content: "";
     width: 110%;
     height: 110%;
@@ -30,10 +30,10 @@
     opacity: 100;
     transform: translate(-50%, -50%) scale(100%);
 }
-.invetoryslot.inv-trans::before{
+.inventoryslot.inv-trans::before{
     transition: opacity .5s ease, transform .5s ease;
 }
-.invetoryslot.inv-anim::before {
+.inventoryslot.inv-anim::before {
     opacity: 0;
     transform: translate(-50%, -50%) scale(150%);
 }

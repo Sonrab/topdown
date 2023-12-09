@@ -1,11 +1,34 @@
-const healthBarText = document.querySelector("#UI_healthBarText");
-const healthBar = document.querySelector("#UI_healthBar");
-
-const manaBarText = document.querySelector("#UI_manaBarText");
-const manaBar = document.querySelector("#UI_manaBar");
-
 const inventory = document.querySelector("#UI_inventory")
 const inventory_playerStats = document.querySelector("#UI_inventory_playerStats")
+
+const healthBarText = document.querySelector("#healthText");
+const healthBar = document.querySelector("#healthBar");
+
+const manaBarText = document.querySelector("#manaText");
+const manaBar = document.querySelector("#manaBar");
+
+const actionBar = document.querySelectorAll('.inventoryslot')
+
+// const pauseMenuBtnReturn = document.getElementById("#btnReturn");
+// pauseMenuBtnReturn.addEventListener("click", function(){
+//     game.unpause();
+// }, false);
+
+/*stores*/
+// const userInterface = document.getElementById('userInterface');
+// const hurtVignette = document.getElementById('hurtVignette');
+// const blackScreen = document.getElementById('blackScreen');
+// const xpBar = document.getElementById('xpBar');
+// const healthBar = document.getElementById('healthBar');
+// const manaBar = document.getElementById('manaBar');
+
+// const healthText = document.getElementById('healthText');
+// const manaText = document.getElementById('manaText');
+
+// const displayLevel = document.getElementById('displayLevel');
+
+// const actionBar = document.querySelectorAll('.inventoryslot')
+/* --- */
 
 class UserInterface
 {
@@ -15,15 +38,17 @@ class UserInterface
         this.ctx = this.canvas.getContext('2d');
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-    
-        this.images = new Map();
         this.bombIconPos = this.canvas.width - 96;
         this.inventoryOpen = false;
     
-        this.actionbarPosition = {
-            x : this.canvas.width/2 - 256,
-            y: this.canvas.height - 102
-        };
+        this.actionBar = {
+            primary: {
+                element: actionBar[0]
+            },
+            mobility: {
+                element: actionBar[5]
+            }
+        }
 
         this.init();
     }
@@ -79,17 +104,15 @@ class UserInterface
         let healthPercent = (player.health/player.maxHealth) * 100;
         if(healthPercent < 0)
             healthPercent = 0;
-        
-        healthBarText.innerHTML = `${player.health}/${player.maxHealth}`;
-        healthBar.style.background = `linear-gradient(to right, rgb(155, 0, 0) 0%, rgb(190, 0, 0) ${healthPercent}%,  rgb(50, 50, 50) ${healthPercent}%,  rgb(50, 50, 50) 100%)`;
-        
+
+        healthBar.style.width = `${(player.health / player.maxHealth) * 100}%`
+        healthBarText.textContent = `${player.health}/${player.maxHealth}`;      
     }
 
     updateMana()
     {
-        let manaPercent = (player.mana/player.maxMana) * 100;
-        manaBarText.innerHTML = `${player.mana}/${player.maxMana}`;
-        manaBar.style.background = `linear-gradient(to right, rgb(0, 0, 180) 0%, rgb(0, 0, 215) ${manaPercent}%,  rgb(50, 50, 50) ${manaPercent}%,  rgb(50, 50, 50) 100%)`;
+        manaBar.style.width = `${(player.mana / player.maxMana) * 100}%`
+        manaBarText.textContent = `${player.mana}/${player.maxMana}`;
     }
 
     renderBomb()
@@ -106,6 +129,17 @@ class UserInterface
     renderActionBar()
     {
         this.ctx.drawImage(ui_action_bar_frame, this.actionbarPosition.x, this.actionbarPosition.y);
+    }
+
+
+    triggerActionBarAnimation(element){
+        element.classList.add('inv-trans');
+        element.classList.add('inv-anim');
+    
+       setTimeout(function(){
+        element.classList.remove('inv-trans');
+        element.classList.remove('inv-anim');
+       }, 500)
     }
 
     

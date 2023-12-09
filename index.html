@@ -1,7 +1,7 @@
 <!DOCTYPE html5>
 <html>
     <head>
-        <link rel="stylesheet" href="/styles/reset.css">
+        <link rel="stylesheet" href="./styles/reset.css">
         <link rel="stylesheet" href="general.css">
         <!--<style type="text/css">@import url(style/general.css)</style>-->
         <title>Spel</title>
@@ -11,29 +11,152 @@
             <div id="canvasDiv">
                 <!-- <canvas id="background_canvas"></canvas> -->
                 <canvas id="canvas">Your browser does not support the canvas tag.</canvas>
-                <div class="game-textbox" id="game-instruction-box" style="display:block;">
-                    <h1>PAUSED</h1><br>
-                    <h2>Controls</h2>
-                    <ul>
-                        <li>WASD: Move around</li>
-                        <li>Mouse: Aim</li>
-                        <li>Mouse1(Left click): Shoot</li>
-                        <li>Space (Needs to be unlocked): Dodge Roll</li>
-                        <li>Tab: Toggle inventory</li>
-                        <li>E: Interact, Open chests etc</li>
-                        <li>F (Needs to be unlocked): Drop bomb</li>
-                        <li>1: Swap between Bow & Grappler</li>
-                        <li>2: Cast fire orb spell. Press 2 again to release a homing orb.</li>
-                    </ul>
-                    <br><h3>Press Escape to pause/unpause and view instructions!</h3>
+                <div id="userInterface" class="user_interface">
+                    <div id="hurtVignette" class="hurt-vignette"></div>
+                    <div id="blackScreen" class="blackscreen">
+                        <div class="game_menu">
+                            <h2 class="game_menu__heading">Game paused</h2>
+            
+                            <div class="game_menu__list">
+                                <button class="btn" name="controls">controls</button>
+                                <button class="btn btn--inactive" name="options">options</button>
+                            </div>
+            
+                            <div class="game_menu__content">
+                                <div class="row">
+                                    <div style="display: flex;">
+                                        <div class="keygrid">
+                                            <span class="keyctrl">w</span>
+                                            <span class="keyctrl">a</span>
+                                            <span class="keyctrl">s</span>
+                                            <span class="keyctrl">d</span>
+                                        </div>
+                                    </div>
+                                        
+                    
+                                    <p>Use WASD keys to move around.</p>
+                                </div>
+                                <div class="row">
+                                    <div><span class="keyctrl">e</span></div>
+                                    
+                      
+                                    <p>Use E key to interact with objects.</p>
+                                </div>
+                                <div class="row">
+                                    <div><span class="keyctrl">SPACE</span></div>
+                                    
+                      
+                                    <p>Use SPACE to perform a roll-maneuver.</p>
+                                </div>
+                                <div class="row">
+                                    <div><span class="keyctrl">lmb</span></div>
+                                    
+                      
+                                    <p>Use left mouse button to fire.</p>
+                                </div>
+                                <div class="row">
+                                    <div>
+                                        <svg width="58" height="62" viewBox="0 0 58 62" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g filter="url(#filter0_d_18_281)">
+                                            <path d="M12.3411 38.1612C9.89555 34.9845 10.3534 30.5463 13.1882 27.7115L16.815 24.0847C19.6092 21.2905 23.9646 20.8069 27.0969 23.2161C29.4295 25.0103 32.2161 27.3295 34.8624 29.9759C37.8045 32.918 40.1691 36.2066 41.8473 38.8622C43.7486 41.8708 43.0749 45.7019 40.5583 48.2186L37.4006 51.3763C34.8656 53.9113 31.0003 54.5819 27.9476 52.7022C25.1664 50.9897 21.7585 48.6166 18.9901 45.8482C16.516 43.3742 14.1876 40.5597 12.3411 38.1612Z" fill="#D9D9D9"/>
+                                            <rect x="16.1273" y="29.9751" width="4.0478" height="9.56752" rx="2.0239" transform="rotate(-45 16.1273 29.9751)" fill="#2A363B"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.2996 18.0059C13.1583 19.7715 13.5898 21.7554 14.1296 23.259C14.2941 23.7173 14.0625 24.2345 13.599 24.3838C13.1986 24.5128 12.7637 24.3191 12.614 23.926C11.9576 22.2016 11.3974 19.8183 11.5722 17.6333C11.6728 16.3774 12.0198 15.1447 12.7745 14.1486C13.5379 13.1411 14.6835 12.4227 16.2818 12.1463C18.1974 11.815 19.6455 12.0814 20.8118 12.8209C21.9337 13.5324 22.6489 14.6003 23.229 15.5001C23.2768 15.5741 23.3237 15.6471 23.3698 15.719C23.9248 16.5826 24.3796 17.2904 25.0084 17.825C25.6248 18.3492 26.4725 18.7499 27.9032 18.7104C30.5064 18.6386 32.0538 16.5058 32.5702 13.7131C32.8239 12.3411 32.8067 10.8856 32.5592 9.60547C32.3844 8.70165 32.1054 7.93703 31.7666 7.35751C31.5408 6.97127 31.5563 6.45602 31.8854 6.15289C32.2098 5.854 32.7188 5.8705 32.9703 6.23298C33.6092 7.15402 34.0282 8.31417 34.2592 9.50881C34.55 11.0123 34.5658 12.6824 34.2759 14.2502C33.705 17.3371 31.8583 20.3412 28.189 20.4424C26.3652 20.4928 25.0365 19.9627 23.9968 19.0786C23.1136 18.3276 22.4897 17.3516 21.9695 16.5377C21.9154 16.453 21.8624 16.3701 21.8103 16.2893C21.2169 15.369 20.7207 14.6825 20.0358 14.2482C19.3953 13.842 18.441 13.5715 16.8009 13.8552C15.5546 14.0707 14.7399 14.6085 14.2078 15.3107C13.667 16.0244 13.3837 16.9551 13.2996 18.0059Z" fill="#ECECEC"/>
+                                            </g>
+                            
+                                            </svg>
+                                    </div>
+                                    
+                      
+                                    <p>Use your mouse to aim.</p>
+                                </div>
+                                
+                                
+                            </div>
+                            <div style="display: flex; justify-content: center; margin: 2rem;">
+                                <button id="btnReturn" class="btn center" name="return">return</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="xp_container">
+                        <div class="uibar uibar--border-radius-right uibar--border-radius-left">
+                            <div id="xpBar" class="uibar__progress uibar__progress--xp uibar__progress--border-radius-right uibar__progress--border-radius-left "></div>
+                        </div>
+                    </div>
+                    <div class="player_status_container">
+                        <div class="shield">
+                            <svg width="118" height="152" viewBox="0 0 118 152" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g filter="url(#filter0_i_33_6)">
+                                <path d="M0 0L19.2284 2.60724C45.622 6.18604 72.378 6.18604 98.7716 2.60724L118 0V100L59 152L0 100V0Z" fill="#1B1D1E"/>
+                                </g>
+                                <path d="M2.5 98.871V2.86186L18.8925 5.08457C45.509 8.6936 72.491 8.69359 99.1076 5.08457L115.5 2.86186V98.871L59 148.668L2.5 98.871Z" stroke="#E2C884" stroke-width="5"/>
+                                </svg>
+                                
+                            <div class="shield__content">
+                                <span id="displayLevel" class="shield__level">24</span>
+                                <span class="shield__info">lvl</span>
+                            </div>
+                        </div>
+                        <div class="player_status_container__bars">
+                            <div class="uibar uibar--border-radius-right">
+                                <span id="healthText" class="uibar__text">250/250</span>
+                                <div id="healthBar" class="uibar__progress uibar__progress--health uibar__progress--border-radius-right"></div>
+                            </div>
+                            <div class="uibar uibar--border-radius-right">
+                                <span id="manaText" class="uibar__text">95/95</span>
+                                <div id="manaBar" class="uibar__progress uibar__progress--mana uibar__progress--border-radius-right"></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+            
+                    <div class="action_bar">
+                        <div class="inventoryslot">
+                            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M76.7548 16.714L78.7224 0.890367L62.8969 2.85602L61.4252 14.7046L58.0672 18.0626L47.3329 7.3283L24.0434 7.43372L17.9162 7.46145L17.9168 7.50967L6.32237 7.50967L6.32237 13.6367L17.9864 13.6367L18.4864 57.6434L16.7623 59.3675L14.3431 59.3675V59.4193H9.43552L9.43553 62.4715L4.06336 62.4715L4.06335 69.8955L10.0322 69.8955L10.0322 75.8642H17.4562L17.4562 70.4312L20.4473 70.4313L20.4473 65.5234L20.4993 65.5234L20.4993 62.4387L22.0511 60.8869L65.9943 61.5781L72.0696 61.5281L71.956 55.4882L71.5004 31.4958L61.4713 21.4667L64.7287 18.2093L76.7548 16.714ZM44.8065 13.4669L53.7347 22.3951L24.545 51.5848L24.113 13.5605L44.8065 13.4669ZM57.1388 25.7992L28.0906 54.8474L65.8262 55.3987L65.4213 34.0817L57.1388 25.7992ZM65.9426 73.6306L65.9943 61.5781L72.0696 61.5281L72.0696 73.6306L65.9426 73.6306Z" fill="#D1DFE4"/>
+                                </g>
+                                <defs>
+                        
+                                </svg>
+                                <span class="keyctrl inventoryslot--key">fire</span>
+                        </div>
+                        <div class="inventoryslot"><svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.0772 32.7166C16.9571 27.5905 5.4988 22.1629 17.4095 6.78455L24.9478 0C24.9478 0 19.5202 14.926 25.2494 18.5444C30.9785 22.1629 32.637 17.0368 34.4462 12.2122C38.3661 22.0121 32.3643 27.5092 36.5569 30.3043C40.1753 32.7166 40.7784 31.3597 47.2614 21.7106C53.5937 36.6366 42.2861 50.5072 33.0893 50.2057C33.0893 50.2057 38.0644 44.0242 36.5569 37.6919C32.9383 39.1996 30.3753 40.255 28.717 39.8027C27.0587 39.3504 18.0427 19.6601 20.5756 27.7413C23.7416 37.8427 19.671 50.658 16.8064 50.9595C13.9418 51.261 6.1017 50.0549 1.57867 41.3104C-2.94436 32.5658 3.68965 15.0768 3.68965 15.0768C1.72967 26.6859 5.7186 37.3882 11.0772 32.7166Z" class="icon_inactive"/>
+                            </svg>
+                            <span class="keyctrl inventoryslot--key">q</span>
+                        </div> 
+                        <div class="inventoryslot"><svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.0772 32.7166C16.9571 27.5905 5.4988 22.1629 17.4095 6.78455L24.9478 0C24.9478 0 19.5202 14.926 25.2494 18.5444C30.9785 22.1629 32.637 17.0368 34.4462 12.2122C38.3661 22.0121 32.3643 27.5092 36.5569 30.3043C40.1753 32.7166 40.7784 31.3597 47.2614 21.7106C53.5937 36.6366 42.2861 50.5072 33.0893 50.2057C33.0893 50.2057 38.0644 44.0242 36.5569 37.6919C32.9383 39.1996 30.3753 40.255 28.717 39.8027C27.0587 39.3504 18.0427 19.6601 20.5756 27.7413C23.7416 37.8427 19.671 50.658 16.8064 50.9595C13.9418 51.261 6.1017 50.0549 1.57867 41.3104C-2.94436 32.5658 3.68965 15.0768 3.68965 15.0768C1.72967 26.6859 5.7186 37.3882 11.0772 32.7166Z" class="icon_inactive"/>
+                            </svg>
+                            <span class="keyctrl inventoryslot--key">r</span>
+                        </div> 
+                        <div class="inventoryslot"><svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.0772 32.7166C16.9571 27.5905 5.4988 22.1629 17.4095 6.78455L24.9478 0C24.9478 0 19.5202 14.926 25.2494 18.5444C30.9785 22.1629 32.637 17.0368 34.4462 12.2122C38.3661 22.0121 32.3643 27.5092 36.5569 30.3043C40.1753 32.7166 40.7784 31.3597 47.2614 21.7106C53.5937 36.6366 42.2861 50.5072 33.0893 50.2057C33.0893 50.2057 38.0644 44.0242 36.5569 37.6919C32.9383 39.1996 30.3753 40.255 28.717 39.8027C27.0587 39.3504 18.0427 19.6601 20.5756 27.7413C23.7416 37.8427 19.671 50.658 16.8064 50.9595C13.9418 51.261 6.1017 50.0549 1.57867 41.3104C-2.94436 32.5658 3.68965 15.0768 3.68965 15.0768C1.72967 26.6859 5.7186 37.3882 11.0772 32.7166Z" class="icon_inactive"/>
+                            </svg>
+                            <span class="keyctrl inventoryslot--key">t</span>
+                        </div> 
+                        <div class="inventoryslot"><svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.0772 32.7166C16.9571 27.5905 5.4988 22.1629 17.4095 6.78455L24.9478 0C24.9478 0 19.5202 14.926 25.2494 18.5444C30.9785 22.1629 32.637 17.0368 34.4462 12.2122C38.3661 22.0121 32.3643 27.5092 36.5569 30.3043C40.1753 32.7166 40.7784 31.3597 47.2614 21.7106C53.5937 36.6366 42.2861 50.5072 33.0893 50.2057C33.0893 50.2057 38.0644 44.0242 36.5569 37.6919C32.9383 39.1996 30.3753 40.255 28.717 39.8027C27.0587 39.3504 18.0427 19.6601 20.5756 27.7413C23.7416 37.8427 19.671 50.658 16.8064 50.9595C13.9418 51.261 6.1017 50.0549 1.57867 41.3104C-2.94436 32.5658 3.68965 15.0768 3.68965 15.0768C1.72967 26.6859 5.7186 37.3882 11.0772 32.7166Z" class="icon_inactive"/>
+                            </svg>
+                            <span class="keyctrl inventoryslot--key">f</span>
+                        </div> 
+                        <div class="inventoryslot">
+                            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M76.7548 16.714L78.7224 0.890367L62.8969 2.85602L61.4252 14.7046L58.0672 18.0626L47.3329 7.3283L24.0434 7.43372L17.9162 7.46145L17.9168 7.50967L6.32237 7.50967L6.32237 13.6367L17.9864 13.6367L18.4864 57.6434L16.7623 59.3675L14.3431 59.3675V59.4193H9.43552L9.43553 62.4715L4.06336 62.4715L4.06335 69.8955L10.0322 69.8955L10.0322 75.8642H17.4562L17.4562 70.4312L20.4473 70.4313L20.4473 65.5234L20.4993 65.5234L20.4993 62.4387L22.0511 60.8869L65.9943 61.5781L72.0696 61.5281L71.956 55.4882L71.5004 31.4958L61.4713 21.4667L64.7287 18.2093L76.7548 16.714ZM44.8065 13.4669L53.7347 22.3951L24.545 51.5848L24.113 13.5605L44.8065 13.4669ZM57.1388 25.7992L28.0906 54.8474L65.8262 55.3987L65.4213 34.0817L57.1388 25.7992ZM65.9426 73.6306L65.9943 61.5781L72.0696 61.5281L72.0696 73.6306L65.9426 73.6306Z" fill="#D1DFE4"/>
+                                </g>
+                                <defs>
+                        
+                                </svg>
+                                <span class="keyctrl inventoryslot--key">space</span>
+                        </div>
+                        
+                    </div>         
+                    <div class="vignette"></div>
                 </div>
+                
                 <div class="user-interface">
-                    <div class="health-bar" id="UI_healthBar">
-                            <p class="unselectable health-bar-text" id="UI_healthBarText"></p>
-                    </div>
-                    <div class="mana-bar" id="UI_manaBar">
-                        <p class="unselectable mana-bar-text" id="UI_manaBarText"></p>
-                    </div>
+                
                     <!-- <div class="bomb-icon" id="bombIcon"><div class="bomb-icon_cooldown_overlay">3</div></div> -->
                     <div class="inventory fadeOut" id="UI_inventory">
                         <div class="inventory-left">
@@ -127,9 +250,11 @@
     <script src="scripts/player/user_interface.js"></script>
     <script src="scripts/player/inventory.js"></script>
     <script src="scripts/player/inventory_slot.js"></script>
+    <script src="scripts/player/cursor.js"></script>
     <script src="scripts/camera.js"></script>
     <script src="scripts/orb.js"></script>
     <script src="scripts/bow.js"></script>
+    
 
 
     <script src="scripts/renderer.js"></script>
@@ -165,5 +290,6 @@
     <!--general scripts-->
 
     <!--Always load main last!-->
+    <script src="scripts/Game.js"></script>
     <script src="scripts/main.js"></script>
 </html>

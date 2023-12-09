@@ -26,7 +26,6 @@ var ctx = canvas.getContext('2d');
 //   });
 
 //globals
-g_paused = true;
 g_projectiles = new Array();
 
 
@@ -49,7 +48,7 @@ var objectList = new Array();
 
 
 
-// window.addEventListener("resize", resizeWindow);
+window.addEventListener("resize", resizeWindow);
 function resizeWindow()
 {
     let mapsize = mapHandler.map.mapsize;
@@ -64,7 +63,8 @@ function resizeWindow()
     else
         canvas.height = mapsize.height;
 
-    player.camera.viewport = {width : window.innerWidth/2, height : window.innerHeight/2};
+    player.camera.refreshViewport();
+    //player.camera.viewport = {width : window.innerWidth/2, height : window.innerHeight/2};
 }
 
 var player, userInterface;
@@ -72,29 +72,28 @@ var mapHandler, tileHandler, musicHandler, gameloop, renderer, upgradeList;
 var playerCamera;
 
 var keysDown = {};
+
 window.addEventListener('keydown', function(e) 
 { 
-    if(g_paused && e.code != "Escape" && e.code != "Tab")
+    if(game.isPaused && e.code != "Escape")
         return;
     keysDown[e.code] = true;
-    keysDown[e.keyCode] = true;
+    // keysDown[e.keyCode] = true;
     checkKeyPress(e);
 });
 
 window.addEventListener('keyup', function(e) 
 {
     checkKeyRelease(e);
-    delete keysDown[e.keyCode];
+    delete keysDown[e.code];
     
 });
 
 var mouse = {};
 canvas.addEventListener("mousemove", function (e) {
-
     //store untranslated x & y to be able to retransform coords when moving camera without moving mouse
     mouse.x = e.clientX;
     mouse.y = e.clientY;
-
     //store mouse coords translated in relation to canvas translation
     let transXY = getTransformedPoint(e.clientX, e.clientY);
     mouse.transX = transXY.x;
@@ -184,45 +183,10 @@ function run()
 }
 var currentTime;
 var updateEnd;
-function setupGame()
-{
-    upgradeList = new UpgradeList();
-    musicHandler = new MusicHandler();
-    loadMaps();
-    
-    tileHandler = new CTileHandler(); //create tilehandler object
-    
-    renderer = new Renderer();
-    player = new Player(); // Create player object
-    userInterface = new UserInterface();
-    mapHandler = new CMapHandler(maps.get("start"), spawn = {x : 11, y : 21}); //create maphandler object
-    
-    updateEnd = performance.now();
-    requestAnimationFrame(renderer.renderScreen);
-    
-}
-
-function startGame()
-{
-    //gameloop = setInterval(run, 2);
-    gameloop = setInterval(run, (1000/60));
-}
-
-function pause()
-{
-    if(g_paused)
-    {
-        startGame();
-    }
-    else
-    {
-        clearInterval(gameloop);
-    }
-    g_paused = !g_paused;
-}
 
 var time;
-
+var game = new Game();
 window.addEventListener("load", function(){ //fires after full pageload including scripts and stylesheets
-    setupGame();
+    game.setup();
+    game.pause();
 }, false);

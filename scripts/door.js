@@ -1,5 +1,5 @@
-cavedoor = new Image();
-cavedoor.src = "images/cavedoor.png";
+//cavedoor = new Image();
+//cavedoor.src = "images/cavedoor.png";
 
 class Door
 {
@@ -10,7 +10,7 @@ class Door
         this.type = "cave";
         this.exitTo = exitTo;
         this.spawn = spawn;
-        this.img = cavedoor;
+        //this.img = cavedoor;
     }
 
     render()

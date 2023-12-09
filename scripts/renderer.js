@@ -14,6 +14,8 @@ class Renderer
     {
          //can not use "this" here due to animationframe hijacking "this"-keyword
         renderer.renderMain();
+
+        player.cursor.render();
         for(let i = 0; i < objectList.length; i++)
             objectList[i].render();
 
@@ -35,6 +37,9 @@ class Renderer
             countR = 0;
         }
         countR++;
+        
+        
+        
         requestAnimationFrame(renderer.renderScreen);
     }
 

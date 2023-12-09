@@ -1,27 +1,24 @@
 function checkInput()
 {
-
-    const standingTile = player.getStandingTile()
-
-    if (65 in keysDown || 37 in keysDown) //vänster
+    if ('KeyA' in keysDown || 'ArrowLeft' in keysDown) //vänster
     {
-        player.move(37);
+        player.move('left');
     }   
  
-    if (87 in keysDown || 38 in keysDown) // upp 
-        player.move(38);
+    if ('KeyW' in keysDown || 'ArrowUp' in keysDown) // upp 
+        player.move('up');
 
 
-    if (83 in keysDown || 40 in keysDown) // ner 
-        player.move(40); 
+    if ('KeyS' in keysDown || 'ArrowDown' in keysDown) // ner 
+        player.move('down'); 
     
     
-    if (68 in keysDown || 39 in keysDown) //höger
+    if ('KeyD' in keysDown || 'ArrowRight' in keysDown) //höger
     {
-        player.move(39);
+        player.move('right');
     }
 
-    if(mouse.down)
+    if(mouse.down && !player.cursor.castModeActive)
     {
         if(player.equippedWep.mouseDownAutoUse)
             player.equippedWep.use();
@@ -31,8 +28,15 @@ function checkInput()
 
 function onMouseClick()
 {
-    if(!player.equippedWep.mouseDownAutoUse)
-            player.equippedWep.use();
+    if(player.cursor.castModeActive)
+    {
+        player.firestorm();
+        player.cursor.exitCastMode();
+    }
+    else if(!player.equippedWep.mouseDownAutoUse)
+    {
+        player.equippedWep.use();
+    }           
 }
 
 
@@ -40,11 +44,13 @@ function onMouseClick()
 var firstClick = true;
 function checkKeyPress(e)
 {
+    console.log(e);
+
     let key = e.keyCode;
     if(firstClick)
     {
         firstClick = false;
-        musicHandler.currentSong.play();
+        game.musicPlayer.currentSong.play();
         // world1.play();
         // world1_loop();
     }
@@ -70,20 +76,22 @@ function checkKeyPress(e)
         player.castFireOrbs();
     }
 
+    if(e.keyCode === 51) // 3
+    {
+        player.castFirestorm();
+    }
+
     if(key === 27) //escape, pause & toggle instructions
     {
         e.preventDefault();
-        pause();
-        console.log(instructionTextbox.style.display);
-        instructionTextbox.style.display = (instructionTextbox.style.display === "block") ? "none" : "block";
-        // if(textarea.style.display ===  "none")
-        // {
-        //     textarea.setAttribute("style", "display:block;");
-        // } 
-        // else
-        // {
-        //     textarea.setAttribute("style", "display:none;");
-        // }
+        if(game.isPaused)
+        {
+            game.unpause();
+        }
+        else
+        {
+            game.pause();
+        }
     }
 
     if(key === 9) //tab, toggle inventory
