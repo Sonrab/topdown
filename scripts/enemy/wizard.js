@@ -65,6 +65,8 @@ class Wizard extends Enemy
         this.spritesheet = spritesheet_wizard;
         this.damage = 1;
         
+        this.expYield = 300;
+        
         this.animations = {
             idle: new Animation(this, 'idle', Wizard.idleAnimationFrames, true),
             walk: new Animation(this, 'walk', Wizard.walkAnimationFrames, true),
@@ -106,6 +108,7 @@ class Wizard extends Enemy
 
     onDeath()
     {
+        player.onEnemyKill(this);
         this.currentAnimation.stop();
         this.removeFromMap();
     }

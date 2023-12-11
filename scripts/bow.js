@@ -6,8 +6,8 @@ class Bow
 {
     constructor()
     {
-        this.arrowSpeed = 10;
-        this.fireRate = 1; //arrows per sec
+        this.arrowSpeed = 15;
+        this.fireRate = 3; //arrows per sec
         this.fireRateIncrease = 1; //percentage increase of firerate (1 = 100%, default)
         this.img = spritesheet_bow;
         this.height = 5;

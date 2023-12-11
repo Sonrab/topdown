@@ -56,14 +56,14 @@ class GreenSlime extends Enemy
         this.tx = this.x;
         this.ty = this.y;
     
-        this.speed = 32 /60; // divide by 60 to get pixels per second in speed
+        this.speed = 32 /game.targetFPS; // divide by targetFPS to get pixels per second in speed
         this.velX = 0;
         this.velY = 0;
     
         this.direction = "right";
         this.damage = 1;
 
-    
+        this.expYield = 10;
         this.targetDestination = {};
         
     
@@ -166,9 +166,9 @@ class GreenSlime extends Enemy
     onDeath()
     {
         this.dead = true;
-        this.anim = 3;
         this.hasColission = false;
         this.animations.death.play();
+        player.onEnemyKill(this);
     }
 
     update()

@@ -47,9 +47,9 @@ class Player
         this.orbs = []; //list for player orbs
         this.orbSpawnAmount = 1; //amount of orbs which spawns by player spell
         //player speed
-        this.speed = 1.5;
+        this.speed = 2;
 
-        
+        this.expHandler = new ExperienceHandler();
     
         this.tileId = "";    
         this.camera = new Camera();
@@ -70,7 +70,6 @@ class Player
     
         this.equippedWep = this.bow;
 
-        
 
         this.animations = {
             walk : {
@@ -142,9 +141,6 @@ class Player
     init()
     {
         this.currentAnimation.play();
-        // this.watch("mana", function(){
-        //     userInterface.updateMana();
-        // });
     }
 
     setX(x)
@@ -208,7 +204,12 @@ class Player
         }
         else
         {
-            this.mana -= 15;
+            if(!this.haveEnoughMana(15))
+            {
+                return;
+            }
+
+            this.removeMana(15);
             let orbSpacing = 360/this.orbSpawnAmount;
             this.orbs = [];
             for(let i = 0; i < this.orbSpawnAmount; i++)
@@ -431,10 +432,16 @@ class Player
     {
 
         /* "hurt flash" when getting hit. Move to better place later */
+        healthBar.classList.add('hurtflash');
         hurtVignette.style.opacity = 1;
         setTimeout(function(){
+            healthBar.classList.remove('hurtflash');
             hurtVignette.style.opacity = 0;
            }, 200)
+        // hurtVignette.style.opacity = 1;
+        // setTimeout(function(){
+        //     hurtVignette.style.opacity = 0;
+        //    }, 200)
         /* ------------- */
 
 
@@ -466,20 +473,27 @@ class Player
         userInterface.updateHealth();
     }
 
-    checkMana(amount)
+    haveEnoughMana(amount)
     {
-
+        return this.mana - amount > 0 ? true : false;
     }
 
     addMana(amount)
     {
         this.mana += amount;
-        //userInterface.updateMana();
+        userInterface.updateMana();
     }
 
     removeMana(amount)
     {
-        this.mana -= amount;
+        if(this.mana - amount < 0)
+        {
+            this.mana = 0;
+        }
+        else
+        {
+            this.mana -= amount;
+        }
         userInterface.updateMana();
     }
 
@@ -831,6 +845,11 @@ class Player
         {
             this.checkEnemyColission();
         }
+    }
+
+    onEnemyKill(enemy)
+    {
+        this.expHandler.addExp(enemy.expYield);
     }
 
 

@@ -52,8 +52,10 @@ function loadMaps()
                 ],
                 enemies = [
                         new GreenSlime(288, 416),
+                        new GreenSlime(400, 700),
                         // new RedSlime(1216, 416),
                         new RedSlime(864, 512),
+                        //new RedSlime(500, 512),
                         new GreenSlime(768, 384),
                         new GreenSlime(1056, 352),
                         new GreenSlime(1056, 672),

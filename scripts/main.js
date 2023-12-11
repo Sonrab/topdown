@@ -115,17 +115,27 @@ function getTransformedPoint(x, y)
 }
 
 
-canvas.addEventListener("click", onMouseClick);
+canvas.addEventListener("click", function(event) {
+    event.preventDefault();
+    onMouseClick();
+});
 
-canvas.addEventListener("mousedown", function() {
+canvas.addEventListener("contextmenu", function(event) {
+    event.preventDefault();
+});
+    
+
+canvas.addEventListener("mousedown", function(event) {
+    event.preventDefault();
     mouse.down = true;
 });
 
-canvas.addEventListener("mouseup", function() {
+canvas.addEventListener("mouseup", function(event) {
+    event.preventDefault();
     mouse.down = false;
 });
 
-
+console.log(10 * Math.pow(1.2, 7));
 var delta = 0;
 var updateFrequence = 0;
 function update(d) 
@@ -159,7 +169,7 @@ function run()
     currentTime = Date.now();
     
     updateStart = performance.now();
-    update((updateStart - updateEnd) / (1000/60));
+    update((updateStart - updateEnd) / (1000/game.targetFPS));
     if(Date.now() >= TimeNow)
     {
         TimeNow = Date.now() + 1000;

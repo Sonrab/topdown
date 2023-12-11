@@ -6,6 +6,7 @@ class Game
         this.userInterface;
         this.loop;
         this.isPaused = false;
+        this.targetFPS = 40;
     }
 
     setup()
@@ -25,7 +26,7 @@ class Game
 
     start()
     {
-        this.loop = setInterval(run, (1000/60));
+        this.loop = setInterval(run, (1000/this.targetFPS));
     }
 
     pause()

@@ -7,7 +7,11 @@ const healthBar = document.querySelector("#healthBar");
 const manaBarText = document.querySelector("#manaText");
 const manaBar = document.querySelector("#manaBar");
 
+const displayLevel = document.getElementById('displayLevel');
+const expBar = document.getElementById('xpBar');
+
 const actionBar = document.querySelectorAll('.inventoryslot')
+
 
 // const pauseMenuBtnReturn = document.getElementById("#btnReturn");
 // pauseMenuBtnReturn.addEventListener("click", function(){
@@ -83,6 +87,7 @@ class UserInterface
     {
         this.updateHealth();
         this.updateMana();
+        this.updateExp();
     }
 
     clear()
@@ -94,8 +99,8 @@ class UserInterface
     {
         this.clear();
         this.renderBomb();
-        this.updateHealth();
-        this.updateMana();
+        // this.updateHealth();
+        // this.updateMana();
         //this.renderActionBar();
     }
 
@@ -113,6 +118,12 @@ class UserInterface
     {
         manaBar.style.width = `${(player.mana / player.maxMana) * 100}%`
         manaBarText.textContent = `${player.mana}/${player.maxMana}`;
+    }
+
+    updateExp()
+    {
+        expBar.style.width = `${(player.expHandler.currentExp / player.expHandler.expToNextLevel) * 100}%`
+        displayLevel.textContent = player.expHandler.level;
     }
 
     renderBomb()
