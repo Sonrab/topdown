@@ -3,7 +3,7 @@ var maps = new Map(); //make a map with key-value pairs with a name for key and 
 function loadMaps()
 {
 
-        maps.set("start", new CMap(
+        maps.set("start", new GameMap(
                 mapname = "start",
                 audio = "overworld",
                 passages = [new Passage("room", {x: 5, y: 8}, {xmin: 11.5, xmax: 12.5, ymin: 19, ymax:20})],
@@ -97,7 +97,7 @@ function loadMaps()
                         ]
         )); //end of map: start
 
-        maps.set("room", new CMap(
+        maps.set("room", new GameMap(
                 mapname = "room",
                 audio = "underground",
                 passages = [new Passage("start", {x: 12, y: 21}, {xmin: 5, xmax: 6, ymin: 9.5, ymax:10})],

@@ -1,4 +1,6 @@
-const castModeCursor = addImage("images/target.png");
+const defaultCursor = addImage("images/cursor_icons/crosshair.png");
+const castModeCursor = addImage("images/cursor_icons/target.png");
+
 
 class Cursor
 {
@@ -17,13 +19,19 @@ class Cursor
         //this.enterCastMode(120);
     }
 
-    update
+
 
     render()
     {
+        let x = Math.floor(mouse.transX);
+        let y = Math.floor(mouse.transY);
         if(this.castModeActive)
         {
-            ctx.drawImage(castModeCursor, mouse.transX - this.radius, mouse.transY - this.radius, this.diameter, this.diameter);
+            ctx.drawImage(castModeCursor, x - this.radius, y - this.radius, this.diameter, this.diameter);
+        }
+        else
+        {
+            ctx.drawImage(defaultCursor, x - 5, y - 5, 11, 11);
         }
         
     }

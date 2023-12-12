@@ -156,10 +156,15 @@ class Wizard extends Enemy
 
     teleport()
     {
-        let x, y;
-        let angle = Math.random()*Math.PI*2;
-        x = Math.cos(angle)*this.teleportTracker.range;
-        y = Math.sin(angle)*this.teleportTracker.range;
+        let x, y, angle;
+
+        //randomize angle until it is on an open tile
+        do 
+        {
+            angle = Math.random()*Math.PI*2;
+            x = Math.cos(angle)*this.teleportTracker.range;
+            y = Math.sin(angle)*this.teleportTracker.range;
+        } while (mapHandler.map.getTileId(x, y).solid)
 
         this.setXY(player.center.x + x - this.width/2, player.center.y + y - this.height/2);
     }

@@ -10,9 +10,12 @@
 //     main : canvas.main.getContext('2d'),
 //     foreground : canvas.foreground.getContext('2d')
 // }
-var canvas = document.getElementById('canvas');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+var canvasBoundingRect = canvas.getBoundingClientRect();
+
 var backgroundMusic = document.getElementById('backgroundMusic');
-var ctx = canvas.getContext('2d');
+
 
 // var UI_canvas = document.getElementById('user_interface_canvas');
 // var UI_ctx = UI_canvas.getContext('2d');
@@ -94,12 +97,38 @@ canvas.addEventListener("mousemove", function (e) {
     //store untranslated x & y to be able to retransform coords when moving camera without moving mouse
     mouse.x = e.clientX;
     mouse.y = e.clientY;
+    //let rect = canvas.getBoundingClientRect();
+    //console.log(rect);
+
     //store mouse coords translated in relation to canvas translation
-    let transXY = getTransformedPoint(e.clientX, e.clientY);
+    //let transXY = getTransformedPoint(e.clientX, e.clientY);
+    let transXY = getTransformedPoint(e.clientX - canvasBoundingRect.left, e.clientY - canvasBoundingRect.top);
     mouse.transX = transXY.x;
     mouse.transY = transXY.y;
 
+    
+    // if(rect.top > 0)
+    // {
+    //     mouse.transY = mouse.transY*2;
+    // }
+
+    // if(rect.left > 0)
+    // {
+    //     mouse.transX = mouse.transX*2;
+    // }
+    // mouse.transX += rect.left;
+    // mouse.transY += rect.top;
+
 });
+
+setInterval(() => {
+    console.log(`Mouse x: ${mouse.x}, Mouse Trans x: ${mouse.transX}`);
+    console.log(`Mouse y: ${mouse.y}, Mouse Trans y: ${mouse.transY}`);
+
+    let rect = canvas.getBoundingClientRect();
+    console.log(rect.top);
+    console.log(rect.left)
+}, 400);
 
 //function to transform mousecoords to become relative to our scaling of the canvas
 function getTransformedPoint(x, y) 

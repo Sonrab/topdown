@@ -42,5 +42,6 @@ class MapHandler
 
 
         player.setXY(spawn.x*tileWidth, spawn.y*tileWidth);
+        canvasBoundingRect = canvas.getBoundingClientRect();
     }
 }
