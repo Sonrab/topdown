@@ -285,7 +285,25 @@ class GameMap
 
     static generateMap()
     {
+        let mapname = "aaaa";
+        let audio = "overworld";
+        let passages = [];
+        let interactables = [];
+        let enemies = [];
 
+        let map = new GameMap();
+        mapname, audio, passages, interactables, enemies, grid
+        // [1, 1, 1]
+        // [1, 3, 1]
+        // [1, 1, 1]
+
+
+        // [1, 1, 1, 0, 0, 0]
+        // [1, 3, 1, 0, 0, 0]
+        // [1, 1, 1, 0, 0, 0]
+        // [0, 0, 0, 0, 0, 0]
+        // [0, 0, 0, 0, 0, 0]
+        // [0, 0, 0, 0, 0, 0]
     }
 
 }

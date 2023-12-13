@@ -65,7 +65,7 @@ class Enemy
         let frame = this.currentAnimation.frames[this.currentAnimation.currentFrame];
         //console.log(frame);
         //ctx.drawImage(this.spritesheet, frame.cutFrom.x, frame.cutFrom.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h, this.x + this.drawData.offset.x, this.y + this.drawData.offset.y, this.drawData.width, this.drawData.height);
-        ctx.drawImage(this.spritesheet, frame.cutFrom.x, frame.cutFrom.y, frame.sourceFrameSize.w-2, frame.sourceFrameSize.h-2, Math.floor(this.x + this.drawData.offset.x), Math.floor(this.y + this.drawData.offset.y -1), this.drawData.width, this.drawData.height);
+        ctx.drawImage(this.spritesheet, frame.cutFrom.x, frame.cutFrom.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h, Math.floor(this.x + this.drawData.offset.x), Math.floor(this.y + this.drawData.offset.y -1), this.drawData.width, this.drawData.height);
     }
 
     toggleIframes()

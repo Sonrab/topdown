@@ -1,5 +1,5 @@
 const img_arrow = new Image();
-img_arrow.src = "images/weapons/arrow.png";
+img_arrow.src = "images/weapons/laserbeam.png";
 
 
 class Projectile

@@ -45,7 +45,7 @@ class Player
         };
    
         this.orbs = []; //list for player orbs
-        this.orbSpawnAmount = 1; //amount of orbs which spawns by player spell
+        this.orbSpawnAmount = 2; //amount of orbs which spawns by player spell
         //player speed
         this.speed = 5;
 
@@ -462,7 +462,15 @@ class Player
 
     removeHealth(amount)
     {
-        this.health -= amount;
+        if(this.health - amount < 0)
+        {
+            this.health = 0;
+        }
+        else
+        {
+            this.health -= amount;
+        }
+        
         userInterface.updateHealth();
     }
 

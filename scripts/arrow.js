@@ -1,4 +1,4 @@
-const spritesheet_Arrow = addImage("images/weapons/arrow.png");
+const spritesheet_Arrow = addImage("images/weapons/laserbeam.png");
 
 class Arrow extends Projectile
 {
