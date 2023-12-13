@@ -12,6 +12,25 @@
 // }
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+
+const mapBuffer = document.createElement('canvas');
+const mapBufferCtx = mapBuffer.getContext('2d');
+
+function updateBufferSize(mapsize)
+{
+    mapBuffer.width = mapsize.width;
+    mapBuffer.height =  mapsize.height;
+    // this.buffer.width = canvas.width;
+    // this.buffer.height = canvas.height;
+}
+
+function resizeCanvas(width, height)
+{
+    canvas.width = width;
+    canvas.height = height;
+    ctx.imageSmoothingEnabled = false; //ctx state is reset after canvas reset so this needs to be set to false on every canvas resize
+}
+
 var canvasBoundingRect = canvas.getBoundingClientRect();
 
 var backgroundMusic = document.getElementById('backgroundMusic');
@@ -33,9 +52,9 @@ g_projectiles = new Array();
 
 
 //html output divs. Used for displaying boxes of text
-const instructionTextbox = document.querySelector("#game-instruction-box");
-const statscreenTextbox = document.querySelector("#game-statscreen-box");
-const descriptionTextbox = document.querySelector("#game-description-box");
+// const instructionTextbox = document.querySelector("#game-instruction-box");
+// const statscreenTextbox = document.querySelector("#game-statscreen-box");
+// const descriptionTextbox = document.querySelector("#game-description-box");
 
 //global constants
 const tileWidth = 32;
@@ -140,7 +159,7 @@ canvas.addEventListener("mouseup", function(event) {
     mouse.down = false;
 });
 
-console.log(10 * Math.pow(1.2, 7));
+
 var delta = 0;
 var updateFrequence = 0;
 function update(d) 

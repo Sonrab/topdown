@@ -8,25 +8,16 @@ class Game
         this.isPaused = false;
         this.targetFPS = 40;
 
-        //calucales scaling with x2 at 1920x1080 resolution as baseline
-        // this.scaling = {
-        //     x: 2,
-        //     y: 2
-        // };
+        //set game scaling.
+        this.scaling = {
+            x: 2,
+            y: 2
+        };
 
         this.scaling = {
             x: 2*(window.innerWidth/1920), 
             y: 2*(window.innerHeight/1080)
         };
-
-
-
-
-
-        // this.scaling = {
-        //     x: window.innerWidth/1920, 
-        //     y: window.innerHeight/1080
-        // };
 
         console.log(this.scaling);
     }
@@ -45,7 +36,6 @@ class Game
         updateEnd = performance.now();
 
         setTimeout(function(){
-            renderer.updateBufferSize();
             requestAnimationFrame(renderer.renderScreen);
         }, 1000);
         

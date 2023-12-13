@@ -12,6 +12,53 @@ class GameMap
         this.grid = grid;
         this.background = backgroundimg;
         this.mapsize = {width : grid[0].length*tileWidth, height : grid.length*tileWidth}
+
+        this.init();
+    }
+
+    init()
+    {
+        this.createMapBuffer();
+    }
+
+    createMapBuffer()
+    {
+        /*REMOVE LATER ??? */
+        let loopRowsFrom = 0;
+        let loopColsFrom = 0;
+        let loopRowsTo = this.mapsize.height/tileWidth;
+        let loopColsTo = this.mapsize.width/tileWidth;
+        /* ----- */
+        
+        let mapIndexOffset = -1;
+        //loops through every tile in the grid, checks it's id and draws the matching 32x32 piece from the tilesheet
+    
+    
+        for (let row = loopRowsFrom; row < loopRowsTo; row++)
+        {
+            for (let col = loopColsFrom; col < loopColsTo; col++)
+            {
+                for(let layer = 0; layer < 2; layer++)
+                {
+                    
+                    //console.log(this.grid[row][col][layer]);
+                    if(this.grid[row][col][layer] === 0)
+                    {
+                        // ctx.textAlign="center";
+                        // ctx.font = "10px Arial"; 
+                        // ctx.fillText("y: " + row, col*32+15, row*32 + 10);
+                        // ctx.fillText("x: " + col, col*32+15, row*32 + 20);
+                        continue;
+                    }
+                    let tileId = this.grid[row][col][layer]+mapIndexOffset;
+        
+                    let sourceX = Math.floor(tileId % imgPerRowTilesheet) *tileWidth;
+                    let sourceY = Math.floor(tileId / imgPerRowTilesheet) *tileWidth;
+    
+                    mapBufferCtx.drawImage(tilesheet, sourceX, sourceY, tileWidth, tileWidth, col*tileWidth, row*tileWidth, tileWidth, tileWidth);
+                }
+            }
+        }
     }
 
     render()
@@ -201,7 +248,7 @@ class GameMap
             } 
             return tile;
         }    
-    };
+    }
 
 
     getSplitTileCorner(tile, overlapX, overlapY, w)
@@ -234,5 +281,12 @@ class GameMap
             this.enemies[i].render();
         }
     }
+
+
+    static generateMap()
+    {
+
+    }
+
 }
 

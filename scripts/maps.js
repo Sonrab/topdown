@@ -14,37 +14,37 @@ function loadMaps()
                         // exitTo = "start2",
                         // spawn = {x : 4, y : 3}
                         // ),
-                        new CChest(
+                        new Chest(
                                 x = 38,
                                 y = 13,
                                 content = upgradeList.getUpgradeByName("upgrade_grappler")
                         ),
-                        new CChest(
+                        new Chest(
                                 x = 39,
                                 y = 13,
                                 content = upgradeList.getUpgradeByName("unlock_bomb")
                         ),
-                        new CChest(
+                        new Chest(
                                 x = 15,
                                 y = 13,
                                 content = upgradeList.getUpgradeByName("unlock_bomb")
                         ),
-                        new CChest(
+                        new Chest(
                                 x = 8,
                                 y = 12,
                                 content = upgradeList.getUpgradeByName("bow_damage_upgrade")     
                         ),
-                        new CChest(
+                        new Chest(
                                 x = 9,
                                 y = 12,
                                 content = upgradeList.getUpgradeByName("upgrade_health_5")        
                         ),
-                        new CChest(
+                        new Chest(
                                 x = 6,
                                 y = 12,
                                 content = upgradeList.getUpgradeByName("upgrade_health_10")        
                         ),
-                        new CChest(
+                        new Chest(
                                 x = 11,
                                 y = 13,
                                 content = upgradeList.getUpgradeByName("unlock_dodgeRoll")        
@@ -108,7 +108,7 @@ function loadMaps()
                         // exitTo = "start2",
                         // spawn = {x : 4, y : 3}
                         // ),
-                        new CChest(
+                        new Chest(
                                 x = 5,
                                 y = 5,
                                 content = upgradeList.getUpgradeByName("upgrade_grappler")

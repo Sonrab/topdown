@@ -24,26 +24,34 @@ class MapHandler
         this.map = map;
         this.spawn = spawn;
 
-        //set canvas width and height
+        //calculate canvas width and height
+        let canvaswidth = 0;
+        let canvasHeight = 0;
+        
         if(this.map.mapsize.width * game.scaling.x > window.innerWidth)
         {
-            canvas.width = Math.floor(window.innerWidth); //offset scrollbar
+            canvaswidth = Math.floor(window.innerWidth); //offset scrollbar
         }
         else
         {
-            canvas.width = this.map.mapsize.width * game.scaling.x;
+            canvaswidth = this.map.mapsize.width * game.scaling.x;
         }
             
         if(this.map.mapsize.height * game.scaling.y > window.innerHeight)
         {
-            canvas.height = window.innerHeight;
+            canvasHeight = window.innerHeight;
         }
         else
         {
-            canvas.height = this.map.mapsize.height * game.scaling.y;
+            canvasHeight = this.map.mapsize.height * game.scaling.y;
         }
 
+        resizeCanvas(canvaswidth, canvasHeight);
+
+        updateBufferSize(this.map.mapsize);
+        this.map.createMapBuffer();
+
         player.setXY(spawn.x*tileWidth, spawn.y*tileWidth);
-        canvasBoundingRect = canvas.getBoundingClientRect();
+        canvasBoundingRect = canvas.getBoundingClientRect(); //used for adjusting mouse pos on canvas on maps smaller than screensize
     }
 }

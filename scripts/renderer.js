@@ -1,3 +1,5 @@
+
+
 class Renderer
 {
     constructor() 
@@ -6,36 +8,26 @@ class Renderer
         this.backgroundQueue = [];
         this.renderQueue = [];
 
-        this.buffer = document.createElement('canvas');
-        this.bufferCtx = this.buffer.getContext('2d');
-
-        this.init();
+        //this.init();
     }
 
-    init()
-    {
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
-    }
-
-    updateBufferSize()
-    {
-        this.buffer.width = mapHandler.map.mapsize.width;
-        this.buffer.height =  mapHandler.map.mapsize.height;
-        // this.buffer.width = canvas.width;
-        // this.buffer.height = canvas.height;
-    }
+    // init()
+    // {
+    //     ctx.imageSmoothingEnabled = false;
+    //     ctx.imageSmoothingQuality = 'high';
+    // }
     
     renderScreen()
     {
         //can not use "this" here due to animationframe hijacking "this"-keyword
         renderer.clearScreen();
-        // ctx.setTransform(1, 0, 0, 1, 0, 0); //Reset all transforms back to default. This means scaling and the changes in x and y
-        // ctx.translate(-player.camera.x*game.scaling.x, -player.camera.y*game.scaling.y); //translate the context to include what the camera sees
-        // ctx.scale(game.scaling.x, game.scaling.y); //scale all drawing
-        //ctx.imageSmoothingEnabled = true;
 
-        mapHandler.map.render();
+        ctx.setTransform(1, 0, 0, 1, 0, 0); //Reset all transforms back to default. This means scaling and the changes in x and y
+        ctx.translate(-player.camera.x*game.scaling.x, -player.camera.y*game.scaling.y); //translate the context to include what the camera sees
+        ctx.scale(game.scaling.x, game.scaling.y); //scale all drawing according to the game scaling
+        ctx.drawImage(mapBuffer, 0, 0);
+        mapHandler.map.renderInteractables();
+        mapHandler.map.renderEnemies();
         player.render();
 
         player.cursor.render();
@@ -43,31 +35,15 @@ class Renderer
             objectList[i].render();
 
         renderer.renderProjectiles();
-        //renderer.renderForeground();
+        renderer.renderForeground();
         // if(!player.behindForeground)
         ctx.globalAlpha = mapHandler.foregroundAlpha;
-            //mapHandler.map.renderForeground();
+        mapHandler.map.renderForeground();
 
         //console.log(mapHandler.foregroundAlpha);
         ctx.globalAlpha = 1.0;
         //player.renderHealth();
         userInterface.render();
-
-        ctx.setTransform(1, 0, 0, 1, 0, 0); //Reset all transforms back to default. This means scaling and the changes in x and y
-        ctx.translate(-player.camera.x*game.scaling.x, -player.camera.y*game.scaling.y); //translate the context to include what the camera sees
-        ctx.scale(game.scaling.x, game.scaling.y); //scale all drawing
-        // ctx.scale(0.5, 0.5);
-        //ctx.scale(0.5, 0.5); //scale all drawing
-        // let bitmap = createImageBitmap(renderer.buffer, {resizeWidth: (renderer.buffer.width*game.scaling.x), resizeHeight: (renderer.buffer.height*game.scaling.y), resizeQuality: 'high'});
-        // console.log(bitmap);
-
-        ctx.drawImage(renderer.buffer, 0, 0);
-        console.log(`${player.camera.x}, ${player.camera.y}`);
-
-        //ctx.drawImage(renderer.buffer, player.camera.x, player.camera.y, player.camera.x + player.camera.viewport.width, player.camera.y + player.camera.viewport.height, 0, 0, canvas.width, canvas.height);
-
-
-        //ctx.drawImage(renderer.buffer, 0, 0, 973 / game.scaling.y, 0, 0, canvas.width, canvas.height);
         
         requestAnimationFrame(renderer.renderScreen);
     }
@@ -84,7 +60,7 @@ class Renderer
     clearScreen()
     {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.clearRect(0, 0, this.buffer.width, this.buffer.height);
+        //ctx.clearRect(0, 0, this.mapbuffer.width, this.buffer.height);
     }
 
     renderForeground()
