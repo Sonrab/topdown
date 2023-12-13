@@ -58,9 +58,13 @@ class Bat extends Enemy
         this.damage = 2;
 
         this.expYield = 20;
-        this.aggroRange = 250;
+        this.aggroRange = 350;
 
-    
+        this.resistances = { 
+            physical: 0.5,
+            fire: 0,
+        };
+
         this.targetDestination = {};
         
     

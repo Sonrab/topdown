@@ -16,7 +16,7 @@ class Arrow extends Projectile
         this.width = 22;
         this.height = 5;
         this.magnitude = magnitude;
-        this.speed = 9;
+        this.speed = 10;
         this.velX = (dx/magnitude) * this.speed;
         this.velY = (dy/magnitude) * this.speed;
         this.animations = {

@@ -6,8 +6,8 @@ class Bow
 {
     constructor()
     {
-        this.arrowSpeed = 15;
-        this.fireRate = 3; //arrows per sec
+        this.arrowSpeed = 10;
+        this.fireRate = 5; //arrows per sec
         this.fireRateIncrease = 1; //percentage increase of firerate (1 = 100%, default)
         this.img = spritesheet_bow;
         this.height = 5;
@@ -16,6 +16,11 @@ class Bow
         this.lastFire = 0;
         this.x = 0;
         this.y = 0;
+        this.accuracy = 0.9;
+        //calc accuracy by base 60 -> 60 * (1-this.accuracy)
+        //angle = angle + randomInt(-(this.accuracy/2), this.accuracy/2)
+        //0.9 accuracy gives 6 deg span
+        //0.8 gives 12 and so on
     
         this.range = 10;
     }
@@ -37,16 +42,34 @@ class Bow
             this.lastFire = currentTime;
             userInterface.triggerActionBarAnimation(userInterface.actionBar.primary.element);
             
-            let dx = mouse.transX - (player.center.x);
-            let dy = mouse.transY - (player.center.y);
+            // let x = mouse.transX - randomInt(-25, 25);
+            // let y = mouse.transY - randomInt(-25, 25);
 
-            let magnitude = Math.sqrt(dx*dx + dy*dy);
+            console.log(`${mouse.transX}, ${x}`)
+            console.log(`${mouse.transY}, ${y}`)
+
+            // let dx = x - player.center.x;
+            // let dy = y - player.center.y;
+
+            
+
+            let dx = mouse.transX - player.center.x;
+            let dy = mouse.transY - player.center.y;
+
+            
+            //console.log(magnitude);
             let angle = Math.atan2(dy, dx) * (180 / Math.PI);
-        
+            angle = angle + randomInt(-5, 5);
             if(angle < 0)
             {
                 angle = 360 - (-angle);
             }     
+            let rad = angle * (Math.PI / 180);
+            dx = Math.cos(rad);
+            dy = Math.sin(rad);
+        
+            let magnitude = pythagorean(dy, dx);
+
             g_projectiles.push(new Arrow(player.center.x, player.center.y, dx, dy, magnitude, angle, this.damage, "player"));
         }
     }

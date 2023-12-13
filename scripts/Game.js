@@ -32,7 +32,7 @@ class Game
         renderer = new Renderer();
         player = new Player(); // Create player object
         userInterface = new UserInterface();
-        mapHandler = new MapHandler(maps.get("start"), {x : 11, y : 21}); //create maphandler object
+        mapHandler = new MapHandler(maps.get("start"), {x : 10, y : 12}); //create maphandler object
         updateEnd = performance.now();
 
         setTimeout(function(){

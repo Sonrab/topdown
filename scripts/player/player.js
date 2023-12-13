@@ -221,14 +221,17 @@ class Player
 
     castFirestorm()
     {
-        this.cursor.enterCastMode(90);
+        this.cursor.enterCastMode(64);
 
-        
+
     }
 
     firestorm()
     {
         console.log("pewpew");
+
+        let bomb = new Bomb(mouse.transX, mouse.transY);
+        objectList.push(bomb);
     }
 
 
@@ -404,7 +407,7 @@ class Player
 
         if(this.bombData.amount > 0) //check if player has bombs in bag
         {
-            let bomb = new Bomb();
+            let bomb = new Bomb(this.center.x, this.center.y);
             objectList.push(bomb);
             //bomb.timer();
             this.bombData.amount--;

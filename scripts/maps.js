@@ -17,7 +17,7 @@ function loadMaps()
                         new Chest(
                                 x = 38,
                                 y = 13,
-                                content = upgradeList.getUpgradeByName("upgrade_grappler")
+                                content = upgradeList.getUpgradeByName("unlock_bomb")
                         ),
                         new Chest(
                                 x = 39,

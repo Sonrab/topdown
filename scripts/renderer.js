@@ -25,7 +25,12 @@ class Renderer
         ctx.setTransform(1, 0, 0, 1, 0, 0); //Reset all transforms back to default. This means scaling and the changes in x and y
         ctx.translate(-player.camera.x*game.scaling.x, -player.camera.y*game.scaling.y); //translate the context to include what the camera sees
         ctx.scale(game.scaling.x, game.scaling.y); //scale all drawing according to the game scaling
+
+        //draw the buffered map as a complete map image
+        //This needs to be fixed, as of now I believe it draws the full map. Needs to cut the section currently in view from the buffer and draw to ordinary canvas
         ctx.drawImage(mapBuffer, 0, 0);
+
+
         mapHandler.map.renderInteractables();
         mapHandler.map.renderEnemies();
         player.render();

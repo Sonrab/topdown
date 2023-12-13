@@ -1,19 +1,16 @@
-const bombCountdownImg = new Image();
-bombCountdownImg.src = "images/bomb_mine.png";
-
-const bombExplosionImg = new Image();
-bombExplosionImg.src = "images/explosion.png";
+const bombCountdownImg = addImage("images/bomb_mine.png");
+const bombExplosionImg = addImage("images/explosion.png");
 
 class Bomb
 {
-    constructor()
+    constructor(x, y)
     {
         //this.timerLength = 3000;
         this.height = 32;
         this.width = 32;
         this.img = bombCountdownImg;
-        this.x = player.x + (player.width/2) - (this.width/2);
-        this.y = player.y + player.height/2 - this.height/2;
+        this.x = x - (this.width/2);
+        this.y = y - this.height/2;
 
         this.blastRange = 50;
 
@@ -21,8 +18,7 @@ class Bomb
 
 
         this.animations = {
-            countdown : new Animation(this, 'countdown', Bomb.countdownFrames, false),
-            explosion: new Animation(this, 'explosion', Bomb.explosionFrames, false)
+            countdown : new Animation(this, 'countdown', Bomb.countdownFrames, false)
         };
         this.currentAnimation = this.animations.countdown;
 
@@ -76,7 +72,7 @@ class Bomb
             if(enemyCenterX > bombCenterX - this.blastRange && enemyCenterX < bombCenterX + this.blastRange
             && enemyCenterY > bombCenterY - this.blastRange && enemyCenterY < bombCenterY + this.blastRange)
             {
-                enemy.takeDmg(1);
+                enemy.onHit(1);
             }
         }
 
@@ -89,13 +85,10 @@ class Bomb
         switch(animName)
         {
             case 'countdown':
-                this.img = bombExplosionImg;
-                this.animations.explosion.play(); 
                 this.explode();
+                objectList.splice(objectList.indexOf(this), 1);
+                objectList.push(new BombExplosion(this.x, this.y));
                 break;
-            case 'explosion':
-                objectList.splice(this, 1);
-
         }
     }
 
@@ -106,48 +99,7 @@ class Bomb
             (this.x+(this.width/2)) - frame.sourceFrameSize.w/2, this.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h]);
     }
 
-    static explosionFrames = [
-        {
-            "cutFrom": { "x": 0, "y": 0},
-            "sourceFrameSize": { "w": 128, "h": 128 },
-            "duration": 60
-        },
-        {
-            "cutFrom": { "x": 128, "y": 0},
-            "sourceFrameSize": { "w": 128, "h": 128 },
-            "duration": 60
-        },
-        {
-            "cutFrom": { "x": 256, "y": 0},
-            "sourceFrameSize": { "w": 128, "h": 128 },
-            "duration": 60
-        },
-        {
-            "cutFrom": { "x": 384, "y": 0},
-            "sourceFrameSize": { "w": 128, "h": 128 },
-            "duration": 60
-        },
-        {
-            "cutFrom": { "x": 512, "y": 0},
-            "sourceFrameSize": { "w": 128, "h": 128 },
-            "duration": 60
-        },
-        {
-            "cutFrom": { "x": 640, "y": 0},
-            "sourceFrameSize": { "w": 128, "h": 128 },
-            "duration": 60
-        },
-        {
-            "cutFrom": { "x": 768, "y": 0},
-            "sourceFrameSize": { "w": 128, "h": 128 },
-            "duration": 60
-        },
-        {
-            "cutFrom": { "x": 896, "y": 0},
-            "sourceFrameSize": { "w": 128, "h": 128 },
-            "duration": 60
-        }
-    ];
+    
     
     static countdownFrames = [
         {
@@ -201,4 +153,88 @@ class Bomb
             "duration": 150
         }
     ]; 
+}
+
+class BombExplosion
+{
+    constructor(x, y)
+    {
+        this.height = 128;
+        this.width = 128;
+        this.img = bombExplosionImg;
+        this.x = x - this.width/2;
+        this.y = y - this.height/2;
+
+        this.animations = {
+            explosion: new Animation(this, 'explosion', BombExplosion.explosionFrames, false)
+        };
+        this.currentAnimation = this.animations.explosion;
+
+        this.init();
+    }
+
+    init()
+    {
+        this.currentAnimation.play();
+    }
+
+    onAnimationEnd(animName) 
+    {
+        switch(animName)
+        {
+            case 'explosion':
+                objectList.splice(objectList.indexOf(this), 1);
+                break;
+        }
+    }
+
+    render()
+    {
+        let frame = this.currentAnimation.getCurrentFrame();
+        renderer.foregroundQueue.push([this.img, frame.cutFrom.x, frame.cutFrom.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h, 
+            (this.x+(this.width/2)) - frame.sourceFrameSize.w/2, this.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h]);
+    }
+
+    static explosionFrames = [
+        {
+            "cutFrom": { "x": 0, "y": 0},
+            "sourceFrameSize": { "w": 128, "h": 128 },
+            "duration": 60
+        },
+        {
+            "cutFrom": { "x": 128, "y": 0},
+            "sourceFrameSize": { "w": 128, "h": 128 },
+            "duration": 60
+        },
+        {
+            "cutFrom": { "x": 256, "y": 0},
+            "sourceFrameSize": { "w": 128, "h": 128 },
+            "duration": 60
+        },
+        {
+            "cutFrom": { "x": 384, "y": 0},
+            "sourceFrameSize": { "w": 128, "h": 128 },
+            "duration": 60
+        },
+        {
+            "cutFrom": { "x": 512, "y": 0},
+            "sourceFrameSize": { "w": 128, "h": 128 },
+            "duration": 60
+        },
+        {
+            "cutFrom": { "x": 640, "y": 0},
+            "sourceFrameSize": { "w": 128, "h": 128 },
+            "duration": 60
+        },
+        {
+            "cutFrom": { "x": 768, "y": 0},
+            "sourceFrameSize": { "w": 128, "h": 128 },
+            "duration": 60
+        },
+        {
+            "cutFrom": { "x": 896, "y": 0},
+            "sourceFrameSize": { "w": 128, "h": 128 },
+            "duration": 60
+        }
+    ];
 }
