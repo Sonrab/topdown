@@ -47,7 +47,7 @@ class Player
         this.orbs = []; //list for player orbs
         this.orbSpawnAmount = 1; //amount of orbs which spawns by player spell
         //player speed
-        this.speed = 5;
+        this.speed = 2;
 
         this.expHandler = new ExperienceHandler();
     
@@ -502,8 +502,7 @@ class Player
     render()
     {
         let frame = this.currentAnimation.getCurrentFrame();
-        //ctx.drawImage(this.spritesheet, frame.cutFrom.x, frame.cutFrom.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h, this.x - ((this.drawWidth-this.width)/2), this.y+this.height-this.drawHeight, this.drawWidth, this.drawHeight);
-        renderer.bufferCtx.drawImage(this.spritesheet, frame.cutFrom.x, frame.cutFrom.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h, Math.floor(this.x - ((this.drawWidth-this.width)/2)), Math.floor(this.y+this.height-this.drawHeight), this.drawWidth, this.drawHeight);
+        ctx.drawImage(this.spritesheet, frame.cutFrom.x, frame.cutFrom.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h, this.x - ((this.drawWidth-this.width)/2), this.y+this.height-this.drawHeight, this.drawWidth, this.drawHeight);
         
 
         //ctx.drawImage(chestImg, this.x - ((this.drawWidth-this.width)/2), this.y+this.height-this.drawHeight);

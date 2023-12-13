@@ -10,11 +10,9 @@ class Camera
         //stores the width and height of the camera viewport
         this.viewport = {
             width : window.innerWidth/game.scaling.x, 
-            height : window.innerHeight/game.scaling.y,
-            halfWidth: window.innerWidth/game.scaling.x/2,
-            halfHeight: window.innerHeight/game.scaling.y/2,
-            unscaledWidth: window.innerWidth,
-            unscaledHeight: window.innerHeight
+            height : window.innerHeight/game.scaling.x,
+            halfWidth: window.innerWidth/game.scaling.y/2,
+            halfHeight: window.innerHeight/game.scaling.y/2
         };
     }
 

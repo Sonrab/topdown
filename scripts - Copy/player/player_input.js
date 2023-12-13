@@ -44,7 +44,7 @@ function onMouseClick()
 var firstClick = true;
 function checkKeyPress(e)
 {
-    //console.log(e);
+    console.log(e);
 
     let key = e.keyCode;
     if(firstClick)

@@ -117,6 +117,15 @@ class GreenSlime extends Enemy
     //     ctx.drawImage(this.renderData.spritesheet, 0,sourceY,32,32,this.x,this.y,32,32);
     // }
 
+    // animate()
+    // {
+    //     this.animationInterval = setTimeout(() => {
+    //         this.anim++;
+    //         if(this.anim >= 2)
+    //             this.anim = 0;
+    //         this.animate();
+    //     }, 400);
+    // }
     onAnimationEnd(animationName)
     {
         switch(animationName)

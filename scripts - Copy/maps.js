@@ -6,7 +6,7 @@ function loadMaps()
         maps.set("start", new GameMap(
                 mapname = "start",
                 audio = "overworld",
-                passages = [new Passage("room", {x: 5.25, y: 9.5}, {xmin: 11.5, xmax: 12.5, ymin: 19, ymax:20})],
+                passages = [new Passage("room", {x: 5, y: 8}, {xmin: 11.5, xmax: 12.5, ymin: 19, ymax:20})],
                 interactables = [
                         // new CDoor(
                         // x = 1,
@@ -100,7 +100,7 @@ function loadMaps()
         maps.set("room", new GameMap(
                 mapname = "room",
                 audio = "underground",
-                passages = [new Passage("start", {x: 11.75, y: 20.5}, {xmin: 5, xmax: 6, ymin: 10.25, ymax:10.5})],
+                passages = [new Passage("start", {x: 12, y: 21}, {xmin: 5, xmax: 6, ymin: 9.5, ymax:10})],
                 interactables = [
                         // new CDoor(
                         // x = 1,

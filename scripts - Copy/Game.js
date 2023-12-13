@@ -9,24 +9,10 @@ class Game
         this.targetFPS = 40;
 
         //calucales scaling with x2 at 1920x1080 resolution as baseline
-        // this.scaling = {
-        //     x: 2,
-        //     y: 2
-        // };
-
         this.scaling = {
-            x: 2*(window.innerWidth/1920), 
-            y: 2*(window.innerHeight/1080)
+            x: Math.floor(2*(window.innerWidth/1920)*100)/100, 
+            y: Math.floor(2*(window.innerHeight/1080)*100)/100
         };
-
-
-
-
-
-        // this.scaling = {
-        //     x: window.innerWidth/1920, 
-        //     y: window.innerHeight/1080
-        // };
 
         console.log(this.scaling);
     }
@@ -43,13 +29,13 @@ class Game
         userInterface = new UserInterface();
         mapHandler = new MapHandler(maps.get("start"), {x : 11, y : 21}); //create maphandler object
         updateEnd = performance.now();
-
-        setTimeout(function(){
-            renderer.updateBufferSize();
-            requestAnimationFrame(renderer.renderScreen);
-        }, 1000);
-        
+        requestAnimationFrame(renderer.renderScreen);
     }
+
+    // onMapChange()
+    // {
+    //     this.scaling = 
+    // }
 
     start()
     {

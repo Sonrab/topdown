@@ -206,7 +206,7 @@ div#canvasDiv {
     height:100vh; */
     image-rendering: -moz-crisp-edges;    /* Firefox */
     image-rendering: -webkit-crisp-edges; /* Webkit (Safari) */
-    image-rendering: pixelated; 
+    image-rendering: crisp-edges; 
 }
 
 .unselectable {

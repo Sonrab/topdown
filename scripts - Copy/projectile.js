@@ -35,17 +35,11 @@ class Projectile
     {
         let frame = this.currentAnimation.getCurrentFrame();
 
-        // ctx.translate(this.x, this.y);
-        // ctx.rotate(this.radians);
-        // ctx.drawImage(this.spritesheet, frame.cutFrom.x, frame.cutFrom.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h, 0, -this.height/2, this.width, this.height);
-        // ctx.rotate(-this.radians);
-        // ctx.translate(-this.x, -this.y);
-
-        renderer.bufferCtx.translate(this.x, this.y);
-        renderer.bufferCtx.rotate(this.radians);
-        renderer.bufferCtx.drawImage(this.spritesheet, frame.cutFrom.x, frame.cutFrom.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h, 0, -this.height/2, this.width, this.height);
-        renderer.bufferCtx.rotate(-this.radians);
-        renderer.bufferCtx.translate(-this.x, -this.y);
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.radians);
+        ctx.drawImage(this.spritesheet, frame.cutFrom.x, frame.cutFrom.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h, 0, -this.height/2, this.width, this.height);
+        ctx.rotate(-this.radians);
+        ctx.translate(-this.x, -this.y);
     }
 
     removeFromMap()

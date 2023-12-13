@@ -1,49 +1,78 @@
-var TimeNowR = 0;
-var FPSR = 0;
-var countR = 0;
-
 class Renderer
 {
     constructor() 
     {
         this.foregroundQueue = [];
         this.backgroundQueue = [];
+        this.renderQueue = [];
+
+        this.buffer = document.createElement('canvas');
+        this.bufferCtx = this.buffer.getContext('2d');
+
+        this.init();
     }
 
+    init()
+    {
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+    }
+
+    updateBufferSize()
+    {
+        this.buffer.width = mapHandler.map.mapsize.width;
+        this.buffer.height =  mapHandler.map.mapsize.height;
+        // this.buffer.width = canvas.width;
+        // this.buffer.height = canvas.height;
+    }
+    
     renderScreen()
     {
-         //can not use "this" here due to animationframe hijacking "this"-keyword
-        renderer.renderMain();
+        //can not use "this" here due to animationframe hijacking "this"-keyword
+        renderer.clearScreen();
+        // ctx.setTransform(1, 0, 0, 1, 0, 0); //Reset all transforms back to default. This means scaling and the changes in x and y
+        // ctx.translate(-player.camera.x*game.scaling.x, -player.camera.y*game.scaling.y); //translate the context to include what the camera sees
+        // ctx.scale(game.scaling.x, game.scaling.y); //scale all drawing
+        //ctx.imageSmoothingEnabled = true;
+
+        mapHandler.map.render();
+        player.render();
 
         player.cursor.render();
         for(let i = 0; i < objectList.length; i++)
             objectList[i].render();
 
         renderer.renderProjectiles();
-        renderer.renderForeground();
+        //renderer.renderForeground();
         // if(!player.behindForeground)
         ctx.globalAlpha = mapHandler.foregroundAlpha;
-            mapHandler.map.renderForeground();
+            //mapHandler.map.renderForeground();
 
         //console.log(mapHandler.foregroundAlpha);
         ctx.globalAlpha = 1.0;
         //player.renderHealth();
         userInterface.render();
 
-        if(Date.now() >= TimeNowR)
-        {
-            TimeNowR = Date.now() + 1000;
-            FPSR = countR;
-            countR = 0;
-        }
-        countR++;
-        
-        
+        ctx.setTransform(1, 0, 0, 1, 0, 0); //Reset all transforms back to default. This means scaling and the changes in x and y
+        ctx.translate(-player.camera.x*game.scaling.x, -player.camera.y*game.scaling.y); //translate the context to include what the camera sees
+        ctx.scale(game.scaling.x, game.scaling.y); //scale all drawing
+        // ctx.scale(0.5, 0.5);
+        //ctx.scale(0.5, 0.5); //scale all drawing
+        // let bitmap = createImageBitmap(renderer.buffer, {resizeWidth: (renderer.buffer.width*game.scaling.x), resizeHeight: (renderer.buffer.height*game.scaling.y), resizeQuality: 'high'});
+        // console.log(bitmap);
+
+        ctx.drawImage(renderer.buffer, 0, 0);
+        console.log(`${player.camera.x}, ${player.camera.y}`);
+
+        //ctx.drawImage(renderer.buffer, player.camera.x, player.camera.y, player.camera.x + player.camera.viewport.width, player.camera.y + player.camera.viewport.height, 0, 0, canvas.width, canvas.height);
+
+
+        //ctx.drawImage(renderer.buffer, 0, 0, 973 / game.scaling.y, 0, 0, canvas.width, canvas.height);
         
         requestAnimationFrame(renderer.renderScreen);
     }
 
-    renderMain()
+    renderMain() //CURRENTLY NOT USED
     {
         this.clearScreen();
         mapHandler.map.render();
@@ -55,6 +84,7 @@ class Renderer
     clearScreen()
     {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, this.buffer.width, this.buffer.height);
     }
 
     renderForeground()

@@ -1,6 +1,6 @@
-const spritesheet_GreenSlime = addImage("images/enemies/slime/green_slime.png");
+const spritesheet_RedSlime = addImage("images/enemies/slime/red_slime.png");
 
-class GreenSlime extends Enemy
+class RedSlime extends Enemy
 {
     static defaultAnimationFrames = [
         {
@@ -43,27 +43,29 @@ class GreenSlime extends Enemy
 
     constructor(x, y)
     {
-        super(
-            x, y, 24, 24, 3, 
+        super(x, y, 28, 28, 3,
             { //drawData
-                width: 32,
-                height: 32,
+                width: 28,
+                height: 28,
                 offset: {x: -4 , y: -4}
             }
         );
-        this.spritesheet = spritesheet_GreenSlime;
+        this.spritesheet = spritesheet_RedSlime;
 
         this.tx = this.x;
         this.ty = this.y;
     
-        this.speed = 32 /game.targetFPS; // divide by targetFPS to get pixels per second in speed
+        this.speed = 48 /game.targetFPS; // divide by 60 to get pixels per second in speed
         this.velX = 0;
         this.velY = 0;
     
         this.direction = "right";
-        this.damage = 1;
+        this.damage = 2;
 
-        this.expYield = 10;
+        this.expYield = 20;
+        this.aggroRange = 250;
+
+    
         this.targetDestination = {};
         
     
@@ -73,9 +75,9 @@ class GreenSlime extends Enemy
 
         //animation
         this.animations = {
-            move: new Animation(this, 'move', GreenSlime.defaultAnimationFrames, true),
-            onHit: new Animation(this, 'onHit', GreenSlime.onHitAnimationFrames, false),
-            death: new Animation(this, 'death', GreenSlime.deathAnimationFrames, false)
+            move: new Animation(this, 'move', RedSlime.defaultAnimationFrames, true),
+            onHit: new Animation(this, 'onHit', RedSlime.onHitAnimationFrames, false),
+            death: new Animation(this, 'death', RedSlime.deathAnimationFrames, false)
         };
         this.currentAnimation = this.animations.move; //set start animation
 
@@ -87,10 +89,10 @@ class GreenSlime extends Enemy
     init()
     {
         this.currentAnimation.play();
-        this.setDestination();
+        this.setRandomDestination();
     }
 
-    setDestination()
+    setRandomDestination()
     {
         let min = 50;
         let max = 200;
@@ -111,11 +113,18 @@ class GreenSlime extends Enemy
         this.velY = (dy/magnitude) * this.speed;
     }
 
-    // render()
-    // {
-    //     let sourceY = this.anim*this.width;
-    //     ctx.drawImage(this.renderData.spritesheet, 0,sourceY,32,32,this.x,this.y,32,32);
-    // }
+    setDestination(tx, ty)
+    {
+        this.targetDestination.x = tx;
+        this.targetDestination.y = ty;
+
+        let dx = this.targetDestination.x - this.x;
+        let dy = this.targetDestination.y - this.y;
+
+        let magnitude = Math.sqrt(dx*dx + dy*dy);
+        this.velX = (dx/magnitude) * (this.speed*1.5);
+        this.velY = (dy/magnitude) * (this.speed*1.5);
+    }
 
     onAnimationEnd(animationName)
     {
@@ -144,12 +153,6 @@ class GreenSlime extends Enemy
                 return;
             }
             this.animations.onHit.play();
-            // this.anim = 2;
-            // setTimeout(() => {
-            //     this.anim = 0;
-            //     this.iframesActive = false;
-            //     this.animate();
-            // }, 150);
         }
     }
 
@@ -167,11 +170,21 @@ class GreenSlime extends Enemy
 
         if(!this.dead)
         {
+            if(distBetweenPoints(this.center.x, this.center.y, player.center.x, player.center.y) <= this.aggroRange)
+            {
+                this.state = this.states.chasing;
+                this.setDestination(player.center.x, player.center.y);
+            }
+            else if(this.state === this.states.chasing)
+            {
+                this.state = this.states.walking;
+                this.setRandomDestination();
+            }
             let range = 10; //the range for target destination
             if(this.x > this.targetDestination.x-range && this.x < this.targetDestination.x+range
             && this.y > this.targetDestination.y-range && this.y < this.targetDestination.y+range)
             {
-                this.setDestination();
+                this.setRandomDestination();
             }
 
             if(!this.iframesActive)
@@ -186,6 +199,7 @@ class GreenSlime extends Enemy
     //MOVEMENT: This makes the character moving based on the keys etc.
     move()
     {  
+        
         this.tx = this.x + this.velX;
         this.ty = this.y + this.velY;
     }
@@ -194,32 +208,61 @@ class GreenSlime extends Enemy
     {
 
         let map = mapHandler.map;
+        let col = {x: false, y: false};
 
-        let tlTile = map.getTileId(this.tx, this.ty);
-        let trTile = map.getTileId(this.tx + this.width, this.ty);
+
+        //check col in x-axis
+        let tlTile = map.getTileId(this.tx, this.y);
+        let trTile = map.getTileId(this.tx + this.width, this.y);
         //middle left, middle right
-        let mlTile = map.getTileId(this.tx, this.ty + (this.height/2));
-        let mrTile = map.getTileId(this.tx + this.width, this.ty + (this.height/2));
+        let mlTile = map.getTileId(this.tx, this.y + (this.height/2));
+        let mrTile = map.getTileId(this.tx + this.width, this.y + (this.height/2));
         //bottom left, bottom right
-        let blTile = map.getTileId(this.tx, this.ty + this.height);
-        let brTile = map.getTileId(this.tx + this.width, this.ty + this.height);
+        let blTile = map.getTileId(this.tx, this.y + this.height);
+        let brTile = map.getTileId(this.tx + this.width, this.y + this.height);
 
-        if(!tlTile.solid && !trTile.solid 
-        && !mlTile.solid && !mrTile.solid 
-        && !blTile.solid && !brTile.solid)
+        if(tlTile.solid || trTile.solid 
+        || mlTile.solid || mrTile.solid 
+        || blTile.solid || brTile.solid)
+        {
+            this.tx = this.x;
+            col.x = true;
+        }
+
+        //check col in y-axis
+        tlTile = map.getTileId(this.x, this.ty);
+        trTile = map.getTileId(this.x + this.width, this.ty);
+        //middle left, middle right
+        mlTile = map.getTileId(this.x, this.ty + (this.height/2));
+        mrTile = map.getTileId(this.x + this.width, this.ty + (this.height/2));
+        //bottom left, bottom right
+        blTile = map.getTileId(this.x, this.ty + this.height);
+        brTile = map.getTileId(this.x + this.width, this.ty + this.height);
+
+        if(tlTile.solid || trTile.solid 
+        || mlTile.solid || mrTile.solid 
+        || blTile.solid || brTile.solid)
+        {
+            this.ty = this.y;
+            col.y = true;
+        }
+        
+        if(col.x && col.y)
+        {
+            this.setRandomDestination(); //randomize new target destination upon col
+        }
+        else if( (col.x || col.y) && this.state != this.states.chasing)
         {
             this.setXY(this.tx, this.ty);
-            // this.x = this.tx;
-            // this.y = this.ty;
+            this.setRandomDestination();
         }
-        else
+        else if(!col.x || !col.y)
         {
-            this.setDestination(); //randomize new target destination upon col
+            //console.log(this.state);
+            this.setXY(this.tx, this.ty);
         }
+
 
     }
-
-
-
 
 }

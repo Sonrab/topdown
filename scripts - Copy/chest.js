@@ -50,5 +50,5 @@ CChest.prototype.render = function()
     if(this.renderContent)
         renderer.foregroundQueue.push([this.content.img, this.x, this.y]);
 
-    renderer.bufferCtx.drawImage(this.img, this.x, this.y);
+    ctx.drawImage(this.img, this.x, this.y);
 };

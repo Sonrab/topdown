@@ -11,6 +11,7 @@ class GameMap
         this.enemies = enemies;
         this.grid = grid;
         this.background = backgroundimg;
+        console.log(enemies);
         this.mapsize = {width : grid[0].length*tileWidth, height : grid.length*tileWidth}
     }
 
@@ -39,16 +40,6 @@ class GameMap
         {
             loopColsTo = this.mapsize.width/tileWidth;
         }
-
-        /*REMOVE LATER ??? */
-        // loopRowsFrom = 0;
-        // loopColsFrom = 0;
-        // loopRowsTo = this.mapsize.height/tileWidth;
-        // loopColsTo = this.mapsize.width/tileWidth;
-        /* ----- */
-
-
-
         //console.log(`Rows: ${loopRowsFrom} -> ${loopRowsTo}, Cols: ${loopColsFrom} -> ${loopColsTo}`);
     
         //console.log(`Rows: ${player.camera.viewport.width} -> ${loopRowsTo}, Cols: ${loopColsFrom} -> ${loopColsTo}`);
@@ -84,8 +75,7 @@ class GameMap
                     let sourceX = Math.floor(tileId % imgPerRowTilesheet) *tileWidth;
                     let sourceY = Math.floor(tileId / imgPerRowTilesheet) *tileWidth;
     
-                    renderer.bufferCtx.drawImage(tilesheet, sourceX, sourceY, tileWidth, tileWidth, col*tileWidth, row*tileWidth, tileWidth, tileWidth);
-                    //ctx.drawImage(tilesheet, sourceX, sourceY, tileWidth, tileWidth, col*tileWidth, row*tileWidth, tileWidth, tileWidth);
+                    ctx.drawImage(tilesheet, sourceX, sourceY, tileWidth, tileWidth, col*tileWidth, row*tileWidth, tileWidth, tileWidth);
     
                 }
                 //write out coordinates on screen
