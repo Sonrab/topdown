@@ -8,6 +8,7 @@ const chestImg = addImage("images/red_armor.png");
 
 
 const spritesheet_player = addImage("images/player/player_sheet.png");
+const imgPlayer = addImage("images/player/player.png");
 
 class Player
 {
@@ -16,7 +17,8 @@ class Player
     constructor()
     {
 
-        this.spritesheet = spritesheet_player;
+        //this.spritesheet = spritesheet_player;
+        this.spritesheet = imgPlayer;
         this.behindForeground = false;
         //x, y and targetx, targety values
         this.x = 0;
@@ -65,28 +67,41 @@ class Player
         
         this.walking = false;
     
-        this.bow = new Bow();
+        this.bow = new Rifle();
+        //this.bow = new Bow();
         this.grappler = new CGrappler();
     
         this.equippedWep = this.bow;
 
-
         this.animations = {
             walk : {
-                down: new Animation(this, 'walkDown', Player.walkDownAnimFrames, true),
                 left: new Animation(this, 'walkLeft', Player.walkLeftAnimFrames, true),
                 right: new Animation(this, 'walkRight', Player.walkRightAnimFrames, true),
-                up: new Animation(this, 'walkUp', Player.walkUpAnimFrames, true)
             },
             idle: {
-                down: new Animation(this, 'idleDown', [Player.walkDownAnimFrames[1]], true),
                 left: new Animation(this, 'idleLeft', [Player.walkLeftAnimFrames[1]], true),
-                right: new Animation(this, 'idleRight', [Player.walkRightAnimFrames[1]], true),
-                up: new Animation(this, 'idleUp', [Player.walkUpAnimFrames[1]], true)
-            },
-            dodgeRoll: new Animation(this, 'dodgeRoll', Player.dodgeRollFrames, true)
+                right: new Animation(this, 'idleRight', [Player.walkRightAnimFrames[1]], true)
+            }
         };
-        this.currentAnimation = this.animations.walk.down;
+        this.currentAnimation = this.animations.walk.left;
+
+
+        // this.animations = {
+        //     walk : {
+        //         down: new Animation(this, 'walkDown', Player.walkDownAnimFrames, true),
+        //         left: new Animation(this, 'walkLeft', Player.walkLeftAnimFrames, true),
+        //         right: new Animation(this, 'walkRight', Player.walkRightAnimFrames, true),
+        //         up: new Animation(this, 'walkUp', Player.walkUpAnimFrames, true)
+        //     },
+        //     idle: {
+        //         down: new Animation(this, 'idleDown', [Player.walkDownAnimFrames[1]], true),
+        //         left: new Animation(this, 'idleLeft', [Player.walkLeftAnimFrames[1]], true),
+        //         right: new Animation(this, 'idleRight', [Player.walkRightAnimFrames[1]], true),
+        //         up: new Animation(this, 'idleUp', [Player.walkUpAnimFrames[1]], true)
+        //     },
+        //     dodgeRoll: new Animation(this, 'dodgeRoll', Player.dodgeRollFrames, true)
+        // };
+        // this.currentAnimation = this.animations.walk.down;
 
         //possible directions
         this.directions = Object.freeze({ 
@@ -105,7 +120,7 @@ class Player
 
         this.state = this.states.idle;
 
-        this.direction = this.directions.down; //direction the player is facing to display correctly
+        this.direction = this.directions.left; //direction the player is facing to display correctly
     
 
         /* DATA FOR DIFFERENT SKILLS AND ABILITIES */
@@ -525,7 +540,7 @@ class Player
         }
         //this.orb.render();
         //ctx.drawImage(this.spritesheet, sourceX,sourceY,this.drawWidth,this.drawHeight, Math.round(this.x - (this.drawWidth-this.width)/2),Math.round(this.y - (this.drawHeight - this.height)),this.drawWidth,this.drawHeight);
-        //this.equippedWep.render();
+        this.equippedWep.render();
     }
 
 
@@ -545,14 +560,19 @@ class Player
         if(angle < 0)
             angle = 360 - (-angle);
 
-        if(angle > 315 && angle <= 360 || angle <= 45) //right
+        if(angle > 270 && angle <= 360 || angle <= 90) //right
             this.setDirection(this.directions.right)
-        else if(angle > 45 && angle <= 135) //down
-            this.setDirection(this.directions.down)
-        else if(angle > 135 && angle <= 225) //left
+        else if(angle > 90 && angle <= 270) //left
             this.setDirection(this.directions.left)
-        else if(angle > 225 && angle <= 315) //up
-            this.setDirection(this.directions.up)
+
+        // if(angle > 315 && angle <= 360 || angle <= 45) //right
+        //     this.setDirection(this.directions.right)
+        // else if(angle > 45 && angle <= 135) //down
+        //     this.setDirection(this.directions.down)
+        // else if(angle > 135 && angle <= 225) //left
+        //     this.setDirection(this.directions.left)
+        // else if(angle > 225 && angle <= 315) //up
+        //     this.setDirection(this.directions.up)
     }
 
     update()
@@ -958,7 +978,7 @@ class Player
         }
     }
 
-    static walkDownAnimFrames = [
+    static walkLeftAnimFrames = [
         {
             "cutFrom": { "x": 0, "y": 0},
             "sourceFrameSize": { "w": 32, "h": 32},
@@ -976,7 +996,7 @@ class Player
         }
     ];
 
-    static walkLeftAnimFrames = [
+    static walkRightAnimFrames = [
         {
             "cutFrom": { "x": 0, "y": 32},
             "sourceFrameSize": { "w": 32, "h": 32},
@@ -994,59 +1014,111 @@ class Player
         }
     ];
 
-    static walkRightAnimFrames = [
+    static idleLeftAnimFrames = [
         {
-            "cutFrom": { "x": 0, "y": 64},
+            "cutFrom": { "x": 32, "y": 0},
             "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        },
-        {
-            "cutFrom": { "x": 32, "y": 64},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        },
-        {
-            "cutFrom": { "x": 64, "y": 64},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
+            "duration": 10000
         }
-    ];
+    ]
 
-    static walkUpAnimFrames = [
+    static idleRightAnimFrames = [
         {
-            "cutFrom": { "x": 0, "y": 96},
+            "cutFrom": { "x": 0, "y": 32},
             "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        },
-        {
-            "cutFrom": { "x": 32, "y": 96},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        },
-        {
-            "cutFrom": { "x": 64, "y": 96},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
+            "duration": 10000
         }
-    ];
+    ]
 
-    static dodgeRollFrames = [
-        {
-            "cutFrom": { "x": 96, "y": 0},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        },
-        {
-            "cutFrom": { "x": 96, "y": 32},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        },
-        {
-            "cutFrom": { "x": 96, "y": 64},
-            "sourceFrameSize": { "w": 32, "h": 32},
-            "duration": 150
-        }
-    ];
+    // static walkDownAnimFrames = [
+    //     {
+    //         "cutFrom": { "x": 0, "y": 0},
+    //         "sourceFrameSize": { "w": 32, "h": 32},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 32, "y": 0},
+    //         "sourceFrameSize": { "w": 32, "h": 32},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 64, "y": 0},
+    //         "sourceFrameSize": { "w": 32, "h": 32},
+    //         "duration": 150
+    //     }
+    // ];
+
+    // static walkLeftAnimFrames = [
+    //     {
+    //         "cutFrom": { "x": 0, "y": 32},
+    //         "sourceFrameSize": { "w": 32, "h": 32},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 32, "y": 32},
+    //         "sourceFrameSize": { "w": 32, "h": 32},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 64, "y": 32},
+    //         "sourceFrameSize": { "w": 32, "h": 32},
+    //         "duration": 150
+    //     }
+    // ];
+
+    // static walkRightAnimFrames = [
+    //     {
+    //         "cutFrom": { "x": 0, "y": 64},
+    //         "sourceFrameSize": { "w": 32, "h": 32},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 32, "y": 64},
+    //         "sourceFrameSize": { "w": 32, "h": 32},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 64, "y": 64},
+    //         "sourceFrameSize": { "w": 32, "h": 32},
+    //         "duration": 150
+    //     }
+    // ];
+
+    // static walkUpAnimFrames = [
+    //     {
+    //         "cutFrom": { "x": 0, "y": 96},
+    //         "sourceFrameSize": { "w": 32, "h": 32},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 32, "y": 96},
+    //         "sourceFrameSize": { "w": 32, "h": 32},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 64, "y": 96},
+    //         "sourceFrameSize": { "w": 32, "h": 32},
+    //         "duration": 150
+    //     }
+    // ];
+
+    // static dodgeRollFrames = [
+    //     {
+    //         "cutFrom": { "x": 96, "y": 0},
+    //         "sourceFrameSize": { "w": 32, "h": 32},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 96, "y": 32},
+    //         "sourceFrameSize": { "w": 32, "h": 32},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 96, "y": 64},
+    //         "sourceFrameSize": { "w": 32, "h": 32},
+    //         "duration": 150
+    //     }
+    // ];
 }
 
 
