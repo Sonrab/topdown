@@ -10,11 +10,6 @@ class Game
 
         //set game scaling.
         this.scaling = {
-            x: 2,
-            y: 2
-        };
-
-        this.scaling = {
             x: 2*(window.innerWidth/1920), 
             y: 2*(window.innerHeight/1080)
         };
@@ -40,10 +35,7 @@ class Game
             this.initList[i].init();
         }
 
-        setTimeout(function(){
-            requestAnimationFrame(renderer.renderScreen);
-        }, 1000);
-        
+        requestAnimationFrame(renderer.renderScreen);        
     }
 
     start()

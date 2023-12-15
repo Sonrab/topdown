@@ -5,7 +5,6 @@ class Item
         this.name = name;
         this.itemType = itemType;
         this.img = addImage("images/item_icons/" + imgsrc);
-        this.imgSrc = "images/item_icons/" + imgsrc;
         this.item = item;
     }
 }
@@ -44,5 +43,41 @@ itemList.set("chof_shirt",
         "chest",
         "icon_shirt.png",
         new Armor('chest')
+    )
+);
+
+itemList.set("chof_business_shirt",
+    new Item(
+        "Chof's business shirt",
+        "chest",
+        "icon_business_shirt.png",
+        new Armor('chest')
+    )
+);
+
+itemList.set("leather_gloves",
+    new Item(
+        "Leather Gloves",
+        "hands",
+        "icon_gloves.png",
+        new Armor('hands')
+    )
+);
+
+itemList.set("leather_boots",
+    new Item(
+        "Leather Boots",
+        "boots",
+        "icon_boots.png",
+        new Armor('boots')
+    )
+);
+
+itemList.set("chof_hat",
+    new Item(
+        "Chof's winter hat",
+        "helm",
+        "icon_hat.png",
+        new Armor('helm')
     )
 );

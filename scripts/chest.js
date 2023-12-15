@@ -1,14 +1,12 @@
-const chest_open = new Image();
-const chest_closed = new Image();
-chest_open.src = "images/chest/chest_open.png";
-chest_closed.src = "images/chest/chest_closed.png";
+const imgChestOpen = addImage("images/chest/chest_open.png");
+const imgChestClosed = addImage("images/chest/chest_closed.png");
 
 class Chest
 {
-    constructor(x, y, content)
+    constructor(x, y, contentType, content)
     {
         this.type = "chest";
-        this.img = chest_closed;
+        this.img = imgChestClosed;
     
         this.tileX = x;
         this.tileY = y;
@@ -17,6 +15,7 @@ class Chest
     
         this.closed = true;
         this.content = content;
+        this.contentType = contentType;
         this.renderContent = false;
     }
 
@@ -25,12 +24,17 @@ class Chest
         if(this.closed)
         {
             this.closed = false;
-            this.img = chest_open;
+            this.img = imgChestOpen;
     
-            console.log(this.content);
-            //executes the function stored in the content like applying an upgrade
-            this.content.execute();
-    
+            switch(this.contentType)
+            {
+                case 'item':
+                    Inventory.addItem(this.content);
+                    break;
+                case 'upgrade':
+                    this.content.execute();
+            }
+            
             this.toggleRenderContent();
         }
         else
@@ -49,9 +53,11 @@ class Chest
 
     render()
     {
-        if(this.renderContent)
-        renderer.foregroundQueue.push([this.content.img, this.x, this.y]);
-
-        mapBufferCtx.drawImage(this.img, this.x, this.y);
+        if(this.renderContent) //render the content inside the chest after opening
+        {
+            renderer.foregroundQueue.push([this.content.img, this.x, this.y]);
+        }
+            
+        ctx.drawImage(this.img, this.x, this.y);
     }
 }

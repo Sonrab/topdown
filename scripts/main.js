@@ -199,7 +199,12 @@ canvas.addEventListener("mousedown", function(event) {
     mouse.down = true;
 });
 
-canvas.addEventListener("mouseup", function(event) {
+// canvas.addEventListener("mouseup", function(event) {
+//     event.preventDefault();
+//     mouse.down = false;
+// });
+
+document.addEventListener("mouseup", function(event) {
     event.preventDefault();
     mouse.down = false;
 });

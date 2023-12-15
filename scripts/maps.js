@@ -17,36 +17,43 @@ function loadMaps()
                         new Chest(
                                 x = 38,
                                 y = 13,
-                                content = upgradeList.getUpgradeByName("unlock_bomb")
+                                contentType = 'item',
+                                content = itemList.get("leather_gloves")
                         ),
                         new Chest(
                                 x = 39,
                                 y = 13,
-                                content = upgradeList.getUpgradeByName("unlock_bomb")
+                                contentType = 'item',
+                                content = itemList.get("leather_boots")
                         ),
                         new Chest(
                                 x = 15,
                                 y = 13,
+                                contentType = 'upgrade',
                                 content = upgradeList.getUpgradeByName("unlock_bomb")
                         ),
                         new Chest(
                                 x = 8,
                                 y = 12,
+                                contentType = 'item',
                                 content = upgradeList.getUpgradeByName("bow_damage_upgrade")     
                         ),
                         new Chest(
                                 x = 9,
                                 y = 12,
+                                contentType = 'upgrade',
                                 content = upgradeList.getUpgradeByName("upgrade_health_5")        
                         ),
                         new Chest(
                                 x = 6,
                                 y = 12,
-                                content = upgradeList.getUpgradeByName("upgrade_health_10")        
+                                contentType = 'item',
+                                content = itemList.get("chof_hat")  
                         ),
                         new Chest(
                                 x = 11,
                                 y = 13,
+                                contentType = 'upgrade',
                                 content = upgradeList.getUpgradeByName("unlock_dodgeRoll")        
                         )
                 ],
@@ -112,18 +119,27 @@ function loadMaps()
                         new LargeChest(
                                 x = 7,
                                 y = 2,
+                                contentType = 'item',
                                 content = itemList.get("barnos_shotgun")
                         ),
                         new LargeChest(
                                 x = 2,
                                 y = 4,
+                                contentType = 'item',
                                 content = itemList.get("chof_shirt")
 
                         ),
                         new LargeChest(
                                 x = 11,
                                 y = 6,
+                                contentType = 'item',
                                 content = itemList.get("chof_pants")
+                        ),
+                        new Chest(
+                                x = 2,
+                                y = 7,
+                                contentType = 'item',
+                                content = itemList.get("chof_business_shirt") 
                         )
                 ],
                 enemies = [

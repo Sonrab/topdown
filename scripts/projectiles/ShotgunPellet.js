@@ -16,7 +16,7 @@ class ShotgunPellet extends Projectile
         this.width = 6;
         this.height = 6;
         this.magnitude = magnitude;
-        this.speed = randomFloat(10, 14);
+        this.speed = randomFloat(14, 18);
         this.velX = (dx/magnitude) * this.speed;
         this.velY = (dy/magnitude) * this.speed;
         this.animations = {
@@ -41,8 +41,8 @@ class ShotgunPellet extends Projectile
         this.x += this.velX;
         this.y += this.velY;
 
-        this.velX *= 0.98;
-        this.velY *= 0.98;
+        this.velX *= 0.95;
+        this.velY *= 0.95;
 
 
     

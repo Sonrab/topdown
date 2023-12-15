@@ -7,11 +7,6 @@ class EquipmentSlot
         this.slotItemType = slotItemType;
         this.item = null;
 
-        this.init();
-    }
-
-    init()
-    {
         this.element.addEventListener("drop", equipmentDropHandler);
         this.element.addEventListener("dragover", dragOverHandler);
     }
@@ -22,24 +17,6 @@ class EquipmentSlot
         this.item = item.item;
         this.element.appendChild(this.item.imageElement);
     }
-
-
-    // equipItem()
-    // {
-    //     player.equippedWep = this.item;
-    // }
-
-    inventorySlotRmbClick()
-    {
-        console.log(this.itemName);
-    }
-
-    createInventoryItem()
-    {
-
-    }
-
-
 }
 
 

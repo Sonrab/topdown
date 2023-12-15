@@ -18,7 +18,9 @@ class MapHandler
     setMap(map, spawn)
     {
         this.clearMap();
-        game.musicPlayer.changeAudio(map.audio);
+
+        //uncomment to enable music
+        //game.musicPlayer.changeAudio(map.audio);
 
 
         this.map = map;

@@ -4,7 +4,7 @@ const imgLargeChestClosed = addImage("images/chest/chest_large_closed.png");
 
 class LargeChest
 {
-    constructor(x, y, item)
+    constructor(x, y, contentType, content)
     {
         this.type = "chest";
         this.img = imgLargeChestClosed;
@@ -15,7 +15,8 @@ class LargeChest
         this.y = (y * tileWidth) -17;
     
         this.closed = true;
-        this.item = item;
+        this.content = content;
+        this.contentType = contentType;
         this.renderContent = false;
     }
 
@@ -25,12 +26,15 @@ class LargeChest
         {
             this.closed = false;
             this.img = imgLargeChestOpen;
-    
-            console.log(this.item);
-            player.inventory.addItem(this.item);
-            //executes the function stored in the content like applying an upgrade
-            // console.log(this.content);
-            // this.content.execute();
+
+            switch(this.contentType)
+            {
+                case 'item':
+                    Inventory.addItem(this.content);
+                    break;
+                case 'upgrade':
+                    this.content.execute();
+            }
     
             this.toggleRenderContent();
         }
@@ -51,7 +55,9 @@ class LargeChest
     render()
     {
         if(this.renderContent)
-        renderer.foregroundQueue.push([this.item.img, this.x + 16, this.y]);
+        {
+            renderer.foregroundQueue.push([this.content.img, this.x+16, this.y]);
+        }
 
         ctx.drawImage(this.img, this.x, this.y);
     }

@@ -1,4 +1,7 @@
 const inventoryElement = document.getElementById('inventory');
+inventoryElement.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+});
 
 class Inventory
 {
@@ -39,14 +42,26 @@ class Inventory
 
     addItem(item)
     {
+        let index = Inventory.findFirstEmptySlot();
+        Inventory.slots[index].setSlotContent(new InventoryItem(item, Inventory.slots[index].element));
+    }
+
+    static addItem(item)
+    {
+        let index = Inventory.findFirstEmptySlot();
+        Inventory.slots[index].setSlotContent(new InventoryItem(item, Inventory.slots[index].element));
+    }
+
+    static findFirstEmptySlot() //Returns index of first empty slot or returns false
+    {
         for(let i = 0; i < Inventory.slots.length; i++)
         {
             if(Inventory.slots[i].item === null)
             {
-                Inventory.slots[i].setSlotContent(new InventoryItem(item, Inventory.slots[i].element));
-                return;
+                return i;
             }
         }
+        return false;
     }
 
     static moveItemLocation(fromSlot, toSlot)
@@ -61,6 +76,7 @@ class Inventory
         {
             fromSlot.item.item.unequip()
         }
+
         //Swap images between slots
         fromSlot.element.removeChild(fromSlot.item.imageElement);
         toSlot.element.appendChild(fromSlot.item.imageElement)
@@ -69,8 +85,6 @@ class Inventory
         //move the item data and set fromslot item to null
         toSlot.item = fromSlot.item;
         fromSlot.item = null;
-
-        
     }
 
     static swapItemLocations(fromSlot, toSlot)
@@ -78,12 +92,6 @@ class Inventory
         if(fromSlot === toSlot)
         {
             console.log("Cannot move items from and to itself");
-            return;
-        }
-        else if(fromSlot.slotType === 'equipment' && toSlot.slotType === 'equipment') //every equip goes to unique slot. If both are equip the move is invalid.
-        //should probably be moved to equipment slot later
-        {
-            console.log("Invalid equipment slot.");
             return;
         }
 
@@ -103,7 +111,7 @@ class Inventory
     {
         if(fromSlot.item.itemType !== toSlot.slotItemType)
         {
-            console.log("Invalid equipment type.");
+            console.log("This slot can not hold this item!");
             return;
         }
             
@@ -129,6 +137,11 @@ class Inventory
     static swapEquipmentLocations(fromSlot, toSlot)
     {
         if(fromSlot.item.itemType !== toSlot.item.itemType)
+        {
+            console.log("This slot can not hold this item!");
+            return;
+        }
+        else if(fromSlot === toSlot)
         {
             console.log("Cannot move items from and to itself");
             return;

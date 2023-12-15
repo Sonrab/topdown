@@ -13,11 +13,6 @@ class InventorySlot
         this.element.appendChild(this.item.imageElement);
     }
 
-    inventorySlotRmbClick()
-    {
-        console.log(this.itemName);
-    }
-
     deleteItem()
     {
         this.element.removeChild(this.item.element);
