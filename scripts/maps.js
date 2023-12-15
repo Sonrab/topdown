@@ -109,15 +109,26 @@ function loadMaps()
                         // exitTo = "start2",
                         // spawn = {x : 4, y : 3}
                         // ),
-                        new Chest(
-                                x = 5,
-                                y = 5,
-                                content = upgradeList.getUpgradeByName("upgrade_grappler")
+                        new LargeChest(
+                                x = 7,
+                                y = 2,
+                                content = itemList.get("barnos_shotgun")
+                        ),
+                        new LargeChest(
+                                x = 2,
+                                y = 4,
+                                content = itemList.get("chof_shirt")
+
+                        ),
+                        new LargeChest(
+                                x = 11,
+                                y = 6,
+                                content = itemList.get("chof_pants")
                         )
                 ],
                 enemies = [
-                        new Bat(64, 64),
-                        new Bat(128, 92)
+                        // new Bat(64, 64),
+                        // new Bat(128, 92)
                 ],
                 grid = [
                 [[1,167,0],[1,168,0],[1,169,0],[1,170,0],[1,167,0],[1,168,0],[1,169,0],[1,170,0],[1,167,0],[1,168,0],[1,169,0],[1,170,0],[1,167,0],[1,168,0],[1,169,0]]

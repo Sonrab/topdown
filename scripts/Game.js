@@ -20,20 +20,25 @@ class Game
         };
 
         console.log(this.scaling);
+        this.initList = [];
     }
 
     setup()
     {
         upgradeList = new UpgradeList();
         loadMaps();
-        
         tileHandler = new TileHandler(); //create tilehandler object
         
         renderer = new Renderer();
         player = new Player(); // Create player object
         userInterface = new UserInterface();
-        mapHandler = new MapHandler(maps.get("start"), {x : 10, y : 12}); //create maphandler object
+        mapHandler = new MapHandler(maps.get("start"), {x : 12, y : 21}); //create maphandler object
         updateEnd = performance.now();
+        
+        for(let i = 0; i < this.initList.length; i++)
+        {
+            this.initList[i].init();
+        }
 
         setTimeout(function(){
             requestAnimationFrame(renderer.renderScreen);

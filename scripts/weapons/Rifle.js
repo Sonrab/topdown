@@ -1,16 +1,16 @@
 const imgRifle = addImage("images/weapons/rifle.png");
 
 
-class Rifle
+class Rifle extends Weapon
 {
     constructor()
     {
-        this.arrowSpeed = 10;
+        super();
         this.fireRate = 5; //arrows per sec
         this.fireRateIncrease = 1; //percentage increase of firerate (1 = 100%, default)
         this.img = imgRifle;
         this.height = 5;
-        this.damage = 1;
+        this.damage = 5;
         this.mouseDownAutoUse = true;
         this.lastFire = 0;
         this.x = 0;
@@ -31,7 +31,7 @@ class Rifle
 
     unequip()
     {
-
+        player.equippedWep = player.bow;
     }
 
     use()
@@ -60,7 +60,7 @@ class Rifle
         
             let magnitude = pythagorean(dy, dx);
 
-            g_projectiles.push(new Arrow(player.center.x, player.center.y, dx, dy, magnitude, angle, this.damage, "player"));
+            g_projectiles.push(new RifleBullet(player.center.x, player.center.y, dx, dy, magnitude, angle, this.damage, "player"));
         }
     }
 
@@ -68,7 +68,6 @@ class Rifle
     {
         this.x = player.x;
         this.y = player.y;
-        console.log(player.direction);
         switch(player.direction)
         {   
             case player.directions.left:

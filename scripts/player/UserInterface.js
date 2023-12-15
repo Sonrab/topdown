@@ -1,4 +1,4 @@
-const inventory = document.querySelector("#UI_inventory")
+const inventory = document.getElementById("inventory")
 const inventory_playerStats = document.querySelector("#UI_inventory_playerStats")
 
 const healthBarText = document.querySelector("#healthText");

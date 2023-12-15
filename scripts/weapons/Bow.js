@@ -2,10 +2,11 @@ const spritesheet_bow = new Image();
 spritesheet_bow.src = "images/weapons/bow.png";
 
 
-class Bow
+class Bow extends Weapon
 {
     constructor()
     {
+        super();
         this.arrowSpeed = 10;
         this.fireRate = 5; //arrows per sec
         this.fireRateIncrease = 1; //percentage increase of firerate (1 = 100%, default)

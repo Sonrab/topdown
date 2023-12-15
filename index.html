@@ -158,27 +158,27 @@
                 <div class="user-interface">
                 
                     <!-- <div class="bomb-icon" id="bombIcon"><div class="bomb-icon_cooldown_overlay">3</div></div> -->
-                    <div class="inventory fadeOut" id="UI_inventory">
+                    <div class="inventory fadeOut" id="inventory">
                         <div class="inventory-left">
                             <div class="equipment">
                                 <div class="equipment-row">
                                     <div class="equipment-slot accessory-slot item-slot">Accessory</div>
-                                    <div class="equipment-slot item-slot">Helm</div>
+                                    <div id="helm" class="equipment-slot item-slot"></div>
                                     <div class="equipment-slot accessory-slot item-slot">Accessory</div>
                                 </div>
                                 <div class="equipment-row">
-                                    <div class="equipment-slot item-slot">Wep</div>
-                                    <div class="equipment-slot item-slot">Chest</div>
-                                    <div class="equipment-slot item-slot">Offhand</div>
+                                    <div id="weapon" class="equipment-slot item-slot "></div>
+                                    <div id="chest" class="equipment-slot item-slot "></div>
+                                    <div id="hands" class="equipment-slot item-slot"></div>
                                 </div>
                                 <div class="equipment-row">
                                     <div class="equipment-slot accessory-slot item-slot">Accessory</div>
-                                    <div class="equipment-slot item-slot">Pants</div>
+                                    <div id="legs" class="equipment-slot item-slot"></div>
                                     <div class="equipment-slot accessory-slot item-slot">Accessory</div>
                                 </div>
                                 <div class="equipment-row">
                                     <div class="equipment-slot accessory-slot item-slot">Accessory</div>
-                                    <div class="equipment-slot item-slot">Boots</div>
+                                    <div id="boots" class="equipment-slot item-slot"></div>
                                     <div class="equipment-slot accessory-slot item-slot">Accessory</div>
                                 </div>
                             </div>
@@ -190,44 +190,44 @@
                         <div class="inventory-right">
                             <div class="inventory-rows flex-col">
                                 <div class="inventory-row flex-row">
-                                    <div class="inventory-slot item-slot">1</div>
-                                    <div class="inventory-slot item-slot">2</div>
-                                    <div class="inventory-slot item-slot">3</div>
-                                    <div class="inventory-slot item-slot">4</div>
-                                    <div class="inventory-slot item-slot">5</div>
-                                    <div class="inventory-slot item-slot">6</div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
                                 </div>
                                 <div class="inventory-row flex-row">
-                                    <div class="inventory-slot item-slot">1</div>
-                                    <div class="inventory-slot item-slot">2</div>
-                                    <div class="inventory-slot item-slot">3</div>
-                                    <div class="inventory-slot item-slot">4</div>
-                                    <div class="inventory-slot item-slot">5</div>
-                                    <div class="inventory-slot item-slot">6</div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
                                 </div>
                                 <div class="inventory-row flex-row">
-                                    <div class="inventory-slot item-slot">1</div>
-                                    <div class="inventory-slot item-slot">2</div>
-                                    <div class="inventory-slot item-slot">3</div>
-                                    <div class="inventory-slot item-slot">4</div>
-                                    <div class="inventory-slot item-slot">5</div>
-                                    <div class="inventory-slot item-slot">6</div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
                                 </div>
                                 <div class="inventory-row flex-row">
-                                    <div class="inventory-slot item-slot">1</div>
-                                    <div class="inventory-slot item-slot">2</div>
-                                    <div class="inventory-slot item-slot">3</div>
-                                    <div class="inventory-slot item-slot">4</div>
-                                    <div class="inventory-slot item-slot">5</div>
-                                    <div class="inventory-slot item-slot">6</div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
                                 </div>
                                 <div class="inventory-row flex-row">
-                                    <div class="inventory-slot item-slot">1</div>
-                                    <div class="inventory-slot item-slot">2</div>
-                                    <div class="inventory-slot item-slot">3</div>
-                                    <div class="inventory-slot item-slot">4</div>
-                                    <div class="inventory-slot item-slot">5</div>
-                                    <div class="inventory-slot item-slot">6</div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
+                                    <div class="inventory-slot item-slot"></div>
                                 </div>
                             </div>
                         </div>
@@ -248,14 +248,23 @@
     <script src="scripts/player/Player.js"></script>
     <script src="scripts/player/player_input.js"></script>
     <script src="scripts/player/UserInterface.js"></script>
-    <script src="scripts/player/Inventory.js"></script>
-    <script src="scripts/player/InventorySlot.js"></script>
+
+    <script src="scripts/player/inventory/Inventory.js"></script>
+    <script src="scripts/player/inventory/InventorySlot.js"></script>
+    <script src="scripts/player/inventory/EquipmentSlot.js"></script>
+    <script src="scripts/player/inventory/InventoryItem.js"></script>
+
+    <script src="scripts/player/Armor.js"></script>
     <script src="scripts/player/Cursor.js"></script>
     <script src="scripts/player/ExperienceHandler.js"></script>
     <script src="scripts/Camera.js"></script>
     <script src="scripts/Orb.js"></script>
-    <script src="scripts/Bow.js"></script>
-    <script src="scripts/Rifle.js"></script>
+
+    <!--Weapon type scripts-->
+    <script src="scripts/weapons/Weapon.js"></script>
+    <script src="scripts/weapons/Bow.js"></script>
+    <script src="scripts/weapons/Rifle.js"></script>
+    <script src="scripts/weapons/Shotgun.js"></script>
     
 
 
@@ -267,11 +276,13 @@
     <script src="scripts/Door.js"></script>
     <script src="scripts/Passage.js"></script>
     <script src="scripts/Chest.js"></script>
+    <script src="scripts/LargeChest.js"></script>
     <script src="scripts/tile.js"></script>
     <script src="scripts/tiles.js"></script>
     <script src="scripts/tile_handler.js"></script>
     <script src="scripts/music_handler.js"></script>
     <script src="scripts/Animation.js"></script>
+
 
     <!--Enemy scripts-->
     <script src="scripts/enemy/enemy.js"></script>
@@ -281,18 +292,26 @@
     <script src="scripts/enemy/Bat.js"></script>
     
     <!--?? scripts-->
-    <script src="scripts/item_list.js"></script>
+    
     <script src="scripts/upgrade_list.js"></script>
     
     <script src="scripts/Grappler.js"></script>
-    <script src="scripts/Projectile.js"></script>
-    <script src="scripts/Arrow.js"></script>
-    <script src="scripts/Fireball.js"></script>
+
+    <!--Projectile scripts-->
+    <script src="scripts/projectiles/Projectile.js"></script>
+    <script src="scripts/projectiles/Arrow.js"></script>
+    <script src="scripts/projectiles/ShotgunPellet.js"></script>
+    <script src="scripts/projectiles/RifleBullet.js"></script>
+    <script src="scripts/projectiles/Fireball.js"></script>
+
+
+
     <script src="scripts/Bomb.js"></script>
 
     <!--general scripts-->
 
     <!--Always load main last!-->
+    <script src="scripts/ItemList.js"></script>
     <script src="scripts/Game.js"></script>
     <script src="scripts/main.js"></script>
 </html>

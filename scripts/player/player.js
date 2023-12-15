@@ -57,6 +57,12 @@ class Player
         this.camera = new Camera();
         this.inventory = new Inventory();
         this.cursor = new Cursor();
+
+        //resistances in 0-1. 0 = no dmg reduction. 1 = full damage reduction(immunity), 0.75 means damage is reduced by 75%
+        this.resistances = { 
+            physical: 0,
+            fire: 0,
+        };
     
     
         //player gravity and forces applied when moving
@@ -67,10 +73,11 @@ class Player
         
         this.walking = false;
     
-        this.bow = new Rifle();
-        //this.bow = new Bow();
+        // this.rifle = itemList.get("sture_rifle").item;
+        this.bow = new Bow();
+        // this.shotgun = itemList.get("barnos_shotgun").item;
         this.grappler = new CGrappler();
-    
+
         this.equippedWep = this.bow;
 
         this.animations = {
@@ -150,12 +157,13 @@ class Player
     
     
         this.sound = {jump : sound_player_jump, death : sound_player_death};
-        this.init();
+        game.initList.push(this);
     }
 
     init()
     {
         this.currentAnimation.play();
+        Inventory.moveToEquipment(Inventory.slots[0], Inventory.equipment.weapon);
     }
 
     setX(x)
@@ -662,8 +670,9 @@ class Player
 
     equipWeapon(wep)
     {
-        player.equippedWep.unequip();
-        wep.equip();
+        //player.equippedWep.unequip();
+        player.equippedWep = wep;
+       // wep.equip();
     }
 
     //MOVEMENT: This makes the character moving based on the keys etc.
@@ -820,14 +829,38 @@ class Player
             this.velX = 0;
         }
 
+        //start by checking corners. No need to calculate the other points if it collides at first check
+        tlTile = map.getTileId(this.x, this.ty);
+        trTile = map.getTileId(this.x + this.width, this.ty);
+
+        blTile = map.getTileId(this.x, this.ty + this.height);
+        brTile = map.getTileId(this.x + this.width, this.ty + this.height);
+
+        if(!tlTile.solid && !trTile.solid && !blTile.solid && !brTile.solid) 
+        {   
+            //no collission on corners, we proceed to calc extra points and check
+
+            //topleftmid, topmid, toprightmid
+            let halfWidth = this.width/2;
+            let quarterWidth = this.width/4;
+            let tlm = map.getTileId(this.x + (this.width/2) - quarterWidth, this.ty);
+            let tm = map.getTileId(this.x + (this.width/2), this.ty);
+            let trm;
+
+            //botleftmid, botmid, botrightmid
+            let blm;
+            let bm;
+            let brm;
+        }
+
         //y-colission
         //top left, top mid, top right
         tlTile = map.getTileId(this.x, this.ty);
         tmTile = map.getTileId(this.x + (this.width/2), this.ty);
         trTile = map.getTileId(this.x + this.width, this.ty);
-        //middle left, middle right
-        mlTile = map.getTileId(this.x, this.ty + (this.height/2));
-        mrTile = map.getTileId(this.x + this.width, this.ty + (this.height/2));
+        // //middle left, middle right
+        // mlTile = map.getTileId(this.x, this.ty + (this.height/2));
+        // mrTile = map.getTileId(this.x + this.width, this.ty + (this.height/2));
         //bottom left, bottom mid, bottom right
         blTile = map.getTileId(this.x, this.ty + this.height);
         bmTile = map.getTileId(this.x + (this.width/2), this.ty + this.height);

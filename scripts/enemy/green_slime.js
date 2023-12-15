@@ -44,7 +44,7 @@ class GreenSlime extends Enemy
     constructor(x, y)
     {
         super(
-            x, y, 24, 24, 3, 
+            x, y, 24, 24, 25, 
             { //drawData
                 width: 32,
                 height: 32,
@@ -134,7 +134,7 @@ class GreenSlime extends Enemy
     {
         if(this.health.current > 0 && !this.iframes.active)
         {          
-            this.toggleIframes();
+            // this.toggleIframes();
             this.takeDmg(dmg);
             console.log(this.health.current);
             if(this.health.current <= 0)
