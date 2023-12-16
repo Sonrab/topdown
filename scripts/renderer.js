@@ -49,7 +49,7 @@ class Renderer
         ctx.globalAlpha = 1.0;
         //player.renderHealth();
         userInterface.render();
-        // ctx.strokeRect(player.x, player.y, player.width, player.height);
+        ctx.strokeRect(player.x, player.y, player.width, player.height);
         requestAnimationFrame(renderer.renderScreen);
     }
 

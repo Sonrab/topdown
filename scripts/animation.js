@@ -1,11 +1,12 @@
 class Animation
 {
-    constructor(host, name, frames, loop)
+    constructor(host, name, frames, loop, spritesheet = null)
     {
         this.host = host; //refers to the entity which "owns" the animation
         this.name = name;
         this.frames = frames; //array of info about each frame, such as the position of the frame in spritesheet and the duration of the frame
         this.loop = loop; // true false depending on if it should loop
+        this.spritesheet = spritesheet; //Stores spritesheet reference which contains frames for this animation
         this.frameCount = this.frames.length;
         this.currentFrame = 0;
         this.animationTimeout = null;
