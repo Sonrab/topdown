@@ -8,7 +8,7 @@ class InventoryItem
         this.img = item.img;
         this.item = item.item;
 
-        this.itemInfoBox;
+        this.itemInfo = item.itemInfo;
 
         this.createInventoryImage();
         // this.imageElement.addEventListener("contextmenu", inventoryItemRmbClick, true);

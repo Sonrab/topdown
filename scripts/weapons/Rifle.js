@@ -60,7 +60,7 @@ class Rifle extends Weapon
         
             let magnitude = pythagorean(dy, dx);
 
-            g_projectiles.push(new RifleBullet(player.center.x, player.center.y, dx, dy, magnitude, angle, this.damage, "player"));
+            g_projectiles.push(new RifleBullet(player.center.x, player.y, dx, dy, magnitude, angle, this.damage, "player"));
         }
     }
 
@@ -71,14 +71,23 @@ class Rifle extends Weapon
         switch(player.direction)
         {   
             case player.directions.left:
-                ctx.drawImage(this.img, 19, 0, 19, 8, player.x-3, player.y, 19, 8);
+                ctx.drawImage(this.img, 19, 0, 19, 8, player.x, player.y-5, 19, 8);
 
                 break;
     
             case player.directions.right:
-                ctx.drawImage(this.img, 0, 0, 19, 8, player.x+3, player.y, 19, 8);
+                ctx.drawImage(this.img, 0, 0, 19, 8, player.x, player.y-5, 19, 8);
                 break;
         }   
+    }
+
+    getInventoryStats()
+    {
+        return {
+            damage: `Damage: ${this.damage}`,
+            accuracy: `Accuracy: ${this.accuracy}`,
+            fireRate: `Rate of fire: ${this.fireRate * this.fireRateIncrease}` 
+        };
     }
 }
 

@@ -16,4 +16,9 @@ class Weapon
     {
         throwAbstractionError("unequip");
     }
+
+    getInventoryStats()
+    {
+        throwAbstractionError("getInventoryStats");
+    }
 }

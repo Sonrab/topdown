@@ -140,6 +140,9 @@
 
 }
 
+.item-info-box > h2{
+    border-bottom: 3px solid rgb(26, 26, 26);
+}
 
 
 

@@ -13,6 +13,8 @@ class GameMap
         this.background = backgroundimg;
         this.mapsize = {width : grid[0].length*tileWidth, height : grid.length*tileWidth}
 
+        this.lootOnGround = [];
+
         this.init();
     }
 
@@ -44,10 +46,11 @@ class GameMap
                     //console.log(this.grid[row][col][layer]);
                     if(this.grid[row][col][layer] === 0)
                     {
-                        // ctx.textAlign="center";
-                        // ctx.font = "10px Arial"; 
-                        // ctx.fillText("y: " + row, col*32+15, row*32 + 10);
-                        // ctx.fillText("x: " + col, col*32+15, row*32 + 20);
+                        // mapBufferCtx.strokeRect(col, row, col+game.tileWidth, row+game.tileWidth);
+                        // mapBufferCtx.textAlign="center";
+                        // mapBufferCtx.font = "10px Arial"; 
+                        // mapBufferCtx.fillText("y: " + row, col*32+15, row*32 + 10);
+                        // mapBufferCtx.fillText("x: " + col, col*32+15, row*32 + 20);
                         continue;
                     }
                     let tileId = this.grid[row][col][layer]+mapIndexOffset;
@@ -56,6 +59,12 @@ class GameMap
                     let sourceY = Math.floor(tileId / imgPerRowTilesheet) *tileWidth;
     
                     mapBufferCtx.drawImage(tilesheet, sourceX, sourceY, tileWidth, tileWidth, col*tileWidth, row*tileWidth, tileWidth, tileWidth);
+
+                    // mapBufferCtx.strokeRect(col*tileWidth, row*tileWidth, (col+1)*tileWidth, (row+1)*tileWidth);
+                    // mapBufferCtx.textAlign="center";
+                    // mapBufferCtx.font = "8px Arial"; 
+                    // mapBufferCtx.fillText("y: " + row, col*tileWidth+8, row*tileWidth + 16);
+                    // mapBufferCtx.fillText("x: " + col, col*tileWidth+8, row*tileWidth + 24);
                 }
             }
         }
@@ -146,6 +155,15 @@ class GameMap
     
         this.renderInteractables();
         this.renderEnemies();
+        this.renderLoot();
+    }
+
+    renderLoot()
+    {
+        for(let i = 0; i < this.lootOnGround.length; i++)
+        {
+            this.lootOnGround[i].render();
+        }
     }
 
     renderForeground()

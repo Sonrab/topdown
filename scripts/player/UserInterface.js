@@ -75,12 +75,20 @@ class UserInterface
             <p title="Player health" class="unselectable">Health: ${player.health}/${player.maxHealth}</p>
             <p title="Player mana" class="unselectable">Mana: ${player.mana}/${player.maxMana}</p>
             <p title="Player movement speed" class="unselectable">Speed: ${player.speed}</p>
-            <p title="Raw bow damage (Before resistances)" class="unselectable">Bow Damage: ${player.bow.damage}</p>
             `;
             this.inventoryOpen = !this.inventoryOpen;
             console.log(`Inv open: ${this.inventoryOpen}, Classlist: ${inventory.classList}`);
             return;
         }
+    }
+
+    static updateInventoryStats()
+    {
+        inventory_playerStats.innerHTML=`
+        <p title="Player health" class="unselectable">Health: ${player.health}/${player.maxHealth}</p>
+        <p title="Player mana" class="unselectable">Mana: ${player.mana}/${player.maxMana}</p>
+        <p title="Player movement speed" class="unselectable">Speed: ${player.speed}</p>
+        `;
     }
 
     init()

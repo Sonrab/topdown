@@ -5,6 +5,8 @@ inventoryElement.addEventListener("contextmenu", (e) => {
 
 const itemInfoBox = document.getElementById('itemInfoBox');
 
+const displayStats = ['health', 'damage', 'fireRate', 'resistance']
+
 inventoryElement.addEventListener("mouseover", onInventoryHover);
 inventoryElement.addEventListener("mouseout", onInventoryExit);
 
@@ -15,14 +17,17 @@ function onInventoryExit(e)
 
 function onInventoryHover(e)
 {
-    console.log(e);
-    let target = e.target;
     if(e.target.nodeName === 'IMG')
     {
         let hoveredSlot = Inventory.getItemSlotByElement(e.target.parentNode);
         itemInfoBox.style.left = hoveredSlot.element.offsetLeft + hoveredSlot.element.offsetWidth + 10;
         itemInfoBox.style.top = hoveredSlot.element.offsetTop;
+
         itemInfoBox.innerHTML = `<h2>${hoveredSlot.item.name}</h2>`;
+        Object.values(hoveredSlot.item.item.getInventoryStats()).forEach(value => {
+            itemInfoBox.innerHTML += `<p>${value}`;
+        });
+
         itemInfoBox.style.visibility = "visible";
     }
     
@@ -196,6 +201,7 @@ class Inventory
         [fromSlot.item, toSlot.item] = [toSlot.item, fromSlot.item];
 
         console.log(toSlot.item.item);
+        fromSlot.item.item.unequip();
         toSlot.item.item.equip();
     }
 

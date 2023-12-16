@@ -1,14 +1,9 @@
 const spritesheet_orb = addImage("images/weapons/orb.png");
+const imgEnergyOrb = addImage("images/weapons/energy_orb.png");
 
 class Orb
 {
-    static defaultAnimationFrames = [
-        {
-            "cutFrom": { "x": 0, "y": 0},
-            "sourceFrameSize": { "w": 16, "h": 16},
-            "duration": 10000
-        }
-    ];
+    static defaultFrames = [];
 
     static damageInfo = {
         damage: 2,
@@ -17,11 +12,34 @@ class Orb
     }
     constructor(startPosInDeg)
     {
+        for(let i = 0; i < 8; i++)
+        {
+            for(let j = 0; j < 8; j++)
+            {
+                if(i === 7 && j > 1)
+                    break;
+
+                Orb.defaultFrames.push({
+                    "cutFrom": { "x": j*32, "y": i*32},
+                    "sourceFrameSize": { "w": 32, "h": 32},
+                    "duration": 25
+                });
+            }
+        }
+
         this.spritesheet = spritesheet_orb;
         this.x = 0;
         this.y = 0;
+
+        this.draw = {
+            width: 32,
+            height: 32,
+            halfWidth: 16,
+            halfHeight: 16
+        }
         this.width = 16;
-        this.height = 16;
+        this.height = 16; 
+
         this.damage = 2;
         this.angle = 0;
 
@@ -53,7 +71,7 @@ class Orb
 
 
         this.animations = {
-            default: new Animation(this, 'default', Orb.defaultAnimationFrames, true)
+            default: new Animation(this, 'default', Orb.defaultFrames, true, imgEnergyOrb)
         };
         this.currentAnimation = this.animations.default;
         this.init();
@@ -74,6 +92,7 @@ class Orb
             this.updateClosestEnemy();
         }, 150);
         this.timers.removeFromMap = setTimeout(() => {
+            console.log("REMOVE");
             this.removeFromMap();
         }, 1500);
     }
@@ -231,7 +250,7 @@ class Orb
 
     render()
     {
-        let cutFrom = this.currentAnimation.frames[this.currentAnimation.currentFrame].cutFrom;
-        ctx.drawImage(this.spritesheet, cutFrom.x, cutFrom.y, this.width, this.height, this.x-8, this.y-8, this.width, this.height);
+        let frame = this.currentAnimation.getCurrentFrame();
+        ctx.drawImage(this.currentAnimation.spritesheet, frame.cutFrom.x, frame.cutFrom.y, frame.sourceFrameSize.w, frame.sourceFrameSize.h, this.x-this.draw.halfWidth, this.y-this.draw.halfHeight, this.draw.width, this.draw.height);
     }
 }

@@ -73,7 +73,7 @@ class UpgradeList
             "icon_roll.png",
             function()
             {
-                player.dodgeRollData.unlocked = true;
+                player.dodgeData.unlocked = true;
             }
         ));
     }

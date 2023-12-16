@@ -78,6 +78,15 @@ class Shotgun extends Weapon
                 break;
         }   
     }
+
+    getInventoryStats()
+    {
+        return {
+            damage: `Damage: ${this.damage}x${this.pellets}`,
+            spread: `Spread: ${this.spread}`,
+            fireRate: `Rate of fire: ${this.fireRate * this.fireRateIncrease}` 
+        };
+    }
 }
 
 

@@ -1,15 +1,3 @@
- // Creates the box that my game will be playable in
-// var canvas = {
-//     background : document.getElementById('background_canvas'),
-//     main : document.getElementById('canvas'),
-//     foreground : document.getElementById('foreground_canvas')
-// };
-
-// var ctx = {
-//     background : canvas.background.getContext('2d'),
-//     main : canvas.main.getContext('2d'),
-//     foreground : canvas.foreground.getContext('2d')
-// }
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -20,17 +8,7 @@ function updateBufferSize(mapsize)
 {
     mapBuffer.width = mapsize.width;
     mapBuffer.height =  mapsize.height;
-    // this.buffer.width = canvas.width;
-    // this.buffer.height = canvas.height;
 }
-
-// let inventorySlots = document.querySelectorAll(".inventory-slot");
-// for(let i = 0; i < inventorySlots.length; i++)
-// {
-//     inventorySlots[i].addEventListener("drop", dropHandler);
-//     inventorySlots[i].addEventListener("dragover", dragOverHandler);
-//     //console.log(inventorySlots[i]);
-// }
 
 function resizeCanvas(width, height)
 {
@@ -38,43 +16,6 @@ function resizeCanvas(width, height)
     canvas.height = height;
     ctx.imageSmoothingEnabled = false; //ctx state is reset after canvas reset so this needs to be set to false on every canvas resize
 }
-// let dragData = {
-//     sourceItemSlot: 0,
-//     targetItemSlot: 0,
-//     sourceItem : 0,
-// };
-// function dragStartHandler(ev)
-// {
-//     // console.log(ev);
-//     dragData.sourceItem = ev.target;
-//     dragData.sourceItemSlot = ev.target.parentNode;
-// }
-
-// function dropHandler(ev) {
-//     ev.preventDefault();
-//     let targetItemSlot;
-//     let itemToSwap = null;
-//     if(ev.target.nodeName === 'IMG')
-//     {
-//         targetItemSlot = ev.target.parentNode;
-//         dragData.sourceItemSlot.appendChild(ev.target)
-//     }
-//     else
-//     {
-//         targetItemSlot = ev.target;
-//     }
-//     console.log(dragData.sourceItem);
-    
-//     targetItemSlot.appendChild(dragData.sourceItem);
-
-    
-//     console.log(ev);
-//     // console.log("aaaaaa");
-// }
-
-// function dragOverHandler(ev) {
-//     ev.preventDefault();
-// }
 
 var canvasBoundingRect = canvas.getBoundingClientRect();
 
