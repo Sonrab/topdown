@@ -6,7 +6,7 @@ function loadMaps()
         maps.set("start", new GameMap(
                 mapname = "start",
                 audio = "overworld",
-                passages = [new Passage("room", {x: 5.25, y: 9.5}, {xmin: 11.5, xmax: 12.5, ymin: 19, ymax:20})],
+                passages = [new Passage("room", {x: 5, y: 9}, {xmin: 11.5, xmax: 12.5, ymin: 19, ymax:20.2})],
                 interactables = [
                         // new CDoor(
                         // x = 1,
@@ -35,7 +35,7 @@ function loadMaps()
                         new Chest(
                                 x = 8,
                                 y = 12,
-                                contentType = 'item',
+                                contentType = 'upgrade',
                                 content = upgradeList.getUpgradeByName("bow_damage_upgrade")     
                         ),
                         new Chest(

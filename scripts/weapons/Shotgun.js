@@ -69,12 +69,12 @@ class Shotgun extends Weapon
         switch(player.direction)
         {   
             case player.directions.left:
-                ctx.drawImage(this.img, 22, 0, 22, 9, player.x-3, player.y, 22, 9);
+                ctx.drawImage(this.img, 22, 0, 22, 9, player.x-10, player.y-25, 22, 9);
 
                 break;
     
             case player.directions.right:
-                ctx.drawImage(this.img, 0, 0, 22, 9, player.x+3, player.y, 22, 9);
+                ctx.drawImage(this.img, 0, 0, 22, 9, player.x+10, player.y-25, 22, 9);
                 break;
         }   
     }

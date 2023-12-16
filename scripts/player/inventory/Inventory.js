@@ -3,6 +3,40 @@ inventoryElement.addEventListener("contextmenu", (e) => {
     e.preventDefault();
 });
 
+const itemInfoBox = document.getElementById('itemInfoBox');
+
+inventoryElement.addEventListener("mouseover", onInventoryHover);
+inventoryElement.addEventListener("mouseout", onInventoryExit);
+
+function onInventoryExit(e)
+{
+    itemInfoBox.style.visibility = "hidden";
+}
+
+function onInventoryHover(e)
+{
+    console.log(e);
+    let target = e.target;
+    if(e.target.nodeName === 'IMG')
+    {
+        let hoveredSlot = Inventory.getItemSlotByElement(e.target.parentNode);
+        itemInfoBox.style.left = hoveredSlot.element.offsetLeft + hoveredSlot.element.offsetWidth + 10;
+        itemInfoBox.style.top = hoveredSlot.element.offsetTop;
+        itemInfoBox.innerHTML = `<h2>${hoveredSlot.item.name}</h2>`;
+        itemInfoBox.style.visibility = "visible";
+    }
+    
+    // console.log(hoveredSlot);
+    // console.log(itemInfoBox);
+
+
+    // itemInfoBox.style.left = hoveredSlot.element.offsetLeft + hoveredSlot.element.offsetWidth;
+    // itemInfoBox.style.top = hoveredSlot.element.offsetTop;
+    // console.log(hoveredSlot);
+    // itemInfoBox.innerHTML = `<h2>${hoveredSlot.item.name}</h2>`;
+    // itemInfoBox.setAttribute("left", hoveredElement.clientHeight);
+}
+
 class Inventory
 {
     static sourceItemSlot;
@@ -185,6 +219,16 @@ class Inventory
             case 'boots':
                 return Inventory.equipment.boots;
         }
+    }
+
+    static getItemSlotByElement(element)
+    {
+        let item;
+        if(!(item = Inventory.getInventorySlotByElement(element)))
+        {
+            item = Inventory.getEquipmentSlotByElement(element);
+        }
+        return item;
     }
 
 }
