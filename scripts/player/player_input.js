@@ -21,7 +21,7 @@ function checkInput()
     if(mouse.down && !player.cursor.castModeActive)
     {
         if(player.equippedWep.mouseDownAutoUse)
-            player.equippedWep.use();
+            player.usePrimary();
     }
 }
 
@@ -35,7 +35,7 @@ function onMouseClick()
     }
     else if(!player.equippedWep.mouseDownAutoUse)
     {
-        player.equippedWep.use();
+        player.usePrimary();
     }           
 }
 
@@ -55,9 +55,9 @@ function checkKeyPress(e)
             player.equipWeapon(player.bow);
     }
 
-    if(e.keyCode === 32 && player.dodgeRollData.unlocked) // space
+    if(e.keyCode === 32) // space
     {
-        player.dodgeRoll();
+        player.dodge();
     }
 
     

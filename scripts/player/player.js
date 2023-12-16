@@ -101,12 +101,17 @@ class Player
                 up: new Animation(this, 'walkUp', Player.walkUpAnimFrames, true)
             },
             idle: {
-                down: new Animation(this, 'idleDown', Player.idleDownAnimFrames, true),
-                // left: new Animation(this, 'idleLeft', [Player.walkLeftAnimFrames[1]], true),
-                // right: new Animation(this, 'idleRight', [Player.walkRightAnimFrames[1]], true),
+                //down: new Animation(this, 'idleDown', Player.idleDownAnimFrames, true),
+                left: new Animation(this, 'idleLeft', Player.idleLeftAnimFrames, true),
+                right: new Animation(this, 'idleRight', Player.idleRightAnimFrames, true),
                 // up: new Animation(this, 'idleUp', [Player.walkUpAnimFrames[1]], true)
             },
-            dodgeRoll: new Animation(this, 'dodgeRoll', Player.dodgeRollFrames, false)
+            dodge: {
+                down: new Animation(this, 'dodgeDown', Player.dodgeDownFrames, false),
+                left: new Animation(this, 'dodgeLeft', Player.dodgeLeftFrames, false),
+                right: new Animation(this, 'dodgeRight', Player.dodgeRightFrames, false),
+                up: new Animation(this, 'dodgeUp', Player.dodgeUpFrames, false)
+            }
         };
         this.currentAnimation = this.animations.walk.down;
 
@@ -122,7 +127,7 @@ class Player
             idle: Symbol("idle"),
             walking: Symbol("walking"),
             grappling: Symbol("grappling"),
-            dodgeRolling: Symbol("dodgeRolling")
+            dodging: Symbol("dodging")
         });
 
         this.state = this.states.idle;
@@ -143,7 +148,7 @@ class Player
         };
 
         //dodge roll
-        this.dodgeRollData = {
+        this.dodgeData = {
             unlocked: true,
             speed: 5,
             ready: true,
@@ -212,11 +217,20 @@ class Player
     {
         switch(anim)
         {
-            case 'dodgeRoll':
+            case 'dodgeLeft':
+            case 'dodgeRight':
+            case 'dodgeUp':
+            case 'dodgeDown':
                 this.state = this.states.walking;
                 this.setPlayerWalking();
-                //this.setPlayerIdle();
         }
+    }
+
+    usePrimary() //use whatever weapon is on mouse 1
+    {
+        if(player.state === player.states.dodging)
+            return;
+        player.equippedWep.use();
     }
 
     castFireOrbs()
@@ -269,11 +283,10 @@ class Player
 
     setPlayerWalking()
     {
-        if(this.state === this.states.dodgeRolling)
+        if(this.state === this.states.dodging)
             return;
 
-        if(this.state != this.states.walking)
-            this.state = this.states.walking;
+        this.state = this.states.walking;
         
         switch(this.direction)
         {
@@ -302,105 +315,83 @@ class Player
         if(this.state != this.states.idle)
             this.state = this.states.idle;
         
-        this.animations.idle.down.play();
-        // switch(this.direction)
-        // {
-        //     case this.directions.up:
-                
-        //         this.animations.idle.up.play();
-        //         break;
-        //     case this.directions.left:
-        //         this.animations.idle.left.play();
-        //         break;
-        //     case this.directions.right:
-        //         this.animations.idle.right.play();
-        //         break;
-        //     case this.directions.down:
-        //         this.animations.idle.down.play();
-        //         break;  
-        // }
+        switch(this.direction)
+        {
+            // case this.directions.up:
+            //     this.animations.idle.up.play();
+            //     break;
+
+            case this.directions.left:
+                this.animations.idle.left.play();
+                break;
+
+            case this.directions.right:
+                this.animations.idle.right.play();
+                break;
+
+            default:
+                this.animations.idle.right.play();
+
+            // case this.directions.down:
+            //     this.animations.idle.down.play();
+            //     break;  
+        }
     }
 
-    dodgeRoll()
+    dodge()
     {
-        if(this.state === this.states.dodgeRolling || this.state === this.states.idle)
+        if(this.state === this.states.dodging || this.state === this.states.idle || !this.dodgeData.unlocked)
             return;
 
-        this.state = this.states.dodgeRolling;
-        this.animations.dodgeRoll.play();
+        this.state = this.states.dodging;
         userInterface.triggerActionBarAnimation(userInterface.actionBar.mobility.element);
-        if ('KeyA' in keysDown || 'ArrowLeft' in keysDown) //vänster
-        {
-            player.move('left');
-        }   
-     
+
         if ('KeyW' in keysDown || 'ArrowUp' in keysDown) // upp 
-            player.move('up');
-    
-    
-        if ('KeyS' in keysDown || 'ArrowDown' in keysDown) // ner 
-            player.move('down'); 
-        
-        
-        if ('KeyD' in keysDown || 'ArrowRight' in keysDown) //höger
         {
-            player.move('right');
-        }
-        if ('KeyA' in keysDown || 'ArrowLeft' in keysDown)
-        {
-            if ('KeyW' in keysDown || 'ArrowUp' in keysDown) // upp 
-            {
-                this.velX = -this.dodgeRollData.speed * diagonalMovementMultiplier;
-                this.velY = -this.dodgeRollData.speed * diagonalMovementMultiplier;
-            }
-            else if ('KeyS' in keysDown || 'ArrowDown' in keysDown) // ner 
-            {
-                this.velX = -this.dodgeRollData.speed * diagonalMovementMultiplier;
-                this.velY = this.dodgeRollData.speed * diagonalMovementMultiplier;
-            }
-            else
-            {
-                this.velX = -this.dodgeRollData.speed;
-                this.velY = 0;
-            }
-        }
-        else if ('KeyW' in keysDown || 'ArrowUp' in keysDown) // upp 
-        {
+            this.velX = 0;
+            this.velY = -this.dodgeData.speed;         
+            this.animations.dodge.up.play();
+
             if ('KeyD' in keysDown || 'ArrowRight' in keysDown) //höger
             {
-                this.velX = this.dodgeRollData.speed * diagonalMovementMultiplier;
-                this.velY = -this.dodgeRollData.speed * diagonalMovementMultiplier;
+                this.velX = this.dodgeData.speed * diagonalMovementMultiplier;
+                this.velY = -this.dodgeData.speed * diagonalMovementMultiplier;
             }
-            else
+            else if('KeyA' in keysDown || 'ArrowLeft' in keysDown) //vänster)
             {
-                this.velX = 0;
-                this.velY = -this.dodgeRollData.speed;
+                this.velX = -this.dodgeData.speed * diagonalMovementMultiplier;
+                this.velY = -this.dodgeData.speed * diagonalMovementMultiplier;
             }
         }
         else if ('KeyS' in keysDown || 'ArrowDown' in keysDown) // ner 
         {
+            this.velX = 0;
+            this.velY = this.dodgeData.speed;
+            this.animations.dodge.down.play();
+
             if ('KeyD' in keysDown || 'ArrowRight' in keysDown) //höger
             {
-                this.velX = this.dodgeRollData.speed * diagonalMovementMultiplier;
-                this.velY = this.dodgeRollData.speed * diagonalMovementMultiplier;
+                this.velX = this.dodgeData.speed * diagonalMovementMultiplier;
+                this.velY = this.dodgeData.speed * diagonalMovementMultiplier;
             }
-            else
+            else if('KeyA' in keysDown || 'ArrowLeft' in keysDown) //vänster)
             {
-                this.velX = 0;
-                this.velY = this.dodgeRollData.speed;
-            } 
-        }   
-        else if ('KeyD' in keysDown || 'ArrowRight' in keysDown) //höger
-        {
-            this.velX = this.dodgeRollData.speed;
-            this.velY = 0;
+                this.velX = -this.dodgeData.speed * diagonalMovementMultiplier;
+                this.velY = this.dodgeData.speed * diagonalMovementMultiplier;
+            }
         }
-
-        console.log(this.velX);
-
-        // setTimeout(() => {
-        //     this.setPlayerIdle();
-        // }, 275);
+        else if('KeyA' in keysDown || 'ArrowLeft' in keysDown)
+        {
+            this.velX = -this.dodgeData.speed;
+            this.velY = 0;
+            this.animations.dodge.left.play();
+        }
+        else if('KeyD' in keysDown || 'ArrowRight' in keysDown)
+        {
+            this.velX = this.dodgeData.speed;
+            this.velY = 0;
+            this.animations.dodge.right.play();
+        }
     }
 
 
@@ -623,7 +614,7 @@ class Player
         if('update' in this.equippedWep)
             this.equippedWep.update();
         
-        if(!this.grappling && this.state != this.states.dodgeRolling)
+        if(!this.grappling && this.state != this.states.dodging)
         {
             this.velX = 0;
             this.velY = 0;
@@ -690,8 +681,12 @@ class Player
     //MOVEMENT: This makes the character moving based on the keys etc.
     move(code)
     {  
-        if(this.state === this.states.dodgeRolling)
+        if(this.state === this.states.dodging)
+        {
+            console.log("RETURNING FROM PLAYER MOVE DUE TO DODGING");
             return;
+        }
+            
         if (code === 'left')	//v�nster
         {     
             if(Math.abs(this.velX - this.speed) < this.velCap)
@@ -1023,7 +1018,7 @@ class Player
         }
     }
 
-    static idleDownAnimFrames = [
+    static idleRightAnimFrames = [
         {
             "cutFrom": { "x": 0, "y": 0},
             "sourceFrameSize": { "w": 64, "h": 64},
@@ -1046,7 +1041,7 @@ class Player
         }
     ];
 
-    static walkRightAnimFrames = [
+    static idleLeftAnimFrames = [
         {
             "cutFrom": { "x": 0, "y": 64},
             "sourceFrameSize": { "w": 64, "h": 64},
@@ -1069,7 +1064,7 @@ class Player
         }
     ];
 
-    static walkLeftAnimFrames = [
+    static walkRightAnimFrames = [
         {
             "cutFrom": { "x": 0, "y": 128},
             "sourceFrameSize": { "w": 64, "h": 64},
@@ -1085,14 +1080,14 @@ class Player
             "sourceFrameSize": { "w": 64, "h": 64},
             "duration": 150
         },
-        {
-            "cutFrom": { "x": 192, "y": 128},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 150
-        }
+        // {
+        //     "cutFrom": { "x": 192, "y": 128},
+        //     "sourceFrameSize": { "w": 64, "h": 64},
+        //     "duration": 150
+        // }
     ];
 
-    static walkUpAnimFrames = [
+    static walkLeftAnimFrames = [
         {
             "cutFrom": { "x": 0, "y": 192},
             "sourceFrameSize": { "w": 64, "h": 64},
@@ -1108,14 +1103,14 @@ class Player
             "sourceFrameSize": { "w": 64, "h": 64},
             "duration": 150
         },
-        {
-            "cutFrom": { "x": 192, "y": 192},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 150
-        }
+        // {
+        //     "cutFrom": { "x": 192, "y": 192},
+        //     "sourceFrameSize": { "w": 64, "h": 64},
+        //     "duration": 350
+        // }
     ];
 
-    static walkDownAnimFrames = [
+    static walkUpAnimFrames = [
         {
             "cutFrom": { "x": 0, "y": 256},
             "sourceFrameSize": { "w": 64, "h": 64},
@@ -1138,27 +1133,30 @@ class Player
         }
     ];
 
-        static dodgeRollFrames = [
+    static walkDownAnimFrames = [
         {
             "cutFrom": { "x": 0, "y": 320},
             "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
+            "duration": 150
         },
         {
             "cutFrom": { "x": 64, "y": 320},
             "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
+            "duration": 150
         },
         {
             "cutFrom": { "x": 128, "y": 320},
             "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
+            "duration": 150
         },
         {
             "cutFrom": { "x": 192, "y": 320},
             "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
-        },
+            "duration": 150
+        }
+    ];
+
+        static dodgeRightFrames = [
         {
             "cutFrom": { "x": 0, "y": 384},
             "sourceFrameSize": { "w": 64, "h": 64},
@@ -1166,6 +1164,125 @@ class Player
         },
         {
             "cutFrom": { "x": 64, "y": 384},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 128, "y": 384},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 192, "y": 384},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 0, "y": 448},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 64, "y": 448},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 100
+        },
+    ];
+
+    static dodgeLeftFrames = [
+        {
+            "cutFrom": { "x": 128, "y": 448},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 192, "y": 448},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 0, "y": 512},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 64, "y": 512},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 128, "y": 512},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 192, "y": 512},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 100
+        },
+    ];
+
+    static dodgeUpFrames = [
+        {
+            "cutFrom": { "x": 0, "y": 576},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 64, "y": 576},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 128, "y": 576},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 192, "y": 576},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 0, "y": 640},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 64, "y": 640},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 100
+        },
+    ];
+
+    static dodgeDownFrames = [
+        {
+            "cutFrom": { "x": 128, "y": 640},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 192, "y": 640},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 0, "y": 704},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 64, "y": 704},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 128, "y": 704},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 75
+        },
+        {
+            "cutFrom": { "x": 192, "y": 704},
             "sourceFrameSize": { "w": 64, "h": 64},
             "duration": 100
         },

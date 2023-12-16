@@ -72,6 +72,9 @@ class Inventory
         }
 
         this.addItem(itemList.get("sture_rifle"));
+        this.addItem(itemList.get("military_shirt"));
+        this.addItem(itemList.get("military_pants"));
+        this.addItem(itemList.get("military_boots"));
     }
 
     addItem(item)

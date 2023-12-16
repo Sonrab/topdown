@@ -81,3 +81,32 @@ itemList.set("chof_hat",
         new Armor('helm')
     )
 );
+
+
+
+itemList.set("military_shirt",
+    new Item(
+        "Military Shirt",
+        "chest",
+        "armor/military/shirt.png",
+        new Armor('chest')
+    )
+);
+
+itemList.set("military_pants",
+    new Item(
+        "Military Pants",
+        "legs",
+        "armor/military/pants.png",
+        new Armor('legs')
+    )
+);
+
+itemList.set("military_boots",
+    new Item(
+        "Military Boots",
+        "boots",
+        "armor/military/boots.png",
+        new Armor('boots')
+    )
+);
