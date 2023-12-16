@@ -9,7 +9,8 @@ const chestImg = addImage("images/red_armor.png");
 
 //const spritesheet_player = addImage("images/player/player_sheet.png");
 //const imgPlayer = addImage("images/player/player.png");
-const imgPlayer = addImage("images/player/player_spritesheet.png");
+//const imgPlayer = addImage("images/player/player_spritesheet.png");
+const imgPlayer = addImage("images/player/spritesheet_45deg_outlines.png");
 
 class Player
 {
@@ -80,19 +81,6 @@ class Player
 
         this.equippedWep = this.bow;
 
-        // this.animations = {
-        //     walk : {
-        //         left: new Animation(this, 'walkLeft', Player.walkLeftAnimFrames, true),
-        //         right: new Animation(this, 'walkRight', Player.walkRightAnimFrames, true),
-        //     },
-        //     idle: {
-        //         left: new Animation(this, 'idleLeft', [Player.walkLeftAnimFrames[1]], true),
-        //         right: new Animation(this, 'idleRight', [Player.walkRightAnimFrames[1]], true)
-        //     }
-        // };
-        // this.currentAnimation = this.animations.walk.left;
-
-
         this.animations = {
             walk : {
                 down: new Animation(this, 'walkDown', Player.walkDownAnimFrames, true),
@@ -101,17 +89,17 @@ class Player
                 up: new Animation(this, 'walkUp', Player.walkUpAnimFrames, true)
             },
             idle: {
-                //down: new Animation(this, 'idleDown', Player.idleDownAnimFrames, true),
+                down: new Animation(this, 'idleDown', Player.idleDownAnimFrames, true),
                 left: new Animation(this, 'idleLeft', Player.idleLeftAnimFrames, true),
                 right: new Animation(this, 'idleRight', Player.idleRightAnimFrames, true),
-                // up: new Animation(this, 'idleUp', [Player.walkUpAnimFrames[1]], true)
+                up: new Animation(this, 'idleUp', [Player.walkUpAnimFrames[1]], true)
             },
-            dodge: {
-                down: new Animation(this, 'dodgeDown', Player.dodgeDownFrames, false),
-                left: new Animation(this, 'dodgeLeft', Player.dodgeLeftFrames, false),
-                right: new Animation(this, 'dodgeRight', Player.dodgeRightFrames, false),
-                up: new Animation(this, 'dodgeUp', Player.dodgeUpFrames, false)
-            }
+            // dodge: {
+            //     down: new Animation(this, 'dodgeDown', Player.dodgeDownFrames, false),
+            //     left: new Animation(this, 'dodgeLeft', Player.dodgeLeftFrames, false),
+            //     right: new Animation(this, 'dodgeRight', Player.dodgeRightFrames, false),
+            //     up: new Animation(this, 'dodgeUp', Player.dodgeUpFrames, false)
+            // }
         };
         this.currentAnimation = this.animations.walk.down;
 
@@ -317,9 +305,9 @@ class Player
         
         switch(this.direction)
         {
-            // case this.directions.up:
-            //     this.animations.idle.up.play();
-            //     break;
+            case this.directions.up:
+                this.animations.idle.up.play();
+                break;
 
             case this.directions.left:
                 this.animations.idle.left.play();
@@ -329,12 +317,14 @@ class Player
                 this.animations.idle.right.play();
                 break;
 
+            case this.directions.down:
+                this.animations.idle.down.play();
+                break;  
+
             default:
                 this.animations.idle.right.play();
 
-            // case this.directions.down:
-            //     this.animations.idle.down.play();
-            //     break;  
+
         }
     }
 
@@ -1018,7 +1008,7 @@ class Player
         }
     }
 
-    static idleRightAnimFrames = [
+    static idleUpAnimFrames = [
         {
             "cutFrom": { "x": 0, "y": 0},
             "sourceFrameSize": { "w": 64, "h": 64},
@@ -1041,7 +1031,7 @@ class Player
         }
     ];
 
-    static idleLeftAnimFrames = [
+    static idleDownAnimFrames = [
         {
             "cutFrom": { "x": 0, "y": 64},
             "sourceFrameSize": { "w": 64, "h": 64},
@@ -1064,7 +1054,7 @@ class Player
         }
     ];
 
-    static walkRightAnimFrames = [
+    static idleRightAnimFrames = [
         {
             "cutFrom": { "x": 0, "y": 128},
             "sourceFrameSize": { "w": 64, "h": 64},
@@ -1080,14 +1070,14 @@ class Player
             "sourceFrameSize": { "w": 64, "h": 64},
             "duration": 150
         },
-        // {
-        //     "cutFrom": { "x": 192, "y": 128},
-        //     "sourceFrameSize": { "w": 64, "h": 64},
-        //     "duration": 150
-        // }
+        {
+            "cutFrom": { "x": 192, "y": 128},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 150
+        }
     ];
 
-    static walkLeftAnimFrames = [
+    static idleLeftAnimFrames = [
         {
             "cutFrom": { "x": 0, "y": 192},
             "sourceFrameSize": { "w": 64, "h": 64},
@@ -1156,137 +1146,321 @@ class Player
         }
     ];
 
-        static dodgeRightFrames = [
+    static walkRightAnimFrames = [
         {
             "cutFrom": { "x": 0, "y": 384},
             "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
+            "duration": 150
         },
         {
             "cutFrom": { "x": 64, "y": 384},
             "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
+            "duration": 150
         },
         {
             "cutFrom": { "x": 128, "y": 384},
             "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
+            "duration": 150
         },
         {
             "cutFrom": { "x": 192, "y": 384},
             "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
-        },
+            "duration": 150
+        }
+    ];
+
+    static walkLeftAnimFrames = [
         {
             "cutFrom": { "x": 0, "y": 448},
             "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
+            "duration": 150
         },
         {
             "cutFrom": { "x": 64, "y": 448},
             "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 100
+            "duration": 150
         },
-    ];
-
-    static dodgeLeftFrames = [
         {
             "cutFrom": { "x": 128, "y": 448},
             "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
+            "duration": 150
         },
         {
             "cutFrom": { "x": 192, "y": 448},
             "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
-        },
-        {
-            "cutFrom": { "x": 0, "y": 512},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
-        },
-        {
-            "cutFrom": { "x": 64, "y": 512},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
-        },
-        {
-            "cutFrom": { "x": 128, "y": 512},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
-        },
-        {
-            "cutFrom": { "x": 192, "y": 512},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 100
-        },
+            "duration": 150
+        }
     ];
 
-    static dodgeUpFrames = [
-        {
-            "cutFrom": { "x": 0, "y": 576},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
-        },
-        {
-            "cutFrom": { "x": 64, "y": 576},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
-        },
-        {
-            "cutFrom": { "x": 128, "y": 576},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
-        },
-        {
-            "cutFrom": { "x": 192, "y": 576},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
-        },
-        {
-            "cutFrom": { "x": 0, "y": 640},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
-        },
-        {
-            "cutFrom": { "x": 64, "y": 640},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 100
-        },
-    ];
+    // static idleRightAnimFrames = [
+    //     {
+    //         "cutFrom": { "x": 0, "y": 0},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 64, "y": 0},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 128, "y": 0},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 192, "y": 0},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     }
+    // ];
 
-    static dodgeDownFrames = [
-        {
-            "cutFrom": { "x": 128, "y": 640},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
-        },
-        {
-            "cutFrom": { "x": 192, "y": 640},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
-        },
-        {
-            "cutFrom": { "x": 0, "y": 704},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
-        },
-        {
-            "cutFrom": { "x": 64, "y": 704},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
-        },
-        {
-            "cutFrom": { "x": 128, "y": 704},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 75
-        },
-        {
-            "cutFrom": { "x": 192, "y": 704},
-            "sourceFrameSize": { "w": 64, "h": 64},
-            "duration": 100
-        },
-    ];
+    // static idleLeftAnimFrames = [
+    //     {
+    //         "cutFrom": { "x": 0, "y": 64},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 64, "y": 64},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 128, "y": 64},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 192, "y": 64},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     }
+    // ];
+
+    // static walkRightAnimFrames = [
+    //     {
+    //         "cutFrom": { "x": 0, "y": 128},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 64, "y": 128},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 128, "y": 128},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     // {
+    //     //     "cutFrom": { "x": 192, "y": 128},
+    //     //     "sourceFrameSize": { "w": 64, "h": 64},
+    //     //     "duration": 150
+    //     // }
+    // ];
+
+    // static walkLeftAnimFrames = [
+    //     {
+    //         "cutFrom": { "x": 0, "y": 192},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 64, "y": 192},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 128, "y": 192},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 192, "y": 192},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 350
+    //     }
+    // ];
+
+    // static walkUpAnimFrames = [
+    //     {
+    //         "cutFrom": { "x": 0, "y": 256},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 64, "y": 256},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 128, "y": 256},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 192, "y": 256},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     }
+    // ];
+
+    // static walkDownAnimFrames = [
+    //     {
+    //         "cutFrom": { "x": 0, "y": 320},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 64, "y": 320},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 128, "y": 320},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     },
+    //     {
+    //         "cutFrom": { "x": 192, "y": 320},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 150
+    //     }
+    // ];
+
+    //     static dodgeRightFrames = [
+    //     {
+    //         "cutFrom": { "x": 0, "y": 384},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 64, "y": 384},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 128, "y": 384},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 192, "y": 384},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 0, "y": 448},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 64, "y": 448},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 100
+    //     },
+    // ];
+
+    // static dodgeLeftFrames = [
+    //     {
+    //         "cutFrom": { "x": 128, "y": 448},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 192, "y": 448},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 0, "y": 512},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 64, "y": 512},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 128, "y": 512},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 192, "y": 512},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 100
+    //     },
+    // ];
+
+    // static dodgeUpFrames = [
+    //     {
+    //         "cutFrom": { "x": 0, "y": 576},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 64, "y": 576},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 128, "y": 576},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 192, "y": 576},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 0, "y": 640},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 64, "y": 640},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 100
+    //     },
+    // ];
+
+    // static dodgeDownFrames = [
+    //     {
+    //         "cutFrom": { "x": 128, "y": 640},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 192, "y": 640},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 0, "y": 704},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 64, "y": 704},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 128, "y": 704},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 75
+    //     },
+    //     {
+    //         "cutFrom": { "x": 192, "y": 704},
+    //         "sourceFrameSize": { "w": 64, "h": 64},
+    //         "duration": 100
+    //     },
+    // ];
 }
 
 
