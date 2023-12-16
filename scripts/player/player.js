@@ -1103,11 +1103,11 @@ class Player
             "sourceFrameSize": { "w": 64, "h": 64},
             "duration": 150
         },
-        // {
-        //     "cutFrom": { "x": 192, "y": 192},
-        //     "sourceFrameSize": { "w": 64, "h": 64},
-        //     "duration": 350
-        // }
+        {
+            "cutFrom": { "x": 192, "y": 192},
+            "sourceFrameSize": { "w": 64, "h": 64},
+            "duration": 350
+        }
     ];
 
     static walkUpAnimFrames = [
