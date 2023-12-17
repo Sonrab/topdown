@@ -62,14 +62,14 @@ class Projectile
         // x1 = x cos(radians) - y sin(radians)
         // y1 = x sin(radians) + y cos(radians)
 
-        let x1 = 22*Math.cos(this.radians) - 0*Math.sin(this.radians);
-        let y1 = 22*Math.sin(this.radians) + 0*Math.cos(this.radians);
+        let x1 = this.width*Math.cos(this.radians) - 0*Math.sin(this.radians);
+        let y1 = this.width*Math.sin(this.radians) + 0*Math.cos(this.radians);
 
-        let x2 = 22*Math.cos(this.radians) - 5*Math.sin(this.radians);
-        let y2 = 22*Math.sin(this.radians) + 5*Math.cos(this.radians);
+        let x2 = this.width*Math.cos(this.radians) - this.height*Math.sin(this.radians);
+        let y2 = this.width*Math.sin(this.radians) + this.height*Math.cos(this.radians);
 
-        let x3 = 0*Math.cos(this.radians) - 5*Math.sin(this.radians);
-        let y3 = 0*Math.sin(this.radians) + 5*Math.cos(this.radians);
+        let x3 = 0*Math.cos(this.radians) - this.height*Math.sin(this.radians);
+        let y3 = 0*Math.sin(this.radians) + this.height*Math.cos(this.radians);
 
 
         this.x1 = this.x + x1;

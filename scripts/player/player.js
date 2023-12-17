@@ -142,7 +142,7 @@ class Player
         //dodge roll
         this.dodgeData = {
             unlocked: true,
-            speed: this.speed*2,
+            speed: 6,
             ready: true,
             cooldown: 100 //time in ms
         };
@@ -580,13 +580,13 @@ class Player
     addSpeed(amount)
     {
         this.speed += amount;
-        this.dodgeData.speed = this.speed*2;
+        this.dodgeData.speed += amount;
     }
 
     removeSpeed(amount)
     {
         this.speed -= amount;
-        this.dodgeData.speed = this.speed*2;
+        this.dodgeData.speed -= amount;
     }
 
 

@@ -15,7 +15,8 @@ class Rifle extends Weapon
         this.lastFire = 0;
         this.x = 0;
         this.y = 0;
-        this.accuracy = 0.9;
+        this.accuracy = 1;
+        this.angleSpan = (1-this.accuracy)*60 / 2;
         //calc accuracy by base 60 -> 60 * (1-this.accuracy)
         //angle = angle + randomInt(-(this.accuracy/2), this.accuracy/2)
         //0.9 accuracy gives 6 deg span
@@ -46,10 +47,9 @@ class Rifle extends Weapon
             let dx = mouse.transX - player.center.x;
             let dy = mouse.transY - player.center.y;
 
-            
-            //console.log(magnitude);
+
             let angle = Math.atan2(dy, dx) * (180 / Math.PI);
-            angle = angle + randomInt(-5, 5);
+            // angle = angle + randomFloat(-this.angleSpan, this.angleSpan);
             if(angle < 0)
             {
                 angle = 360 - (-angle);
@@ -60,7 +60,7 @@ class Rifle extends Weapon
         
             let magnitude = pythagorean(dy, dx);
 
-            g_projectiles.push(new RifleBullet(player.center.x, player.y, dx, dy, magnitude, angle, this.damage, "player"));
+            g_projectiles.push(new RifleBullet(player.center.x, player.center.y, dx, dy, magnitude, angle, this.damage, "player"));
         }
     }
 

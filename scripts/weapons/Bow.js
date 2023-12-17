@@ -60,7 +60,7 @@ class Bow extends Weapon
             
             //console.log(magnitude);
             let angle = Math.atan2(dy, dx) * (180 / Math.PI);
-            angle = angle + randomInt(-5, 5);
+            // angle = angle + randomInt(-5, 5);
             if(angle < 0)
             {
                 angle = 360 - (-angle);

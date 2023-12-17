@@ -30,16 +30,6 @@ function onInventoryHover(e)
 
         itemInfoBox.style.visibility = "visible";
     }
-    
-    // console.log(hoveredSlot);
-    // console.log(itemInfoBox);
-
-
-    // itemInfoBox.style.left = hoveredSlot.element.offsetLeft + hoveredSlot.element.offsetWidth;
-    // itemInfoBox.style.top = hoveredSlot.element.offsetTop;
-    // console.log(hoveredSlot);
-    // itemInfoBox.innerHTML = `<h2>${hoveredSlot.item.name}</h2>`;
-    // itemInfoBox.setAttribute("left", hoveredElement.clientHeight);
 }
 
 class Inventory
