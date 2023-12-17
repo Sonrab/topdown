@@ -29,6 +29,10 @@ class Armor
             {
                 player.addMaxMana(value);
             }
+            else if(stat === 'speed')
+            {
+                player.addSpeed(value);
+            }
             else
             {
                 player[stat] += value;
@@ -50,6 +54,10 @@ class Armor
             else if(stat === 'mana')
             {
                 player.removeMaxMana(value);
+            }
+            else if(stat === 'speed')
+            {
+                player.removeSpeed(value);
             }
             else
             {
@@ -76,6 +84,9 @@ class Armor
                     break;
                 case 'manaRegen':
                     obj[stat] = `Mana regen: ${value}`;
+                    break;
+                case 'speed':
+                    obj[stat] = `Movement Speed: ${value}`;
                     break;
 
             }

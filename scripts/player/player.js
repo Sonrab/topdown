@@ -142,7 +142,7 @@ class Player
         //dodge roll
         this.dodgeData = {
             unlocked: true,
-            speed: 5,
+            speed: this.speed*2,
             ready: true,
             cooldown: 100 //time in ms
         };
@@ -575,6 +575,18 @@ class Player
             this.mana = this.maxMana;
         }
         userInterface.updateMana();
+    }
+
+    addSpeed(amount)
+    {
+        this.speed += amount;
+        this.dodgeData.speed = this.speed*2;
+    }
+
+    removeSpeed(amount)
+    {
+        this.speed -= amount;
+        this.dodgeData.speed = this.speed*2;
     }
 
 
@@ -1247,32 +1259,32 @@ class Player
         {
             "cutFrom": { "x": 0, "y": 0},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 100
+            "duration": 75
         },
         {
             "cutFrom": { "x": 48, "y": 0},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 100
+            "duration": 75
         },
         {
             "cutFrom": { "x": 96, "y": 0},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 100
+            "duration": 75
         },
         {
             "cutFrom": { "x": 144, "y": 0},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 100
+            "duration": 75
         },
         {
             "cutFrom": { "x": 0, "y": 48},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 125
+            "duration": 100
         },
         {
             "cutFrom": { "x": 48, "y": 48},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 125
+            "duration": 100
         },
     ];
 
@@ -1280,32 +1292,32 @@ class Player
         {
             "cutFrom": { "x": 96, "y": 48},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 100
+            "duration": 75
         },
         {
             "cutFrom": { "x": 144, "y": 48},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 100
+            "duration": 75
         },
         {
             "cutFrom": { "x": 0, "y": 96},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 100
+            "duration": 75
         },
         {
             "cutFrom": { "x": 48, "y": 96},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 100
+            "duration": 75
         },
         {
             "cutFrom": { "x": 96, "y": 96},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 125
+            "duration": 100
         },
         {
             "cutFrom": { "x": 144, "y": 96},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 125
+            "duration": 100
         },
     ];
 
@@ -1313,32 +1325,32 @@ class Player
         {
             "cutFrom": { "x": 0, "y": 144},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 100
+            "duration": 75
         },
         {
             "cutFrom": { "x": 48, "y": 144},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 100
+            "duration": 75
         },
         {
             "cutFrom": { "x": 96, "y": 144},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 100
+            "duration": 75
         },
         {
             "cutFrom": { "x": 144, "y": 144},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 100
+            "duration": 75
         },
         {
             "cutFrom": { "x": 0, "y": 192},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 125
+            "duration": 100
         },
         {
             "cutFrom": { "x": 48, "y": 192},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 125
+            "duration": 100
         },
     ];
 
@@ -1346,32 +1358,32 @@ class Player
         {
             "cutFrom": { "x": 96, "y": 192},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 100
+            "duration": 75
         },
         {
             "cutFrom": { "x": 144, "y": 192},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 100
+            "duration": 75
         },
         {
             "cutFrom": { "x": 0, "y": 240},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 100
+            "duration": 75
         },
         {
             "cutFrom": { "x": 48, "y": 240},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 100
+            "duration": 75
         },
         {
             "cutFrom": { "x": 96, "y": 240},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 125
+            "duration": 100
         },
         {
             "cutFrom": { "x": 144, "y": 240},
             "sourceFrameSize": { "w": 48, "h": 48},
-            "duration": 125
+            "duration": 100
         },
     ];
 
