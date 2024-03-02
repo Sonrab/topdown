@@ -33,6 +33,7 @@ class Bomb
 
     explode()
     {
+        let map = game.currentMap;
         //get center of bomb
         let bombCenterX = this.x + this.width/2;
         let bombCenterY = this.y + this.height/2;
@@ -42,17 +43,17 @@ class Bomb
         //start by getting the topleft tile of that 3x3 grid and then loop through all positions and look for bombable tiles
         let gridX = Math.floor(bombCenterX / tileWidth) -1;
         let gridY = Math.floor(bombCenterY / tileWidth) -1;
-        for(let i = 0; i < 3; i++)
-        {
-            for(let j = 0; j < 3; j++)
-            {
-                if(!mapHandler.map.grid[gridY+i] || !mapHandler.map.grid[gridY+i][gridX+j] || !mapHandler.map.grid[gridY+i][gridX+j][1])
-                    continue;
+        // for(let i = 0; i < 3; i++)
+        // {
+        //     for(let j = 0; j < 3; j++)
+        //     {
+        //         if(!map.grid[gridY+i] || !map.grid[gridY+i][gridX+j] || !map.grid[gridY+i][gridX+j][1])
+        //             continue;
                 
-                if(tileHandler.getTileById(mapHandler.map.grid[gridY+i][gridX+j][1]).bombable)
-                    mapHandler.map.grid[gridY+i][gridX+j][1] = 0;
-            }
-        }
+        //         if(tileHandler.getTileById(map.grid[gridY+i][gridX+j][1]).bombable)
+        //             map.grid[gridY+i][gridX+j][1] = 0;
+        //     }
+        // }
 
         let playerCenterX = player.x + (player.width/2);
         let playerCenterY = player.y + (player.height/2);
@@ -62,7 +63,7 @@ class Bomb
             player.takeDmg(1);
         }
 
-        let enemies = mapHandler.map.enemies;
+        let enemies = map.enemies;
         for(let i = enemies.length-1; i >= 0; i--)
         {
             let enemy = enemies[i];

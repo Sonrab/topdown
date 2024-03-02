@@ -47,8 +47,6 @@ const tileWidth = 32;
 const imgPerRowTilesheet = 16;
 const diagonalMovementMultiplier = 1/Math.sqrt(2);
 
-var tilesheet = new Image();
-tilesheet.src = "images/tilesheets/tilesheet_32.png";
 
 var objectList = new Array();
 
@@ -58,7 +56,7 @@ var objectList = new Array();
 window.addEventListener("resize", resizeWindow);
 function resizeWindow()
 {
-    let mapsize = mapHandler.map.mapsize;
+    let mapsize = game.currentMap.mapsize;
     if(mapsize.width > window.innerWidth)
         canvas.width = window.innerWidth; //offset scrollbar
     else
@@ -153,23 +151,7 @@ document.addEventListener("mouseup", function(event) {
 
 var delta = 0;
 var updateFrequence = 0;
-function update(d) 
-{
-    delta = d;
 
-
-    player.update();
-    for(let i = 0; i < mapHandler.map.enemies.length; i++)
-    {
-        mapHandler.map.enemies[i].update();
-    }
-
-    for(let i = g_projectiles.length-1; i >= 0; i--)
-    {
-        
-        g_projectiles[i].update(i);
-    }
-}
 
 var TimeNow = 0;
 var FPS = 0;
@@ -179,33 +161,7 @@ var count = 0;
 var updateCounter = 0;
 var updateStart = 0;
 var lastUpdate = 0;
-function run() 
-{    
-    currentTime = Date.now();
-    
-    updateStart = performance.now();
-    update((updateStart - updateEnd) / (1000/game.targetFPS));
-    if(Date.now() >= TimeNow)
-    {
-        TimeNow = Date.now() + 1000;
-        FPS = count;
-        count = 0;
 
-    }
-    count++;
-    // debugOutput.innerHTML = "FPS: " + FPS;
-    // debugOutput.innerHTML += "<br>FPS Render: " + FPSR;
-    updateEnd = performance.now();
-    lastUpdate = performance.now();
-
-    // if(performance.now() - lastUpdate > 16)
-    // {
-    //     updateStart = performance.now();
-    //     update((updateStart - updateEnd) / (1000/60));
-    //     updateEnd = performance.now();
-    //     lastUpdate = performance.now();
-    // }
-}
 var currentTime;
 var updateEnd;
 

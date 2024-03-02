@@ -12,6 +12,13 @@ class Chest
         this.tileY = y;
         this.x = x * tileWidth;
         this.y = (y * tileWidth) -17;
+
+        this.interactArea = {
+            x: this.x - 16,
+            y: this.y + 16,
+            width: 64,
+            height: 48,
+        }
     
         this.closed = true;
         this.content = content;
@@ -57,6 +64,8 @@ class Chest
         {
             renderer.foregroundQueue.push([this.content.img, this.x, this.y]);
         }
+
+        ctx.strokeRect(this.interactArea.x, this.interactArea.y, this.interactArea.width, this.interactArea.height);
             
         ctx.drawImage(this.img, this.x, this.y);
     }

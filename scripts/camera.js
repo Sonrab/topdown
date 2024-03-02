@@ -6,6 +6,10 @@ class Camera
         this.tx = 0;
         this.y = 0;
         this.ty = 0;
+        this.velX = 0;
+        this.velY = 0;
+        this.locked = true;
+        this.speed = 8;
 
         //stores the width and height of the camera viewport
         this.viewport = {
@@ -20,7 +24,7 @@ class Camera
 
     update()
     {
-        let mapsize = mapHandler.map.mapsize;
+        let mapsize = game.currentMap.mapsize;
 
         //set target viewport coordinates to be centered on player
         this.tx = Math.floor(player.center.x - this.viewport.halfWidth);
@@ -36,6 +40,24 @@ class Camera
             this.ty = 0; //stop camera at top edge
         else if(this.ty + this.viewport.height > mapsize.height) //occurs if camera hits bottom edge
             this.ty = mapsize.height - this.viewport.height; //stop camera at bottom edge
+
+
+        //CODE FOR MAKING CAMERA MOVE SLOWER TOWARDS PLAYER    
+        // let dx = Math.floor(this.tx - this.x);
+        // let dy = Math.floor(this.ty - this.y);  
+        // let magnitude = pythagorean(dy, dx);
+        // this.velX = (dx/magnitude) * this.speed;
+        // this.velY = (dy/magnitude) * this.speed;
+
+        // if(this.tx - this.x > this.speed || this.tx - this.x < -this.speed)
+        // {
+        //     this.tx = this.x + this.velX;
+        // }
+
+        // if(this.ty - this.y > this.speed || this.ty - this.y < -this.speed)
+        // {
+        //     this.ty = this.y + this.velY;
+        // }
 
         this.x = this.tx;
         this.y = this.ty;

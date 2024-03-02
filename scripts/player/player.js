@@ -3,12 +3,12 @@ var sound_player_death= new Audio("sounds/player/death.wav");
 sound_player_jump.volume = 0.2;
 sound_player_death = 0.2;
 
-const chestImg = addImage("images/red_armor.png");
-
 const imgPlayerIdle = addImage("images/player/idle_anim.png");
 const imgPlayerRun = addImage("images/player/run_anim.png");
 const imgPlayerDodge = addImage("images/player/roll_anim.png");
 const imgPlayerDeath = addImage("images/player/death_anim.png");
+
+const imgPlayerWeapon = addImage("images/player/32_rifle.png");
 
 
 
@@ -28,15 +28,17 @@ class Player
         this.z = 0;
         this.behindForeground = false;
 
-        this.width = 24;
+        this.width = 32;
         this.height = 24;
         this.animTimeout = false;
         this.health = 25;
         this.maxHealth = 25;
 
+        this.collidesWith = [1, 2, 3];
+
         this.mana = 50;
         this.maxMana = 50;
-        this.manaRegen = 0;
+        this.manaRegen = 0.5;
         //width and height
         
         this.drawWidth = 48;
@@ -65,18 +67,19 @@ class Player
             fire: 0,
         };
     
-    
+        this.posOnGrappleStart = {
+            x: 0,
+            y: 0
+        };
         //player gravity and forces applied when moving
         this.velX = 0;
         this.velY = 0;
         this.velCap = 5;
         this.knockbackVel;
 
-    
-        // this.rifle = itemList.get("sture_rifle").item;
         this.bow = new Bow();
-        // this.shotgun = itemList.get("barnos_shotgun").item;
-        this.grappler = new CGrappler();
+
+        this.grappler = new Grappler();
 
         this.equippedWep = this.bow;
 
@@ -149,8 +152,7 @@ class Player
 
         /* END OF DATA FOR DIFFERENT SKILLS AND ABILITIES */
     
-        this.grappling = false;
-        this.grapplerUnlocked = false;
+        this.grapplerUnlocked = true;
     
     
         this.sound = {jump : sound_player_jump, death : sound_player_death};
@@ -358,51 +360,51 @@ class Player
         this.state = this.states.dodging;
         userInterface.triggerActionBarAnimation(userInterface.actionBar.mobility.element);
 
-        if ('KeyW' in keysDown || 'ArrowUp' in keysDown) // upp 
-        {
-            this.velX = 0;
-            this.velY = -this.dodgeData.speed;         
-            this.animations.dodge.up.play();
-
-            if ('KeyD' in keysDown || 'ArrowRight' in keysDown) //höger
-            {
-                this.velX = this.dodgeData.speed * diagonalMovementMultiplier;
-                this.velY = -this.dodgeData.speed * diagonalMovementMultiplier;
-            }
-            else if('KeyA' in keysDown || 'ArrowLeft' in keysDown) //vänster)
-            {
-                this.velX = -this.dodgeData.speed * diagonalMovementMultiplier;
-                this.velY = -this.dodgeData.speed * diagonalMovementMultiplier;
-            }
-        }
-        else if ('KeyS' in keysDown || 'ArrowDown' in keysDown) // ner 
-        {
-            this.velX = 0;
-            this.velY = this.dodgeData.speed;
-            this.animations.dodge.down.play();
-
-            if ('KeyD' in keysDown || 'ArrowRight' in keysDown) //höger
-            {
-                this.velX = this.dodgeData.speed * diagonalMovementMultiplier;
-                this.velY = this.dodgeData.speed * diagonalMovementMultiplier;
-            }
-            else if('KeyA' in keysDown || 'ArrowLeft' in keysDown) //vänster)
-            {
-                this.velX = -this.dodgeData.speed * diagonalMovementMultiplier;
-                this.velY = this.dodgeData.speed * diagonalMovementMultiplier;
-            }
-        }
-        else if('KeyA' in keysDown || 'ArrowLeft' in keysDown)
+        if('KeyA' in keysDown || 'ArrowLeft' in keysDown)
         {
             this.velX = -this.dodgeData.speed;
             this.velY = 0;
             this.animations.dodge.left.play();
+
+            if ('KeyW' in keysDown || 'ArrowUp' in keysDown) // upp 
+            {
+                this.velX = -this.dodgeData.speed * diagonalMovementMultiplier;
+                this.velY = -this.dodgeData.speed * diagonalMovementMultiplier;
+            }
+            else if ('KeyS' in keysDown || 'ArrowDown' in keysDown) // ner 
+            {
+                this.velX = -this.dodgeData.speed * diagonalMovementMultiplier;
+                this.velY = this.dodgeData.speed * diagonalMovementMultiplier;
+            }
         }
         else if('KeyD' in keysDown || 'ArrowRight' in keysDown)
         {
             this.velX = this.dodgeData.speed;
             this.velY = 0;
             this.animations.dodge.right.play();
+
+            if ('KeyW' in keysDown || 'ArrowUp' in keysDown) // upp 
+            {
+                this.velX = this.dodgeData.speed * diagonalMovementMultiplier;
+                this.velY = -this.dodgeData.speed * diagonalMovementMultiplier;
+            }
+            else if ('KeyS' in keysDown || 'ArrowDown' in keysDown) // ner 
+            {
+                this.velX = this.dodgeData.speed * diagonalMovementMultiplier;
+                this.velY = this.dodgeData.speed * diagonalMovementMultiplier;
+            }
+        }
+        else if ('KeyW' in keysDown || 'ArrowUp' in keysDown) // upp 
+        {
+            this.velX = 0;
+            this.velY = -this.dodgeData.speed;
+            this.animations.dodge.up.play();
+        }
+        else if ('KeyS' in keysDown || 'ArrowDown' in keysDown) // ner 
+        {
+            this.velX = 0;
+            this.velY = this.dodgeData.speed;
+            this.animations.dodge.down.play();
         }
     }
 
@@ -604,6 +606,8 @@ class Player
         {
             this.orbs[i].render();
         }
+
+        this.grappler.render();
         //this.orb.render();
         //ctx.drawImage(this.spritesheet, sourceX,sourceY,this.drawWidth,this.drawHeight, Math.round(this.x - (this.drawWidth-this.width)/2),Math.round(this.y - (this.drawHeight - this.height)),this.drawWidth,this.drawHeight);
         // this.equippedWep.render();
@@ -656,22 +660,19 @@ class Player
             this.setPlayerIdle();
         }
 
-
-        
-
         this.tx = this.x + (this.velX * delta);
         this.ty = this.y + (this.velY * delta);
 
-        
-        this.checkCollision(mapHandler.map);
+        this.checkCollision();
         //this.checkBehindForeground();
         this.updateRotation();
         this.camera.update(); 
+        this.grappler.update();
 
         if('update' in this.equippedWep)
             this.equippedWep.update();
         
-        if(!this.grappling && this.state != this.states.dodging)
+        if(this.state !== this.states.grappling && this.state !== this.states.dodging)
         {
             this.velX = 0;
             this.velY = 0;
@@ -685,9 +686,11 @@ class Player
 
     interact()
     {
-        let map = mapHandler.map;
+        let map = game.currentMap;
         let positions = new Array();
-        console.log("asd");
+
+        
+
         //get left and right position in the grid of player. will be used for calculating multiple positions
         let x = {left : parseInt(this.x/tileWidth), right : parseInt((this.x+this.width)/tileWidth)};
 
@@ -716,16 +719,62 @@ class Player
             for(let j = 0; j < map.interactables.length; j++)
             {
                 let obj =  map.interactables[j];
-                console.log(obj);
-                if(positions[i].x === obj.tileX && positions[i].y === obj.tileY)
+
+                if(typeof obj.playerInInteractArea === 'function')
                 {
-                    
+                    if(obj.playerInInteractArea(obj.interactArea1))
+                    {
+                        console.log("interacting");
+                        obj.onInteract("TP1");
+                        return;
+                    }
+                    else if(obj.playerInInteractArea(obj.interactArea2))
+                    {
+                        console.log("interacting");
+                        obj.onInteract("TP2");
+                        return;
+                    }
+                }
+                
+                
+                if (positions[i].x === obj.tileX && positions[i].y === obj.tileY)
+                {
                     console.log("interacting");
                     obj.onInteract();
                     return;
                 }
             }
         }
+    }
+
+    onGrappleStart()
+    {
+        this.state = this.states.grappling;
+        this.collidesWith.splice(this.collidesWith.indexOf(3), 1);
+
+        this.posOnGrappleStart.x = this.x; 
+        this.posOnGrappleStart.y = this.y; 
+    }
+
+    onGrappleEnd()
+    {
+        if(!this.collidesWith.includes(3))
+            this.collidesWith.push(3);
+
+        let map = game.currentMap;
+        //top left, top right
+        let tlTile = map.getCollissionTileId(this.x, this.y);
+        let trTile = map.getCollissionTileId(this.x + this.width, this.y);
+
+        //bottom left, bottom right
+        let blTile = map.getCollissionTileId(this.x, this.y + this.height);
+        let brTile = map.getCollissionTileId(this.x + this.width, this.y + this.height);
+
+        if(tlTile === 3 || trTile === 3 || blTile === 3 || brTile === 3) //if we end grapple in a pit, restore character to position where grapple began
+        {
+            this.setXY(this.posOnGrappleStart.x, this.posOnGrappleStart.y);
+        }
+        this.setPlayerIdle();
     }
 
     equipWeapon(wep)
@@ -738,9 +787,8 @@ class Player
     //MOVEMENT: This makes the character moving based on the keys etc.
     move(code)
     {  
-        if(this.state === this.states.dodging)
+        if(this.state === this.states.dodging || this.state === this.states.grappling)
         {
-            console.log("RETURNING FROM PLAYER MOVE DUE TO DODGING");
             return;
         }
             
@@ -798,17 +846,14 @@ class Player
 
     checkPassages()
     {
-        let passages = mapHandler.map.passages;
-        // console.log(this.center.x/tileWidth);
-        // console.log(this.center.y/tileWidth);
-        // console.log("");
+        let passages = game.currentMap.passages;
 
         for(let i = 0; i < passages.length; i++)
         {   
             let passage = passages[i];
             if(this.center.x >= passage.entrance.xmin*tileWidth && this.center.x <= passage.entrance.xmax*tileWidth && this.center.y >= passage.entrance.ymin*tileWidth && this.center.y <= passage.entrance.ymax*tileWidth)
             {
-                mapHandler.setMap(maps.get(passage.passageTo), passage.playerSpawnPoint);
+                game.setMap(passage.passageTo, passage.playerSpawnPoint);
             }
         }
     }
@@ -817,23 +862,8 @@ class Player
     //COLLISION DETECTION AND HANDLING: This function detects and handles the collision, making you unable to walk through walls etc.
     checkCollision()
     {
-        let map = mapHandler.map;
-        let tiles = tileHandler.tiles;
-        let colissionDetected = false;
+        let map = game.currentMap;
         let tlTile, tmTile, trTile, mlTile, mrTile, blTile, bmTile, brTile;
-
-
-        
-
-
-
-        //player.tx = player.x + (player.tx - player.x)*delta;
-        
-
-        //KOD FÖR HEIGHTMAP
-        // let x = Math.floor(player.center.x / tileWidth);
-        // let y = Math.floor(player.center.y / tileWidth);
-        // console.log(mapHandler.map.heightmap[y][x]);
 
         //get the tileids for 6 different positions of the player.
         //since these values will be used to check sideways colission, y is offset by 2 so the top and bottom corners wont
@@ -841,125 +871,143 @@ class Player
         //get tileID function will return the tile of the position sent in parameteres
         //it will recalculate the x and y to grid x and grid y
 
-        
+
+
+        let rect = {
+            topLeft: {x: this.tx, y: this.ty},
+            topRight: {x: this.tx+this.width, y: this.ty},
+            bottomRight: {x: this.tx+this.width, y: this.ty+this.height},
+            bottomLeft: {x: this.tx, y: this.ty+this.height}
+        };
+
+        for(let i = 0; i < game.currentMap.objects.length; i++)
+        {
+            let obj = game.currentMap.objects[i];
+            if(!obj.activated)
+            {
+                continue;
+            }
+
+
+            let lineTo = {
+                x1: obj.post1.orb.x,
+                y1: obj.post1.orb.y,
+                x2: obj.post2.orb.x,
+                y2: obj.post2.orb.y
+            };
+
+            if(rectangleLineIntersect(rect, lineTo))
+            {
+                this.setXY(this.x, this.y);
+                // this.tx = this.x;
+                // this.ty = this.y; 
+                return;
+            }
+        }
+
+
 
         //top left, top right
-        tlTile = map.getTileId(this.tx, this.y);
-        trTile = map.getTileId(this.tx + this.width, this.y);
+        tlTile = map.getCollissionTileId(this.tx, this.y);
+        trTile = map.getCollissionTileId(this.tx + this.width, this.y);
         //middle left, middle right
-        mlTile = map.getTileId(this.tx, this.y + (this.height/2));
-        mrTile = map.getTileId(this.tx + this.width, this.y + (this.height/2));
+        mlTile = map.getCollissionTileId(this.tx, this.y + (this.height/2));
+        mrTile = map.getCollissionTileId(this.tx + this.width, this.y + (this.height/2));
         //bottom left, bottom right
-        blTile = map.getTileId(this.tx, this.y + this.height);
-        brTile = map.getTileId(this.tx + this.width, this.y + this.height);
+        blTile = map.getCollissionTileId(this.tx, this.y + this.height);
+        brTile = map.getCollissionTileId(this.tx + this.width, this.y + this.height);
 
-        //no colission, all blocks touched by the player are non-solid
-        if(!trTile.solid && !mrTile.solid && !brTile.solid 
-        && !tlTile.solid && !mlTile.solid && !blTile.solid)
-        {   
-            this.x = this.tx;
-        }
-        else //colission
+        let standingTiles = [tlTile, trTile, mlTile, mrTile, blTile, brTile].filter((tileId) => tileId > 0);
+
+        for(let i = 0; i < standingTiles.length; i++)
         {
-            if(this.tx - this.x > 0) //colission right
+            if(this.collidesWith.includes(standingTiles[i]))
             {
-                while(trTile.solid || mrTile.solid || brTile.solid) //if any tile on right side is solid
-                {      
-                    this.tx -=1;   
-                    trTile = map.getTileId(this.tx + this.width, this.y);
-                    mrTile = map.getTileId(this.tx + this.width, this.y + (this.height/2));
-                    brTile = map.getTileId(this.tx + this.width, this.y + this.height);         
-                }
-            }
-            else if(this.tx - this.x < 0) //colission left
-            {
-                while(tlTile.solid || mlTile.solid || blTile.solid) //if any tile on left side is solid
+                if(this.tx - this.x > 0) //colission right
                 {
-                    this.tx +=1;
-                    tlTile = map.getTileId(this.tx, this.y);
-                    mlTile = map.getTileId(this.tx, this.y + (this.height/2));
-                    blTile = map.getTileId(this.tx, this.y + this.height);
+                    while(this.collidesWith.includes(trTile) || this.collidesWith.includes(mrTile) || this.collidesWith.includes(brTile)) //if any tile on right side is solid
+                    {      
+                        this.tx -=1;   
+                        trTile = map.getCollissionTileId(this.tx + this.width, this.y);
+                        mrTile = map.getCollissionTileId(this.tx + this.width, this.y + (this.height/2));
+                        brTile = map.getCollissionTileId(this.tx + this.width, this.y + this.height);         
+                    }
                 }
+                else if(this.tx - this.x < 0) //colission left
+                {
+                    while(this.collidesWith.includes(tlTile) || this.collidesWith.includes(mlTile) || this.collidesWith.includes(blTile)) //if any tile on left side is solid
+                    {
+                        this.tx +=1;
+                        tlTile = map.getCollissionTileId(this.tx, this.y);
+                        mlTile = map.getCollissionTileId(this.tx, this.y + (this.height/2));
+                        blTile = map.getCollissionTileId(this.tx, this.y + this.height);
+                    }
+                }
+                this.velX = 0;
+                break;
             }
+        }
 
             if(Math.floor(this.tx) === Math.floor(this.x)) //if rounded down numbers are the same there's no need to move player. It will only cause "vibrations"
                 this.tx = this.x;
             this.x = this.tx;
+
+
+
             
-            this.velX = 0;
-        }
-
-        //start by checking corners. No need to calculate the other points if it collides at first check
-        tlTile = map.getTileId(this.x, this.ty);
-        trTile = map.getTileId(this.x + this.width, this.ty);
-
-        blTile = map.getTileId(this.x, this.ty + this.height);
-        brTile = map.getTileId(this.x + this.width, this.ty + this.height);
-
-        if(!tlTile.solid && !trTile.solid && !blTile.solid && !brTile.solid) 
-        {   
-            //no collission on corners, we proceed to calc extra points and check
-
-            //topleftmid, topmid, toprightmid
-            let halfWidth = this.width/2;
-            let quarterWidth = this.width/4;
-            let tlm = map.getTileId(this.x + (this.width/2) - quarterWidth, this.ty);
-            let tm = map.getTileId(this.x + (this.width/2), this.ty);
-            let trm;
-
-            //botleftmid, botmid, botrightmid
-            let blm;
-            let bm;
-            let brm;
-        }
+            
+    
 
         //y-colission
         //top left, top mid, top right
-        tlTile = map.getTileId(this.x, this.ty);
-        tmTile = map.getTileId(this.x + (this.width/2), this.ty);
-        trTile = map.getTileId(this.x + this.width, this.ty);
+        tlTile = map.getCollissionTileId(this.x, this.ty);
+        tmTile = map.getCollissionTileId(this.x + (this.width/2), this.ty);
+        trTile = map.getCollissionTileId(this.x + this.width, this.ty);
         // //middle left, middle right
         // mlTile = map.getTileId(this.x, this.ty + (this.height/2));
         // mrTile = map.getTileId(this.x + this.width, this.ty + (this.height/2));
         //bottom left, bottom mid, bottom right
-        blTile = map.getTileId(this.x, this.ty + this.height);
-        bmTile = map.getTileId(this.x + (this.width/2), this.ty + this.height);
-        brTile = map.getTileId(this.x + this.width, this.ty + this.height);
+        blTile = map.getCollissionTileId(this.x, this.ty + this.height);
+        bmTile = map.getCollissionTileId(this.x + (this.width/2), this.ty + this.height);
+        brTile = map.getCollissionTileId(this.x + this.width, this.ty + this.height);
 
-        
+        standingTiles = [tlTile, tmTile, trTile, blTile, bmTile, brTile].filter((tileId) => tileId > 0);
 
-        if(!tlTile.solid && !tmTile.solid && !trTile.solid 
-        && !blTile.solid && !bmTile.solid && !brTile.solid)
-        {   
-            this.y = this.ty;
-        }
-        else //colission
+        for(let i = 0; i < standingTiles.length; i++)
         {
-            if(this.ty - this.y > 0) //colission down
+            if(this.collidesWith.includes(standingTiles[i])) //coll
             {
-                while(blTile.solid || brTile.solid) //if any tile on right side is solid
-                {      
-                    this.ty -=1;   
-                    blTile = map.getTileId(this.x, this.ty + this.height);
-                    brTile = map.getTileId(this.x + this.width, this.ty + this.height);         
-                }
-            }
-            else if(this.ty - this.y < 0) //colission up
-            {
-                while(tlTile.solid || trTile.solid) //if any tile on left side is solid
+                if(this.ty - this.y > 0) //colission down
                 {
-                    this.ty +=1;
-                    tlTile = map.getTileId(this.x, this.ty);
-                    trTile = map.getTileId(this.x + this.width, this.ty);
+                    while(this.collidesWith.includes(blTile) || this.collidesWith.includes(bmTile) || this.collidesWith.includes(brTile)) //if any tile below is solid
+                    {      
+                        this.ty -=1;   
+                        blTile = map.getCollissionTileId(this.x, this.ty + this.height);
+                        bmTile = map.getCollissionTileId(this.x + (this.width/2), this.ty + this.height);
+                        brTile = map.getCollissionTileId(this.x + this.width, this.ty + this.height);         
+                    }
                 }
+                else if(this.ty - this.y < 0) //colission up
+                {
+                    while(this.collidesWith.includes(tlTile) || this.collidesWith.includes(tmTile) || this.collidesWith.includes(trTile)) //if any tile on left side is solid
+                    {
+                        this.ty +=1;
+                        tlTile = map.getCollissionTileId(this.x, this.ty);
+                        tmTile = map.getCollissionTileId(this.x + (this.width/2), this.ty);
+                        trTile = map.getCollissionTileId(this.x + this.width, this.ty);
+                    }
+                }
+                this.velY = 0;
+                break;
             }
-
-            if(Math.floor(this.ty) === Math.floor(this.y)) //if rounded down numbers are the same there's no need to move player. It will only cause "vibrations"
-                this.ty = this.y;
-            this.y = this.ty;
-            
-            this.velY = 0;
         }
+  
+        if(Math.floor(this.ty) === Math.floor(this.y)) //if rounded down numbers are the same there's no need to move player. It will only cause "vibrations"
+            this.ty = this.y;
+        this.y = this.ty;
+        
+        
+        
 
         this.center.x = this.x + this.width/2;
         this.center.y = this.y + this.height/2;
@@ -1016,7 +1064,7 @@ class Player
 
     checkEnemyColission()
     {
-        let map = mapHandler.map;
+        let map = game.currentMap;
         let center = {};
         center.x = this.x + (this.width/2);
         center.y = this.y + (this.height/2);
@@ -1045,7 +1093,7 @@ class Player
     checkCollisionEvents()
     {
         //check if player hits the map-exit
-        let map = mapHandler.map;
+        let map = game.currentMap;
 
         let center = {};
         let pcTile; //holds the tileid for centercoords of the player

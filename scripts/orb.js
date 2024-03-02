@@ -220,7 +220,7 @@ class Orb
 
     checkCollision()
     {
-        let map = mapHandler.map;
+        let map = game.currentMap;
         let len = map.enemies.length;
 
         for(let i = 0; i < len; i++)

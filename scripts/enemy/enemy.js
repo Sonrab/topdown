@@ -13,18 +13,24 @@ class Enemy
             cutFromY: 0 
         };
 
-        this.x = x;
-        this.y = y;
+        this.width = width;
+        this.height = height;
+        
+        this.x = x*tileWidth;
+        this.y = y*tileWidth;
         this.center = {
             x: this.x + (this.width/2),
             y: this.y + (this.height/2)
         };
 
+        this.tx;
+        this.ty;
+
+        this.collidesWith;
+
         this.drawData = drawData;
 
 
-        this.width = width;
-        this.height = height;
 
         this.health = {
             max: health,
@@ -98,8 +104,119 @@ class Enemy
 
     removeFromMap()
     {
-        let i = mapHandler.map.enemies.indexOf(this);
-        mapHandler.map.enemies.splice(i, 1);
+        let i = game.currentMap.enemies.indexOf(this);
+        game.currentMap.enemies.splice(i, 1);
+    }
+
+    checkColission()
+    {
+        let map = game.currentMap;
+        let tlTile, tmTile, trTile, mlTile, mrTile, blTile, bmTile, brTile;        
+        let collissionInfo = {
+            x: false,
+            y: false
+        };
+        //top left, top right
+        tlTile = map.getCollissionTileId(this.tx, this.y);
+        trTile = map.getCollissionTileId(this.tx + this.width, this.y);
+        //middle left, middle right
+        mlTile = map.getCollissionTileId(this.tx, this.y + (this.height/2));
+        mrTile = map.getCollissionTileId(this.tx + this.width, this.y + (this.height/2));
+        //bottom left, bottom right
+        blTile = map.getCollissionTileId(this.tx, this.y + this.height);
+        brTile = map.getCollissionTileId(this.tx + this.width, this.y + this.height);
+
+        let standingTiles = [tlTile, trTile, mlTile, mrTile, blTile, brTile].filter((tileId) => tileId > 0);
+
+        for(let i = 0; i < standingTiles.length; i++)
+        {
+            if(this.collidesWith.includes(standingTiles[i]))
+            {
+                if(this.tx - this.x > 0) //colission right
+                {
+                    while(this.collidesWith.includes(trTile) || this.collidesWith.includes(mrTile) || this.collidesWith.includes(brTile)) //if any tile on right side is solid
+                    {      
+                        this.tx -=1;   
+                        trTile = map.getCollissionTileId(this.tx + this.width, this.y);
+                        mrTile = map.getCollissionTileId(this.tx + this.width, this.y + (this.height/2));
+                        brTile = map.getCollissionTileId(this.tx + this.width, this.y + this.height);         
+                    } 
+                }
+                else if(this.tx - this.x < 0) //colission left
+                {
+                    while(this.collidesWith.includes(tlTile) || this.collidesWith.includes(mlTile) || this.collidesWith.includes(blTile)) //if any tile on left side is solid
+                    {
+                        this.tx +=1;
+                        tlTile = map.getCollissionTileId(this.tx, this.y);
+                        mlTile = map.getCollissionTileId(this.tx, this.y + (this.height/2));
+                        blTile = map.getCollissionTileId(this.tx, this.y + this.height);
+                    }
+                }
+                this.velX = 0;
+                collissionInfo.x = true;
+                break;
+            }
+        }
+
+            if(Math.floor(this.tx) === Math.floor(this.x)) //if rounded down numbers are the same there's no need to move player. It will only cause "vibrations"
+                this.tx = this.x;
+
+            
+
+        //y-colission
+        //top left, top mid, top right
+        tlTile = map.getCollissionTileId(this.x, this.ty);
+        tmTile = map.getCollissionTileId(this.x + (this.width/2), this.ty);
+        trTile = map.getCollissionTileId(this.x + this.width, this.ty);
+        // //middle left, middle right
+        // mlTile = map.getTileId(this.x, this.ty + (this.height/2));
+        // mrTile = map.getTileId(this.x + this.width, this.ty + (this.height/2));
+        //bottom left, bottom mid, bottom right
+        blTile = map.getCollissionTileId(this.x, this.ty + this.height);
+        bmTile = map.getCollissionTileId(this.x + (this.width/2), this.ty + this.height);
+        brTile = map.getCollissionTileId(this.x + this.width, this.ty + this.height);
+
+        standingTiles = [tlTile, tmTile, trTile, blTile, bmTile, brTile].filter((tileId) => tileId > 0);
+
+        for(let i = 0; i < standingTiles.length; i++)
+        {
+            if(this.collidesWith.includes(standingTiles[i])) //coll
+            {
+                if(this.ty - this.y > 0) //colission down
+                {
+                    while(this.collidesWith.includes(blTile) || this.collidesWith.includes(bmTile) || this.collidesWith.includes(brTile)) //if any tile below is solid
+                    {      
+                        this.ty -=1;   
+                        blTile = map.getCollissionTileId(this.x, this.ty + this.height);
+                        bmTile = map.getCollissionTileId(this.x + (this.width/2), this.ty + this.height);
+                        brTile = map.getCollissionTileId(this.x + this.width, this.ty + this.height);         
+                    }
+                }
+                else if(this.ty - this.y < 0) //colission up
+                {
+                    while(this.collidesWith.includes(tlTile) || this.collidesWith.includes(tmTile) || this.collidesWith.includes(trTile)) //if any tile on left side is solid
+                    {
+                        this.ty +=1;
+                        tlTile = map.getCollissionTileId(this.x, this.ty);
+                        tmTile = map.getCollissionTileId(this.x + (this.width/2), this.ty);
+                        trTile = map.getCollissionTileId(this.x + this.width, this.ty);
+                    }
+                }
+                this.velY = 0;
+                collissionInfo.y = true;
+                break;
+            }
+        }
+
+        if(Math.floor(this.ty) === Math.floor(this.y)) //if rounded down numbers are the same there's no need to move player. It will only cause "vibrations"
+            this.ty = this.y;
+
+        this.setXY(this.tx, this.ty);
+        
+        if(collissionInfo.x || collissionInfo.y)
+        {
+            this.onCollission(collissionInfo);
+        }
     }
 
 
@@ -117,5 +234,10 @@ class Enemy
     update()
     {
         throwAbstractionError("update");
+    }
+
+    onCollission(collissionInfo)
+    {
+        throwAbstractionError("onCollission");
     }
 }

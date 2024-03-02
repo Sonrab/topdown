@@ -11,16 +11,11 @@ class Renderer
         //this.init();
     }
 
-    // init()
-    // {
-    //     ctx.imageSmoothingEnabled = false;
-    //     ctx.imageSmoothingQuality = 'high';
-    // }
     
-    renderScreen()
+    renderScene()
     {
         //can not use "this" here due to animationframe hijacking "this"-keyword
-        renderer.clearScreen();
+        renderer.clearScene();
 
         ctx.setTransform(1, 0, 0, 1, 0, 0); //Reset all transforms back to default. This means scaling and the changes in x and y
         ctx.translate(-player.camera.x*game.scaling.x, -player.camera.y*game.scaling.y); //translate the context to include what the camera sees
@@ -30,42 +25,26 @@ class Renderer
         //This needs to be fixed, as of now I believe it draws the full map. Needs to cut the section currently in view from the buffer and draw to ordinary canvas
         ctx.drawImage(mapBuffer, 0, 0);
 
+        game.currentMap.render();
 
-        mapHandler.map.renderInteractables();
-        mapHandler.map.renderEnemies();
-        player.render();
+        //player.render();
 
         player.cursor.render();
-        for(let i = 0; i < objectList.length; i++)
-            objectList[i].render();
 
         renderer.renderProjectiles();
         renderer.renderForeground();
         // if(!player.behindForeground)
-        ctx.globalAlpha = mapHandler.foregroundAlpha;
-        mapHandler.map.renderForeground();
-
-        //console.log(mapHandler.foregroundAlpha);
-        ctx.globalAlpha = 1.0;
-        //player.renderHealth();
+        game.currentMap.renderForeground();
         userInterface.render();
-        ctx.strokeRect(player.x, player.y, player.width, player.height);
-        requestAnimationFrame(renderer.renderScreen);
+        
+        // ctx.strokeRect(player.x, player.y, player.width, player.height);
+        requestAnimationFrame(renderer.renderScene);
     }
 
-    renderMain() //CURRENTLY NOT USED
+    clearScene()
     {
-        this.clearScreen();
-        mapHandler.map.render();
-        player.render();
-        // if(player.bomb !== false)
-        //     player.bomb.render();
-    }
-
-    clearScreen()
-    {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        //ctx.clearRect(0, 0, this.mapbuffer.width, this.buffer.height);
+        //ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(player.camera.x, player.camera.y, canvas.width, canvas.height);
     }
 
     renderForeground()

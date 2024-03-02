@@ -1,8 +1,8 @@
 class Animation
 {
-    constructor(host, name, frames, loop, spritesheet = null)
+    constructor(parent, name, frames, loop, spritesheet = null)
     {
-        this.host = host; //refers to the entity which "owns" the animation
+        this.parent = parent; //refers to the entity which "owns" the animation
         this.name = name;
         this.frames = frames; //array of info about each frame, such as the position of the frame in spritesheet and the duration of the frame
         this.loop = loop; // true false depending on if it should loop
@@ -14,8 +14,8 @@ class Animation
 
     play()
     {
-        this.host.currentAnimation.stop();
-        this.host.currentAnimation = this;
+        this.parent.currentAnimation.stop();
+        this.parent.currentAnimation = this;
         this.currentFrame = 0;
         this.animationTimeout = setTimeout(() => {
             this.nextFrame();
@@ -35,7 +35,7 @@ class Animation
         this.currentFrame++;
         if(!this.loop && this.currentFrame >= this.frameCount) //0 indexbased currentframe, framecount length is not
         {
-            this.host.onAnimationEnd(this.name);
+            this.parent.onAnimationEnd(this.name);
             return;
         }
         else if(this.currentFrame >= this.frameCount)

@@ -50,7 +50,7 @@ class Bat extends Enemy
         this.tx = this.x;
         this.ty = this.y;
     
-        this.speed = 64 /game.targetFPS; // divide by 60 to get pixels per second in speed
+        this.speed = 2; // divide by 60 to get pixels per second in speed
         this.velX = 0;
         this.velY = 0;
     
@@ -67,6 +67,7 @@ class Bat extends Enemy
 
         this.targetDestination = {};
         
+        this.collidesWith = [1];
     
         this.hasColission = true;
         this.dead = false;
@@ -117,8 +118,8 @@ class Bat extends Enemy
         this.targetDestination.x = tx;
         this.targetDestination.y = ty;
 
-        let dx = this.targetDestination.x - this.x;
-        let dy = this.targetDestination.y - this.y;
+        let dx = this.targetDestination.x - this.x+this.width/2;
+        let dy = this.targetDestination.y - this.y+this.height/2;
 
         let magnitude = Math.sqrt(dx*dx + dy*dy);
         this.velX = (dx/magnitude) * (this.speed*1.5);
@@ -167,6 +168,11 @@ class Bat extends Enemy
         
     }
 
+    onCollission(collInfo)
+    {
+
+    }
+
     update()
     {
 
@@ -205,66 +211,4 @@ class Bat extends Enemy
         this.tx = this.x + this.velX;
         this.ty = this.y + this.velY;
     }
-
-    checkColission()
-    {
-
-        // let map = mapHandler.map;
-        // let col = {x: false, y: false};
-
-
-        // //check col in x-axis
-        // let tlTile = map.getTileId(this.tx, this.y);
-        // let trTile = map.getTileId(this.tx + this.width, this.y);
-        // //middle left, middle right
-        // let mlTile = map.getTileId(this.tx, this.y + (this.height/2));
-        // let mrTile = map.getTileId(this.tx + this.width, this.y + (this.height/2));
-        // //bottom left, bottom right
-        // let blTile = map.getTileId(this.tx, this.y + this.height);
-        // let brTile = map.getTileId(this.tx + this.width, this.y + this.height);
-
-        // if(tlTile.solid || trTile.solid 
-        // || mlTile.solid || mrTile.solid 
-        // || blTile.solid || brTile.solid)
-        // {
-        //     this.tx = this.x;
-        //     col.x = true;
-        // }
-
-        // //check col in y-axis
-        // tlTile = map.getTileId(this.x, this.ty);
-        // trTile = map.getTileId(this.x + this.width, this.ty);
-        // //middle left, middle right
-        // mlTile = map.getTileId(this.x, this.ty + (this.height/2));
-        // mrTile = map.getTileId(this.x + this.width, this.ty + (this.height/2));
-        // //bottom left, bottom right
-        // blTile = map.getTileId(this.x, this.ty + this.height);
-        // brTile = map.getTileId(this.x + this.width, this.ty + this.height);
-
-        // if(tlTile.solid || trTile.solid 
-        // || mlTile.solid || mrTile.solid 
-        // || blTile.solid || brTile.solid)
-        // {
-        //     this.ty = this.y;
-        //     col.y = true;
-        // }
-        
-        // if(col.x && col.y)
-        // {
-        //     this.setRandomDestination(); //randomize new target destination upon col
-        // }
-        // else if( (col.x || col.y) && this.state != this.states.chasing)
-        // {
-        //     this.setXY(this.tx, this.ty);
-        //     this.setRandomDestination();
-        // }
-        // else if(!col.x || !col.y)
-        // {
-        //     //console.log(this.state);
-        //     this.setXY(this.tx, this.ty);
-        // }
-
-        this.setXY(this.tx, this.ty);
-    }
-
 }

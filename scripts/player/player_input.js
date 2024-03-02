@@ -41,18 +41,12 @@ function onMouseClick()
 
 function checkKeyPress(e)
 {
-    //console.log(e);
-
     let key = e.keyCode;
+    // console.log(e.keyCode);
 
-    if(e.keyCode === 49)
+    if(e.keyCode === 81) //q
     {
-        
-        if(player.equippedWep != player.grappler)
-            //player.equippedWep = player.grappler;
-            player.equipWeapon(player.grappler);
-        else
-            player.equipWeapon(player.bow);
+        player.grappler.use();
     }
 
     if(e.keyCode === 32) // space
@@ -90,10 +84,6 @@ function checkKeyPress(e)
         userInterface.toggleInventory();
     }
 
-    // if(key === 81)
-    // {
-    //     player.grappler.use();
-    // }
 
     if(key === 70)
     {

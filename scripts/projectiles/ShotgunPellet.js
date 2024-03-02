@@ -31,21 +31,16 @@ class ShotgunPellet extends Projectile
         this.currentAnimation.play();
     }
 
-    update(projectileIndex)
+    update()
     {
-        console.log(this.velX);
         if(this.velX < 3 && this.velX > -3 && this.velY < 3 && this.velY > -3)
         {
             this.removeFromMap();
+            return;
         }
-        this.x += this.velX;
-        this.y += this.velY;
+        this.setXY(this.x + this.velX, this.y + this.velY);
 
         this.velX *= 0.95;
         this.velY *= 0.95;
-
-
-    
-        this.checkCollision(projectileIndex);
     }
 }

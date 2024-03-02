@@ -31,28 +31,28 @@
                                             <span class="keyctrl">s</span>
                                             <span class="keyctrl">d</span>
                                         </div>
-                                    </div>
-                                        
-                    
+                                    </div>  
                                     <p>Use WASD keys to move around.</p>
                                 </div>
                                 <div class="row">
-                                    <div><span class="keyctrl">e</span></div>
-                                    
-                      
+                                    <div><span class="keyctrl">e</span></div>  
                                     <p>Use E key to interact with objects.</p>
                                 </div>
                                 <div class="row">
                                     <div><span class="keyctrl">SPACE</span></div>
-                                    
-                      
                                     <p>Use SPACE to perform a roll-maneuver.</p>
                                 </div>
                                 <div class="row">
                                     <div><span class="keyctrl">lmb</span></div>
-                                    
-                      
                                     <p>Use left mouse button to fire.</p>
+                                </div>
+                                <div class="row">
+                                    <div><span class="keyctrl">Q</span></div>
+                                    <p>Use Q key to grapple walls.</p>
+                                </div>
+                                <div class="row">
+                                    <div><span class="keyctrl">TAB</span></div>
+                                    <p>Use TAB to open inventory.</p>
                                 </div>
                                 <div class="row">
                                     <div>
@@ -65,15 +65,13 @@
                             
                                             </svg>
                                     </div>
-                                    
-                      
                                     <p>Use your mouse to aim.</p>
                                 </div>
                                 
                                 
                             </div>
                             <div style="display: flex; justify-content: center; margin: 2rem;">
-                                <button id="btnReturn" class="btn center" name="return">return</button>
+                                <button id="btnReturn" class="btn center" name="return">ESCAPE TO RETURN</button>
                             </div>
                         </div>
                     </div>
@@ -256,6 +254,8 @@
     <script src="scripts/player/inventory/EquipmentSlot.js"></script>
     <script src="scripts/player/inventory/InventoryItem.js"></script>
 
+    <script src="scripts/player/Grappler.js"></script>
+
     <script src="scripts/player/Armor.js"></script>
     <script src="scripts/player/Cursor.js"></script>
     <script src="scripts/player/ExperienceHandler.js"></script>
@@ -269,18 +269,18 @@
     <script src="scripts/weapons/Shotgun.js"></script>
     
 
-
     <script src="scripts/Renderer.js"></script>
     
-    <script src="scripts/GameMap.js"></script>
-    <script src="scripts/MapHandler.js"></script>
-    <script src="scripts/maps.js"></script>
-    <script src="scripts/Door.js"></script>
-    <script src="scripts/Passage.js"></script>
-    <script src="scripts/Chest.js"></script>
-    <script src="scripts/LargeChest.js"></script>
+    <!--Level object scripts-->
+    <script src="scripts/level_design/Door.js"></script>
+    <script src="scripts/level_design/Passage.js"></script>
+    <script src="scripts/level_design/Chest.js"></script>
+    <script src="scripts/level_design/LargeChest.js"></script>
+    <script src="scripts/level_design/PressurePlate.js"></script>
+    <script src="scripts/level_design/PoweredFence.js"></script>
+    <script src="scripts/level_design/Teleporter.js"></script>
+    
     <script src="scripts/tile.js"></script>
-    <script src="scripts/tiles.js"></script>
     <script src="scripts/tile_handler.js"></script>
     <script src="scripts/music_handler.js"></script>
     <script src="scripts/Animation.js"></script>
@@ -292,12 +292,13 @@
     <script src="scripts/enemy/red_slime.js"></script>
     <script src="scripts/enemy/wizard.js"></script>
     <script src="scripts/enemy/Bat.js"></script>
+    <script src="scripts/enemy/Mechalord.js"></script>
     
     <!--?? scripts-->
     
     <script src="scripts/upgrade_list.js"></script>
     
-    <script src="scripts/Grappler.js"></script>
+    
 
     <!--Projectile scripts-->
     <script src="scripts/projectiles/Projectile.js"></script>
@@ -306,6 +307,12 @@
     <script src="scripts/projectiles/RifleBullet.js"></script>
     <script src="scripts/projectiles/Fireball.js"></script>
 
+
+    <!-- Maps -->
+    <script src="scripts/level_design/GameMap.js"></script>
+    <script src="scripts/level_design/maps.js"></script>
+    <script src="scripts/level_design/maps/scifi.js"></script>
+    <script src="scripts/level_design/maps/MechaChamber.js"></script>
 
 
     <script src="scripts/Bomb.js"></script>

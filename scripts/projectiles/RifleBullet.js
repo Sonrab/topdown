@@ -9,16 +9,23 @@ class RifleBullet extends Projectile
             "duration": 10000
         }
     ];
+
+    static width = 12;
+    static height = 4;
+    static halfWidth = RifleBullet.width/2;
+    static halfHeight = RifleBullet.height/2;
+
     constructor(x, y, dx, dy, magnitude, angle, damage)
     {
         super(x, y, angle, damage);
         this.spritesheet = imgRifleBullet;
-        this.width = 12;
-        this.height = 4;
+        this.width = RifleBullet.width;
+        this.height = RifleBullet.height;
         this.magnitude = magnitude;
-        this.speed = 15;
+        this.speed = 16;
         this.velX = (dx/magnitude) * this.speed;
         this.velY = (dy/magnitude) * this.speed;
+
         this.animations = {
             default: new Animation(this, 'default', RifleBullet.defaultAnimationFrames, true)
         };
@@ -31,11 +38,8 @@ class RifleBullet extends Projectile
         this.currentAnimation.play();
     }
 
-    update(projectileIndex)
+    update()
     {
-        this.x += this.velX;
-        this.y += this.velY;
-    
-        this.checkCollision(projectileIndex);
+        this.setXY(this.x + this.velX, this.y + this.velY);
     }
 }

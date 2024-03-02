@@ -47,7 +47,6 @@ class Rifle extends Weapon
             let dx = mouse.transX - player.center.x;
             let dy = mouse.transY - player.center.y;
 
-
             let angle = Math.atan2(dy, dx) * (180 / Math.PI);
             // angle = angle + randomFloat(-this.angleSpan, this.angleSpan);
             if(angle < 0)
@@ -58,9 +57,9 @@ class Rifle extends Weapon
             dx = Math.cos(rad);
             dy = Math.sin(rad);
         
-            let magnitude = pythagorean(dy, dx);
+            let magnitude = pythagorean(dx, dy);
 
-            g_projectiles.push(new RifleBullet(player.center.x, player.center.y, dx, dy, magnitude, angle, this.damage, "player"));
+            g_projectiles.push(new RifleBullet(player.center.x + RifleBullet.halfHeight, player.center.y-RifleBullet.halfHeight, dx, dy, magnitude, angle, this.damage, "player"));
         }
     }
 

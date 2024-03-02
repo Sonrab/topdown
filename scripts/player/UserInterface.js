@@ -125,7 +125,7 @@ class UserInterface
     updateMana()
     {
         manaBar.style.width = `${(player.mana / player.maxMana) * 100}%`
-        manaBarText.textContent = `${player.mana}/${player.maxMana}`;
+        manaBarText.textContent = `${Math.floor(player.mana)}/${player.maxMana}`;
     }
 
     updateExp()

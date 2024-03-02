@@ -44,19 +44,20 @@ class GreenSlime extends Enemy
     constructor(x, y)
     {
         super(
-            x, y, 24, 24, 25, 
+            x, y, 24, 24, 1, 
             { //drawData
                 width: 32,
                 height: 32,
                 offset: {x: -4 , y: -4}
             }
         );
+
         this.spritesheet = spritesheet_GreenSlime;
 
         this.tx = this.x;
         this.ty = this.y;
     
-        this.speed = 32 /game.targetFPS; // divide by targetFPS to get pixels per second in speed
+        this.speed = 3; // divide by targetFPS to get pixels per second in speed
         this.velX = 0;
         this.velY = 0;
     
@@ -66,7 +67,7 @@ class GreenSlime extends Enemy
         this.expYield = 10;
         this.targetDestination = {};
         
-    
+        this.collidesWith = [1, 2, 3];
         this.hasColission = true;
         this.dead = false;
         this.destinationReached = false;
@@ -162,6 +163,11 @@ class GreenSlime extends Enemy
         player.onEnemyKill(this);
     }
 
+    onCollission(collInfo)
+    {
+        this.setDestination();
+    }
+
     update()
     {
 
@@ -189,37 +195,4 @@ class GreenSlime extends Enemy
         this.tx = this.x + this.velX;
         this.ty = this.y + this.velY;
     }
-
-    checkColission()
-    {
-
-        let map = mapHandler.map;
-
-        let tlTile = map.getTileId(this.tx, this.ty);
-        let trTile = map.getTileId(this.tx + this.width, this.ty);
-        //middle left, middle right
-        let mlTile = map.getTileId(this.tx, this.ty + (this.height/2));
-        let mrTile = map.getTileId(this.tx + this.width, this.ty + (this.height/2));
-        //bottom left, bottom right
-        let blTile = map.getTileId(this.tx, this.ty + this.height);
-        let brTile = map.getTileId(this.tx + this.width, this.ty + this.height);
-
-        if(!tlTile.solid && !trTile.solid 
-        && !mlTile.solid && !mrTile.solid 
-        && !blTile.solid && !brTile.solid)
-        {
-            this.setXY(this.tx, this.ty);
-            // this.x = this.tx;
-            // this.y = this.ty;
-        }
-        else
-        {
-            this.setDestination(); //randomize new target destination upon col
-        }
-
-    }
-
-
-
-
 }
